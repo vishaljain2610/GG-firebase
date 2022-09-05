@@ -1,0 +1,67 @@
+html {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+html::-webkit-scrollbar {
+    width: 0px; /* For Chrome, Safari, and Opera */
+}
+
+body{
+width: 100vw;
+height: 100vh;
+font: Poppins;
+background-color: #f0f0f0;
+}
+
+#plan-management-view{
+ padding: 20px;
+}
+
+.plan-tab{
+    width: 100vw;
+    background-color: #f0f0f0;
+}
+
+.plan-sub-tab{
+    width: 40vw;
+    margin-right: 5vw;
+}
+
+.plan-sub-tab-label{
+    font-size:x-large;
+    font-weight: bold;
+}
+
+#opened_plan{
+    font-size: smaller;
+    font-weight: 400;
+    margin-top: -7px;
+    color: darkgrey;
+}
+.packages_div{
+    display:flex;
+}
+#packages_list{
+    width:50%;
+    margin-right: 0.5rem;
+}
+#special_packages_list{
+    width:50%;
+
+}
+#package_heading{
+    width:50%;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+#special_package_heading{
+    width:50%;
+    font-weight: 600;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    
+
+}
