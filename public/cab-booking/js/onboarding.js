@@ -273,10 +273,10 @@ function load_packages() {
           var selected_package_index = $(this).index();
           console.log("Opening", selected_package_index, received_plans[selected_package_index]);
           vehicles_received = received_plans[selected_package_index].plans;
-          console.log('Veehicales', vehicles_received);
-          //console.log(vehicles_received);
+          console.log('Vehicles', vehicles_received);
+          console.log(received_plans);
           var selected_plan = received_plans[selected_package_index];
-          delete selected_plan.plans;
+          //delete selected_plan.plans;
           booking.selected_plan = selected_plan;
           console.log("Plan Selected", booking);
           $("#plan_Selected_description_label").text(received_plans[selected_package_index].package_description);
