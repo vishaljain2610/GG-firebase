@@ -13,7 +13,7 @@ exports.createBooking = functions.https.onRequest((request, response) => {
   admin
       .firestore()
       .collection("Booking")
-      .doc().set(booking)
+      .doc(booking.id).set(booking)
       .then( () => {
         response.json({
           id: booking.pickup,
@@ -32,11 +32,10 @@ exports.updateBooking = functions.https.onRequest((request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
   response.set("Access-Control-Allow-Headers", "Content-Type");
   const booking = request.body;
-  const userId = request.body.userId;
   admin
       .firestore()
       .collection("Booking")
-      .doc(userId).set(booking)
+      .doc(booking.id).set(booking)
       .then( () => {
         response.json({
           id: booking.userId,

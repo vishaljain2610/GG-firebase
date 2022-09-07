@@ -77,7 +77,7 @@ var capture_new_apckage_form = function () {
         }
         else {
             $('#create_new_package_modal').modal('hide');
-            data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+                
             if (received_plans) {
                 $("#plan-management-view").hide();
                 $("#plan-loader").show();

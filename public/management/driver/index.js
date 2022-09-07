@@ -30,7 +30,9 @@ $(document).ready(function () {
       "data" : "t_permit"
   }, {
     "data" : "vehicle_number"
-} ]
+} , {
+  "data" : "carrier_available"
+}]
     })
     $('#partner_table').on('click', 'tr', function () {
       $(this).toggleClass('selected');
