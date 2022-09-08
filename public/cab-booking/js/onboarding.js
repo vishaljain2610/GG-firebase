@@ -2,7 +2,8 @@ var partner_profile = {};
 var received_plans;
 var data;
 var user_data;
-
+var order_data={};
+var toatal_amount;
 
 function submit_mobile_number() {
   if ($("#mobile_number").val().length != 10) {
@@ -395,6 +396,7 @@ function populate_summary_view() {
   $("#breakup_allowance").text("₹ " + booking.selected_plan.selected_vehicle_plan.allowance_amount);
   $("#breakup_pd_payable_fare").text("₹ " + booking.selected_plan.selected_vehicle_plan.payable_post_discount);
   $("#breakup_booking_payable_amount").text("₹ " + booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount);
+  total_amount=booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount;
 
   if (booking.selected_plan.selected_vehicle_plan.discount == 0) {
     $("#discount_li").hide();
@@ -719,7 +721,7 @@ function login_now() {
           postoffices = response[0].PostOffice;
           console.log(postoffices);
           console.log(data);
-          user_data=data+postoffices;
+          user_data=data;
 
           if (postoffices.length < 2) {
             user.region = postoffices[0].District;
@@ -789,11 +791,13 @@ function login_now() {
 }
 
 function send_orders_to_management() {
-  var order_data = {...booking};
+  order_data = {...booking};
   console.log(order_data);
   order_data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   console.log(user_data);
   order_data.user=user_data;
+  order_data.total_amount=total_amount;
+  order_data.status="Booked"
   console.log(order_data);  
   //order_data.booking=booking; 
  
