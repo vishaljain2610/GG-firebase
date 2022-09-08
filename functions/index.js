@@ -16,7 +16,7 @@ exports.createBooking = functions.https.onRequest((request, response) => {
       .doc(booking.id).set(booking)
       .then( () => {
         response.json({
-          id: booking.pickup,
+          id: booking.id,
           name: booking.name,
         });
       })
