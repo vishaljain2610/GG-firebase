@@ -1,5 +1,8 @@
 var partner_profile = {};
 var received_plans;
+var data;
+var user_data;
+
 
 function submit_mobile_number() {
   if ($("#mobile_number").val().length != 10) {
@@ -455,7 +458,7 @@ function get_car_image(car) {
 
 function openplan(index) {
   if (received_plans) {
-    var data = received_plans;
+    data = received_plans;
     opened_plan = data[index];
     opened_plan_index = index;
     //console.log(opened_plan);
@@ -539,6 +542,7 @@ function summary_page_action() {
       $("#login_modal").modal();
     }
   }
+  send_orders_to_management();
 }
 
 var user = { loggedIn: false };
@@ -682,7 +686,7 @@ function login_now() {
   }
   else if (register_activated) {
     user.loggedIn = true;
-    var data = $('#login_form').serializeArray().reduce(function (obj, item) {
+    data = $('#login_form').serializeArray().reduce(function (obj, item) {
       obj[item.name] = item.value;
       return obj;
     }, {});
@@ -714,6 +718,9 @@ function login_now() {
           var postoffices = [];
           postoffices = response[0].PostOffice;
           console.log(postoffices);
+          console.log(data);
+          user_data=data+postoffices;
+
           if (postoffices.length < 2) {
             user.region = postoffices[0].District;
             user.state = postoffices[0].State;
@@ -721,6 +728,9 @@ function login_now() {
             $("#area_view").val(postoffices[0].Name + ", " + postoffices[0].District);
             $("#region_layout").show();
             $("#login_modal").modal();
+            console.log("user",user)
+
+
           }
           else {
             $("#list_view_modal_title").text("Select Area / अपना  एरिया सेलेक्ट करे ");
@@ -733,6 +743,7 @@ function login_now() {
               li.appendChild(document.createTextNode(postoffices[i].Name + ", " + postoffices[i].District));
               ul.appendChild(li);
             }
+
             $("#list_view_modal_list li").click(function () {
               var index = [$(this).index()];
               user.region = postoffices[index].District;
@@ -742,6 +753,8 @@ function login_now() {
               $("#region_layout").show();
               $("#list_view_modal").modal('hide');
               $("#login_modal").modal();
+              
+
             });
             $("#list_view_modal").modal();
           }
@@ -775,6 +788,28 @@ function login_now() {
   }
 }
 
+function send_orders_to_management() {
+  var order_data = {...booking};
+  console.log(order_data);
+  order_data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+  console.log(user_data);
+  order_data.user=user_data;
+  console.log(order_data);  
+  //order_data.booking=booking; 
+ 
+  
+  $.ajax({
+    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",
+    type: "post",
+    data: order_data,
+    success: function (response) {
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking", response);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+    }
+  });
+}
 var otp_sent = false;
 function sendOTP() {
   //ajax call
