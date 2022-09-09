@@ -19,7 +19,7 @@ $(document).ready(function () {
           "bAutoWidth" : false,
           "aaData" : data,
           "columns" : [ {
-              "data" : "phoneNumber"
+              "data" : "user.number"
           }, {
               "data" : "pickup"
           }, {

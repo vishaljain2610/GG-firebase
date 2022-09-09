@@ -501,6 +501,7 @@ function summary_page_action() {
   }
   else {
     if (isLoggedIn()) {
+      console.log(booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount);
       var options =
       {
         "key": "rzp_live_WjbZygz4PwOqo3",
@@ -731,8 +732,7 @@ function login_now() {
             $("#region_layout").show();
             $("#login_modal").modal();
             console.log("user",user)
-
-
+            
           }
           else {
             $("#list_view_modal_title").text("Select Area / अपना  एरिया सेलेक्ट करे ");
@@ -800,8 +800,6 @@ function send_orders_to_management() {
   order_data.status="Booked"
   console.log(order_data);  
   //order_data.booking=booking; 
- 
-  
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",
     type: "post",
