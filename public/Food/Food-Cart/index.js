@@ -260,7 +260,7 @@ function addingcustdetails() {
  
   var bookings = [];
   var old = localStorage.getItem("cart_cab_item");
-  var details = new Array(old.length);
+  // var details = new Array(old.length);
   old = old ? JSON.parse(old) : [];
   console.log(old)
   for (var i = 0; i < old.length; i++) {

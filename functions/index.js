@@ -131,7 +131,7 @@ exports.createPackage = functions.https.onRequest((request, response) => {
   admin
       .firestore()
       .collection("Package")
-      .doc().set(package)
+      .doc(package.id).set(package)
       .then( () => {
         response.json({
           id: package.id,
