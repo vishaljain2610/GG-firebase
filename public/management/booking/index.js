@@ -90,9 +90,20 @@ function editbooking(selected) {
   }
 
   function edit_booking(selected){
-    //var new_data = selected;
+    var new_data = selected;
+    new_data.user.name = $('#edit_booking_form #exampleFormControlInput1').val();
+    new_data.user.number = $('#edit_booking_form #exampleFormControlInput2').val();
+    new_data.pickup_date = $('#edit_booking_form #exampleFormControlInput3').val();
+    new_data.pickup_time = $('#edit_booking_form #exampleFormControlInput4').val();
+    new_data.pickup = $('#edit_booking_form #exampleFormControlInput5').val();
+    new_data.selected_plan.selected_vehicle_plan.selected_vehicle = $('#edit_booking_form #exampleFormControlInput6').val();
+    new_data.selected_plan.selected_vehicle_plan.no_of_seats = $('#edit_booking_form #exampleFormControlInput7').val();
+    new_data.selected_plan.selected_vehicle_plan.plan_alloted_kms = $('#edit_booking_form #exampleFormControlInput8').val();
+    new_data.selected_plan.selected_vehicle_plan.plan_charged_kms = $('#edit_booking_form #exampleFormControlInput9').val();
+    new_data.selected_plan.selected_vehicle_plan.price_per_km = $('#edit_booking_form #exampleFormControlInput10').val();
+    new_data.total_amount = $('#edit_booking_form #exampleFormControlInput11').val();
+    new_data.status = $('#edit_booking_form #exampleFormControlInput12').val();
     
-    new_data.id = selected.id;
     console.log(new_data)
     $.ajax({
       url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking",
@@ -100,7 +111,7 @@ function editbooking(selected) {
       data: new_data,
       success: function (response) {
         console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking", response);
-        //location.reload();
+        location.reload();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
