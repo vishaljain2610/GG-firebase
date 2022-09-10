@@ -20,13 +20,13 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-    <link rel="stylesheeet" href="./index.js">
+    <link rel="stylesheet" href="./index.js">
 
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
 
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
-    <script src="../product/index.js"></script>
+    <!-- <script src="../product/index.js"></script> -->
 
 
     <title>Booking Management</title>
@@ -47,8 +47,9 @@
                 <a class="nav-item nav-link" href="../booking/index.html">Booking</a>
                 <a class="nav-item nav-link" href="../coupon/index.html">Coupon</a>
                 <a class="nav-item nav-link" href="../product/index.html">Products</a>
-                <a class="nav-item nav-link" href="../allotedbookings/index.html">Alloted Bookings</a>
+                <a class="nav-item nav-link" href="../allotedbookings/index.html">Alloted Booking</a>
                 <a class="nav-item nav-link" href="../foodorders/index.html">Food Orders</a>
+                
             </div>
         </div>
         
@@ -58,31 +59,29 @@
     </div>
 
     <div id="body_holder">
-        <button type="button" id="del_button" class="btn btn-outline-primary my-3" style="margin-left: 10px;" >Delete Alloted Boooking</button> 
 
         <div id="partner_list">
             <div class="plan-sub-tab-label" style="display: -webkit-inline-box;margin-bottom: 15px;">
                 <div>
-                    <h3 class="mx-3 my-3">Alloted Partner List</h3>
+                    <h3>Booking List</h3>
                 </div>
             </div>
 
             <table id="partner_table" class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Car Owner</th>
-                        <th scope="col">Carrier Available</th>
-                        <th scope="col">Cars Under Management</th>
-                        <th scope="col">Contact</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Pick Up</th>
-                        <th scope="col">Pickup Date</th>
-                        <th scope="col">Pickup Time</th>
-                        <th scope="col">Region</th>
-                        <th scope="col">Station</th>
-                        <th scope="col">Station is</th>
-                        
+                        <th scope="col">User Name</th>
+                        <th scope="col">User Number</th>
+                        <th scope="col">Pickup date</th>
+                        <th scope="col">Picup Time</th>
+                        <th scope="col">Pickup Location</th>
+                        <th scope="col">Vehicle</th>
+                        <th scope="col">Number Of Seats</th>
+                        <th scope="col">Alloted Kms</th>
+                        <th scope="col">Charges Kms</th>
+                        <th scope="col">Price per Km</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,9 +89,8 @@
         </div>
     </div>
     </div>
-</table>   
-
-<!-- <button type="button" id="allotment_button" class="btn btn-outline-primary" style="margin-left: 10px;" data-toggle="modal"
+</table>
+<button type="button" id="allotment_button" class="btn btn-outline-primary" style="margin-left: 10px;" data-toggle="modal"
 data-target="#allot_partner_modal" onclick="allot_partner_with_booking()">Allot Partner</button>
 <div class="modal" id="allot_partner_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -128,7 +126,7 @@ data-target="#allot_partner_modal" onclick="allot_partner_with_booking()">Allot 
             
         </div>
     </div>
-</div> -->
+</div>
     <script src="./index.js"></script>
 </body>
 
