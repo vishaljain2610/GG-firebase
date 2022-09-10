@@ -125,13 +125,14 @@ exports.getBookingDetails = functions.https.onRequest((request, response) => {
 });
 
 exports.createPackage = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
   response.set("Access-Control-Allow-Origin", "*");
   response.set("Access-Control-Allow-Headers", "Content-Type");
   const package = request.body;
   admin
       .firestore()
       .collection("Package")
-      .doc().set(package)
+      .doc(package.id).set(package)
       .then( () => {
         response.json({
           id: package.id,
@@ -142,9 +143,11 @@ exports.createPackage = functions.https.onRequest((request, response) => {
           error: error.code,
         });
       });
+    });
 });
 
 exports.updatePackage = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
   response.set("Access-Control-Allow-Origin", "*");
   response.set("Access-Control-Allow-Headers", "Content-Type");
   const package = request.body;
@@ -162,6 +165,7 @@ exports.updatePackage = functions.https.onRequest((request, response) => {
           error: error.code,
         });
       });
+    });
 });
 
 exports.getAllPackages = functions.https

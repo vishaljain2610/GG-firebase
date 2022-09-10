@@ -6,7 +6,7 @@ var booking_time_set_display = [];
 booking.station_is = "Pickup";
 
 $(document).ready(function(){    
-    $('#stationSelectionModal').hide(); //enter the class or id of the particular html element which you wish to hide. 
+    // $('#stationSelectionModal').hide(); //enter the class or id of the particular html element which you wish to hide. 
 });
 
 function stationSelection() {
@@ -195,7 +195,7 @@ function station_selected(station) {
         booking.pickup_time = booking_time_set[$(this).index()];
         console.log("Time Selected", booking);
         localStorage.setItem('Booking', JSON.stringify(booking));
-        location.href='/FoodBooking-HomeScreen/index.html'
+        location.href='./FoodBooking-HomeScreen/index.html'
         // $("#loader_layout").modal();
         // load_packages();
       });
