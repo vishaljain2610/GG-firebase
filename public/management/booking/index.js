@@ -51,45 +51,56 @@ $(document).ready(function () {
         $(this).toggleClass('selected');
       });
 
-      $('#edit_button').click(function () {
-        var row = table.api().rows('.selected').data();
-        selected = row[0];
-        console.log(selected);
-        editbooking(selected);
-      });
     
       $('#allotment_button').click(function () {
         var row = table.api().rows('.selected').data();
         data1 = row[0];
         console.log(data1);
     });
+
+    $('#edit_button').click(function () {
+      var row = table.api().rows('.selected').data();
+      selected = row[0];
+      console.log(selected);
+      editbooking(selected);
+    });
   }
 });
 
 function editbooking(selected) {
-    $("#edit_booking_form #status").val(selected.status);
+    $("#edit_booking_form #exampleFormControlInput1").val(selected.user.name);
+    $("#edit_booking_form #exampleFormControlInput2").val(selected.user.number);
+    $("#edit_booking_form #exampleFormControlInput3").val(selected.pickup_date);
+    $("#edit_booking_form #exampleFormControlInput4").val(selected.pickup_time);
+    $("#edit_booking_form #exampleFormControlInput5").val(selected.pickup);
+    $("#edit_booking_form #exampleFormControlInput6").val(selected.selected_plan.selected_vehicle_plan.selected_vehicle);
+    $("#edit_booking_form #exampleFormControlInput7").val(selected.selected_plan.selected_vehicle_plan.no_of_seats);
+    $("#edit_booking_form #exampleFormControlInput8").val(selected.selected_plan.selected_vehicle_plan.plan_alloted_kms);
+    $("#edit_booking_form #exampleFormControlInput9").val(selected.selected_plan.selected_vehicle_plan.plan_charged_kms);
+    $("#edit_booking_form #exampleFormControlInput10").val(selected.selected_plan.selected_vehicle_plan.price_per_km);
+    $("#edit_booking_form #exampleFormControlInput11").val(selected.total_amount);
+    $("#edit_booking_form #exampleFormControlInput12").val(selected.status);
+    //console.log(selected.status)
     $('#save_edit_button').click(function () {
       edit_booking(selected);
       console.log(selected); 
-      alert("data sent") 
   });
+    
+
   }
 
   function edit_booking(selected){
-    var new_data = $('#edit_booking_form').serializeArray().reduce(function (obj, item) {
-      obj[item.name] = item.value;
-      return obj;
-    }, {});
-    var newdata = new_data;
-    newdata.id = selected.id;
-    console.log(newdata)
+    //var new_data = selected;
+    
+    new_data.id = selected.id;
+    console.log(new_data)
     $.ajax({
       url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking",
       type: "post",
-      data: newdata,
+      data: new_data,
       success: function (response) {
         console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking", response);
-        location.reload();
+        //location.reload();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);

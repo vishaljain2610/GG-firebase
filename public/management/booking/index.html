@@ -141,8 +141,64 @@ data-target="#allot_partner_modal" onclick="allot_partner_with_booking()">Allot 
                             <div class="" id="make_new_partner">
                                 <form id="edit_booking_form">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Status</label>
-                                        <select class="form-control" name="status" id="#status">
+                                        <label for="exampleFormControlInput1">User Name</label>
+                                        <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
+                                            placeholder="User Name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput2">User Number</label>
+                                        <input type="number" name="number" class="form-control"
+                                            id="exampleFormControlInput2" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput3">Pickup Date</label>
+                                        <input type="text" name="pickup_date" class="form-control"
+                                            id="exampleFormControlInput3"  autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput4">Pickup Time</label>
+                                        <input type="text" name="pickup_time" class="form-control"
+                                            id="exampleFormControlInput4" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput5">Pickup Location</label>
+                                        <input type="text" name="pickup" class="form-control"
+                                            id="exampleFormControlInput5" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput6">Selected Vehicle</label>
+                                        <input type="text" name="selected_vehicle" class="form-control"
+                                            id="exampleFormControlInput6"autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput7">Number of seats</label>
+                                        <input type="text" name="no_of_seats" class="form-control"
+                                            id="exampleFormControlInput7"autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput8">Alloted kms</label>
+                                        <input type="text" name="plan_alloted_kms" class="form-control"
+                                            id="exampleFormControlInput8"autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Charged Kms</label>
+                                        <input type="text" name="plan_charged_kms" class="form-control"
+                                            id="exampleFormControlInput9"autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput10">Price per km</label>
+                                        <input type="text" name="price_per_km" class="form-control"
+                                            id="exampleFormControlInput10"autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput11">Total Amount</label>
+                                        <input type="number" name="total_amount" class="form-control"
+                                            id="exampleFormControlInput11"autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput12">Status</label>
+                                        <select class="form-control" name="status" id="#exampleFormControlInput12">
                                             <option selected readonly disabled>Change Status</option>
                                             <option class="list-group-item" onclick="">Booked</option>
                                             <option class="list-group-item" onclick="">Completed</option>
