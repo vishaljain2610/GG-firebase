@@ -4,6 +4,9 @@ var data;
 var user_data;
 var order_data={};
 var toatal_amount;
+var selected_plan;
+var selected_package_index;
+var plans;
 
 function submit_mobile_number() {
   if ($("#mobile_number").val().length != 10) {
@@ -274,13 +277,14 @@ function load_packages() {
         $("#plan_holder_list li").click(function () {
           $('#plan_holder_list li').removeClass('selected');
           $(this).addClass('selected');
-          var selected_package_index = $(this).index();
+          selected_package_index = $(this).index();
           console.log("Opening", selected_package_index, received_plans[selected_package_index]);
           vehicles_received = received_plans[selected_package_index].plans;
           console.log('Vehicles', vehicles_received);
           console.log(received_plans);
-          var selected_plan = received_plans[selected_package_index];
+          selected_plan = received_plans[selected_package_index];
           //delete selected_plan.plans;
+          console.log(selected_plan.plans[selected_package_index])
           booking.selected_plan = selected_plan;
           console.log("Plan Selected", booking);
           $("#plan_Selected_description_label").text(received_plans[selected_package_index].package_description);
@@ -301,7 +305,7 @@ function load_packages() {
 
 
 function populate_vehicles_list(parent_plan_name) {
-  var plans = vehicles_received;
+  plans = vehicles_received;
   console.log('Plans ---', plans);
   //alert(plans.length + " cars in this plan");
   plans?.sort((b, a) => b.no_of_seats - a.no_of_seats)
@@ -796,6 +800,7 @@ function send_orders_to_management() {
   order_data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   console.log(user_data);
   order_data.user=user_data;
+  order_data.vehicle_plan_selected=selected_plan.plans[selected_package_index];
   order_data.total_amount=total_amount;
   order_data.status="Booked"
   console.log(order_data);  

@@ -3,6 +3,7 @@ var data1;
 var data2;
 var allotedData;
 var allotedData1;
+var selected;
 
 $(document).ready(function () {
   $.ajax({
@@ -19,24 +20,42 @@ $(document).ready(function () {
           "bAutoWidth" : false,
           "aaData" : data,
           "columns" : [ {
+              "data" : "user.name"
+          }, {
               "data" : "user.number"
           }, {
-              "data" : "pickup"
-          }, {
-              "data" : "pickup_coordinates"
-          }, {
               "data" : "pickup_date"
+          }, {
+              "data" : "pickup_time"
           },   {
-                "data": "pickup_time"
+                "data": "pickup"
            }, {
-                "data":"station"
+                "data":"selected_plan.selected_vehicle_plan.selected_vehicle"
            }, {
-                "data":"station_is"        
-           }
+                "data":"selected_plan.selected_vehicle_plan.no_of_seats"        
+           }, {
+                "data":"selected_plan.selected_vehicle_plan.plan_alloted_kms"        
+           }, {
+                "data":"selected_plan.selected_vehicle_plan.plan_charged_kms"        
+          }, {
+                "data":"selected_plan.selected_vehicle_plan.price_per_km"        
+          },  {
+            "data":"total_amount"        
+          }, {
+                "data":"status"        
+          },
+
       ]})
     
       $('#partner_table').on('click', 'tr', function () {
         $(this).toggleClass('selected');
+      });
+
+      $('#edit_button').click(function () {
+        var row = table.api().rows('.selected').data();
+        selected = row[0];
+        console.log(selected);
+        editbooking(selected);
       });
     
       $('#allotment_button').click(function () {
@@ -47,7 +66,36 @@ $(document).ready(function () {
   }
 });
 
+function editbooking(selected) {
+    $("#edit_booking_form #status").val(selected.status);
+    $('#save_edit_button').click(function () {
+      edit_booking(selected);
+      console.log(selected); 
+      alert("data sent") 
+  });
+  }
 
+  function edit_booking(selected){
+    var new_data = $('#edit_booking_form').serializeArray().reduce(function (obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    var newdata = new_data;
+    newdata.id = selected.id;
+    console.log(newdata)
+    $.ajax({
+      url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking",
+      type: "post",
+      data: newdata,
+      success: function (response) {
+        console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking", response);
+        location.reload();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+      }
+    });
+  }
 function update_partner_table() {
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllPartners",
@@ -120,9 +168,6 @@ function assignToEventsColumns_partners(data) {
       });
 
     });
-      
-      
-
+  }
 
   
-  }
