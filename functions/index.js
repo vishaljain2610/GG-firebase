@@ -156,9 +156,7 @@ exports.updatePackage = functions.https.onRequest((request, response) => {
       .collection("Package")
       .doc(package.id).update(package)
       .then( () => {
-        response.json({
-          id: package.id,
-        });
+        response.json(package);
       })
       .catch((error) => {
         response.status(500).json({
