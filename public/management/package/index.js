@@ -17,7 +17,7 @@ var capture_new_apckage_form = function () {
         obj[item.name] = item.value;
         return obj;
     }, {});
-    data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+
     var go_ahead = true;
     if (!data.alloted_kms) {
         go_ahead = false;
@@ -77,7 +77,7 @@ var capture_new_apckage_form = function () {
         }
         else {
             $('#create_new_package_modal').modal('hide');
-                
+            data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
             if (received_plans) {
                 $("#plan-management-view").hide();
                 $("#plan-loader").show();
@@ -87,10 +87,11 @@ var capture_new_apckage_form = function () {
                 packages.push(data);
                 alert("Sending to Server");
                 var data_packet = data;
-                data_packet.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+                data_packet.id =  Date.now().toString(36) + Math.random().toString(36).substr(2);
                 $.ajax({
                     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPackage",
                     method: "POST", //First change type to method here
+
                     data: data_packet,
                     success: function (response) {
                         //alert("Successfully Created");
@@ -107,10 +108,11 @@ var capture_new_apckage_form = function () {
                 packages.push(data);
                 var data_packet = data;
 
-                data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+
                 $("#plan-management-view").hide();
                 $("#plan-loader").show();
                 alert("Sending to Server");
+                data_packet.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
                 $.ajax({
                     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPackage",
                     method: "POST", //First change type to method here
@@ -672,13 +674,13 @@ var capture_new_special_apckage_form = function () {
                 var data_packet = data;
                 data_packet.special_plan = true;
                 $.ajax({
-                    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updatePackage",
+                    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPackage",
                     method: "POST",
                     data: data_packet,
                     success: function (response) {
                         //received_plans=response;
                         //alert("Successfully Edited");
-                        console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updatePackage", response);
+                        console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPackage", response);
                         editIndex = -1;
                         isEditOn = false;
                         location.reload();
@@ -726,7 +728,9 @@ var capture_new_special_apckage_form = function () {
                 var data_packet = data;
                 $("#plan-management-view").hide();
                 $("#plan-loader").show();
+                
                 alert("Sending to Server");
+                data_packet.id =  Date.now().toString(36) + Math.random().toString(36).substr(2);
                 $.ajax({
                     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPackage",
                     method: "POST",
