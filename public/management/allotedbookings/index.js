@@ -21,11 +21,6 @@ $(document).ready(function () {
             },   {
                   "data": "contact_number"
              }, {
-                  "data":"model"
-             }, {
-                  "data":"phoneNumber"        
-             },
-             {
                 "data" : "pickup"
             }, {
                 "data" : "pickup_date"

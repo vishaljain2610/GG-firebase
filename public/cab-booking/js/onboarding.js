@@ -509,7 +509,8 @@ function summary_page_action() {
       var options =
       {
         "key": "rzp_live_WjbZygz4PwOqo3",
-        "amount": booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount * 100, // 2000 paise = INR 20
+        "amount": 100, 
+        //booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount * 100, // 2000 paise = INR 20
         "name": "Gadigoda.com",
         "reference_id": booking.booking_id,
         "description": "Mobility for Bharat. Payment for Booking ID no #" + booking.booking_id,
