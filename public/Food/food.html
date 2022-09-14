@@ -7,7 +7,6 @@
     <title>Gadigoda - Rail to Roads.</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,6 +15,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./food.css">
+    <link rel="stylesheet" href="../Food/FoodBooking-HomeScreen/index.css">
 </head>
 <body>  
     <!-- station selection -->
@@ -56,6 +56,76 @@
     </div>
 
     <!-- station selection ends -->
+
+    <!-- food booking homescreen -->
+    <div id="foodBookingHomeScreen" > 
+      <div class="contain">
+        <div id="header">
+          <div id="backmenu">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+          <div id="logo_holder">
+            <img class="img-fluid" src="image 3.png" />
+            <div id="brandname">Gadigoda.com</div>
+          </div>
+          <div id="menu">
+            <i onclick="call_main_menu()" class="fas fa-bars"></i>
+          </div>
+        </div>
+        <div class="container">
+          <div class="cont1">
+            <div class="container_01">
+              <img class="img_location" src="map-pin.png" />
+              <div class="location">Falna</div>
+            </div>
+            <div id="user-name"><b>Hi Nitin!</b></div>
+            <div id="question">Find your favourite dish</div>
+          </div>
+          <img class="img_car" src="car_image.png" />
+        </div>
+        <input id="input" class="bar" type="number2" placeholder="Search" onkeyup="searchfood()" />
+      </div>
+      <div class="con1">
+        <div id="list"><b>Restaurants nearby</b></div>
+        <a href="link" class="show"><u>Show all</u></a>
+      </div>
+
+      <div class="products"></div>
+      <div class="cart">
+        <button class="viewCart" onClick="cart()">VIEW CART</button>
+      </div>
+    </div>
+    
+    
+      <div class="modal fade" id="main_menu" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="main_menu_title">Main Menu</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+    
+            <div class="modal-body">
+              <ul class="list-group list-group-flush">
+                <li id="menuitem_login" class="list-group-item">Login / Register</li>
+                <li id="menuitem_account" class="list-group-item">My Account</li>
+                <li id="menuitem_fares" class="list-group-item">Fares & Pricing</li>
+                <li id="menuitem_partner" class="list-group-item" onclick="become_a_partner_click()">Become An Partner</li>
+                <li id="menuitem_faqs" class="list-group-item">F.A.Q.s</li>
+                <li id="menuitem_contactus" class="list-group-item">Contact Us</li>
+                <li id="menuitem_tnc" class="list-group-item">Terms & Conditions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+    <!-- end of food booking homescreen -->
 </body>
 <script src="./food.js"></script>
 </html>
