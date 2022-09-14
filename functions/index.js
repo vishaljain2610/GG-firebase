@@ -416,3 +416,28 @@ exports.sendOTP = functions.https.onRequest((request, response) => {
     });
   });
 });
+
+exports.getAllotedData = functions.https
+.onRequest((request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+  response.set("Access-Control-Allow-Headers", "Content-Type");
+  const number = request.body.number;
+  admin
+      .firestore()
+      .collection("Alloted Data")
+      .where("user.number", "==", number)
+      .get()
+      .then((querySnapshot) => {
+        const packages = [];
+        querySnapshot.forEach((doc) => {
+          const package = doc.data();
+          packages.push(package);
+        });
+        response.json(packages);
+      })
+      .catch((error) => {
+        response.status(500).json({
+          error: error.code,
+        });
+      });
+});
