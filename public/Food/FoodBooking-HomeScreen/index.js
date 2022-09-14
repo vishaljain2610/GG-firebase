@@ -229,11 +229,11 @@ $(document).ready(function () {
               " </div>" +
               '<div class="con6">' +
               ' <div class="rating">' +
-              ' <img class="star" src="star.png" />' +
+              ' <img class="star" src="./assets/star.png" />' +
               '<div id="number">4.5</div>' +
               "</div>" +
               '<div class="time">' +
-              '<img class="clock" src="clock.png" />' +
+              '<img class="clock" src="./assets/clock.png" />' +
               '<div id="mins">' +
               cart_item.delay +
               "</div>" +
