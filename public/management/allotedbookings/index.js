@@ -13,26 +13,49 @@ $(document).ready(function () {
             "bAutoWidth" : false,
             "aaData" : data,
             "columns" : [ {
-                "data" : "car_owner"
+                "data" : "user.name"
             }, {
-                "data" : "carrier_available"
-            }, {
-                "data" : "cars_under_management"
-            },   {
-                  "data": "contact_number"
-             }, {
-                "data" : "pickup"
+                "data" : "user.number"
             }, {
                 "data" : "pickup_date"
             }, {
                 "data" : "pickup_time"
-            }, {
-                "data" : "region"
-            }, {
-                  "data":"station"
+            },   {
+                  "data": "pickup"
              }, {
-                  "data":"station_is"        
-             }
+                  "data":"selected_plan.selected_vehicle_plan.selected_vehicle"
+             }, 
+            //  {
+            //       "data":"selected_plan.selected_vehicle_plan.no_of_seats"        
+            //   },
+            //  {
+            //       "data":"selected_plan.selected_vehicle_plan.plan_alloted_kms"        
+            //  }, 
+            {
+                  "data":"selected_plan.selected_vehicle_plan.plan_charged_kms"        
+            }, {
+                  "data":"selected_plan.selected_vehicle_plan.price_per_km"        
+            },  {
+              "data":"total_amount"        
+            }, {
+                  "data":"status"        
+            }, {
+                "data" : "car_owner"
+            }, {
+                "data" : "cars_under_management"
+            }, {
+                "data" : "contact_number"
+            }, {
+                "data" : "vehicle_number"
+            }, {
+              "data" : "region"
+          }, {
+              "data" : "seater"
+          }, {
+              "data" : "carrier_available"
+          }, {
+              "data" : "t_permit"
+          }
              
         ]})
       

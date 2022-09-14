@@ -39,3 +39,10 @@ background-color: #f0f0f0;
     margin-top: -7px;
     color: darkgrey;
 }
+
+@media (min-width: 768px) {
+    .modal-xl {
+      width: 90%;
+     max-width:1600px;
+    }
+  }

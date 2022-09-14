@@ -157,7 +157,15 @@ function assignToEventsColumns_partners(data) {
             "data" : "contact_number"
         }, {
             "data" : "vehicle_number"
-        } ]
+        }, {
+          "data" : "region"
+      }, {
+          "data" : "seater"
+      }, {
+          "data" : "carrier_available"
+      }, {
+          "data" : "t_permit"
+      } ]
     })
 
     $('#driver_table').on('click', 'tr', function () {
