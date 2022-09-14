@@ -8,6 +8,11 @@ var selected_plan;
 var selected_package_index;
 var plans;
 
+$(document).ready(function () {
+  $(".contain").hide();
+ });
+
+
 function submit_mobile_number() {
   if ($("#mobile_number").val().length != 10) {
     alert("Invalid Phone Number");
@@ -817,6 +822,17 @@ function send_orders_to_management() {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
+  mybookings();
+}
+
+function mybookings(){
+
+
+
+
+
+
+
 }
 var otp_sent = false;
 function sendOTP() {
