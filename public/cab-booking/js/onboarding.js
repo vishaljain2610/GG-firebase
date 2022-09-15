@@ -9,13 +9,16 @@ var selected_package_index;
 var plans;
 
 $(document).ready(function () {
-  $(".contain").hide();
+  // $("#booking_successfully_completed").hide();
  });
 
 function mybookings(number){
   var usernumber={};
   usernumber.number=number;
-  $(".contain").show();
+
+  $("#booking_successfully_completed").fadeIn("slow");
+  console.log("wakanda shit is this")
+  $(".booking_successfully_completed").show();
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData",
     type: "post",
@@ -28,6 +31,14 @@ function mybookings(number){
       ("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
+  $("#day").val(data.pickup_date);
+  $("#pm").val(data.pickup_time);
+  $("#station").val(data.pickup);
+  //$("#amt").val(data.total_amount);
+  $("#plan").val(data.selected_plan.name);
+  $("#seat").val(data.vehicle_plan_selected.no_of_seats);
+  $("#km").val(data.vehicle_plan_selected.selected_vehicle);
+  $("#cost").val(data.total_amount);
 }
 
 function submit_mobile_number() {
@@ -540,6 +551,7 @@ function summary_page_action() {
         "handler": function (response) {
           console.log(response);
           //razorpay_payment_id
+          
         },
         "customer": {
           "name": user.name,
@@ -562,17 +574,21 @@ function summary_page_action() {
           "color": "#FFCD02" // screen color
         }
       };
+
+
       //console.log(options);
+      send_orders_to_management();
       console.log("Moving to Payment", booking);
-      var propay = new Razorpay(options);
-      propay.open();
+
+      // var propay = new Razorpay(options);
+      // propay.open();
     }
     else {
       $("#plan_summary_modal").modal('hide');
       $("#login_modal").modal();
     }
   }
-  send_orders_to_management();
+  
 }
 
 var user = { loggedIn: false };
@@ -839,6 +855,11 @@ function send_orders_to_management() {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
+  $(".modal-backdrop").hide();
+  $(".show").hide();
+  $(".modal-open").hide();
+  $("#plan_summary_modal").hide();
+  $("#summary_holder").hide();
   mybookings(order_data.user.number);
 }
 

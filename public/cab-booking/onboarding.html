@@ -702,19 +702,49 @@
       </div>
     </div>
   </div>
-  
-  <div class="contain">
-    <div class="container">
-      <div class="cont1">
 
-        <div id="user-name"><b>Your Bookings</b></div>
+<div class="booking_successfully_completed" id="booking_successfully_completed" >
+  <img class="img_tick" src="../cab-booking/assets/tick.png">
+  <div id="booking_completed" style="white-space:pre-wrap"><b>Booking Completed Successfully</b></div>
+  <div class="container">
+    <div class="container1">
+      <div class="container-1">
+        <div class="date" id="date"><b>Date</b></div>
+        <div class="day" id="day"><b></b></div>
+        <br>
+        <div class="time" id="time"><b>Time</b></div>
+        <div class="pm" id="pm"><b></b></div>
+      </div>  
+      <div class="container-2">
+        <div class="pick" id="pick"><b>Pickup From</b></div>
+        <div class="station" id="station"><b></b></div>
+        <br>
+        <div class="received" id="received" style="white-space:pre-wrap"><b>Advance Received</b></div>
+        <div class="amt" id="amt"><b></b></div>
       </div>
-      <img class="img_car" src="../cab-booking/assets/ezgif.com-gif-maker (4).gif" />
+    </div> 
+    <img class="line" src="../cab-booking/assets/Line.png"> 
+    <div class="plan"><b></b></div>  
+    <div class="container01">
+      <img class="img_car" src="dzire.png">
+      <div class="container_1">
+          <div class="container001">
+              <div class="seat"><b></b></div>
+              <div class="km" style="white-space:pre-wrap"></div>
+          </div>
+          <div class="container0001">
+              <div class="price"><b>Price</b></div>
+              <div class="cost" ><b></b></div>
+          </div>
+      </div> 
     </div>
+    <img class="line" src="../cab-booking/assets/Line.png"> 
+    <button class="done"><b>Done</b></button>
   </div>
+</div>
+
 
   <script>
-    
     
     var element = document.getElementById("summary_holder");
     element.addEventListener('scroll', function (event) {
