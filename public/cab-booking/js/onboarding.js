@@ -12,6 +12,23 @@ $(document).ready(function () {
   $(".contain").hide();
  });
 
+function mybookings(number){
+  var usernumber={};
+  usernumber.number=number;
+  $(".contain").show();
+  $.ajax({
+    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData",
+    type: "post",
+    data: usernumber,
+    success: function (response) {
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData", response);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log
+      ("ERROR ON NETWORK CALL", textStatus, errorThrown);
+    }
+  });
+}
 
 function submit_mobile_number() {
   if ($("#mobile_number").val().length != 10) {
@@ -822,18 +839,9 @@ function send_orders_to_management() {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
-  mybookings();
+  mybookings(order_data.user.number);
 }
 
-function mybookings(){
-
-
-
-
-
-
-
-}
 var otp_sent = false;
 function sendOTP() {
   //ajax call
