@@ -8,15 +8,21 @@ var selected_plan;
 var selected_package_index;
 var plans;
 
-$(document).ready(function () {
-  // $("#booking_successfully_completed").hide();
- });
+
 
 function mybookings(number){
   var usernumber={};
   usernumber.number=number;
 
-  $("#booking_successfully_completed").fadeIn("slow");
+  $("#booking_summary").fadeOut("def", function () {
+    $("#plan_summary_modal").fadeOut();
+    $("#footer").fadeOut();
+    $("#content_holder").fadeOut();
+    $("#design_footer").fadeOut();
+    $(".modal-backdrop").remove();
+    $("#header").fadeOut();
+    $("#booking_completed_successfully").fadeIn("slow");
+  });
   console.log("wakanda shit is this")
   $(".booking_successfully_completed").show();
   $.ajax({
@@ -35,7 +41,8 @@ function mybookings(number){
   $("#pm").val(data.pickup_time);
   $("#station").val(data.pickup);
   //$("#amt").val(data.total_amount);
-  $("#plan").val(data.selected_plan.name);
+  $("#plan").val(data.vehicle_plan_selected.parent-plan-name);
+  console.log(data.vehicle_plan_selected.parent-plan-name);
   $("#seat").val(data.vehicle_plan_selected.no_of_seats);
   $("#km").val(data.vehicle_plan_selected.selected_vehicle);
   $("#cost").val(data.total_amount);
@@ -855,11 +862,7 @@ function send_orders_to_management() {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
-  $(".modal-backdrop").hide();
-  $(".show").hide();
-  $(".modal-open").hide();
-  $("#plan_summary_modal").hide();
-  $("#summary_holder").hide();
+ 
   mybookings(order_data.user.number);
 }
 
