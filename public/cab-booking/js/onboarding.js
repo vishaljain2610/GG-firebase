@@ -10,42 +10,114 @@ var plans;
 var data_res;
 var payable_total_amount;
 var base_amt;
+var usernumber={}
+var booked_data;
 
-function mybookings(number){
-  var usernumber={};
-  usernumber.number=number;
-
-  $("#booking_summary").fadeOut("def", function () {
-    $("#plan_summary_modal").fadeOut();
-    $("#footer").fadeOut();
-    $("#content_holder").fadeOut();
-    $("#height").fadeOut();
-    $("#design_footer").fadeOut();
-    $(".modal-backdrop").remove();
-    $("#header").fadeOut();
-    $("#booking_completed_successfully").fadeIn("slow");
-  });
-  console.log("wakanda shit is this")
-  $(".booking_successfully_completed").show();
+function mybookings_open(){
+  console.log("in function");
+  usernumber.number="8691860197";
+$("#loader_layout").modal();
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData",
     type: "post",
     data: usernumber,
     success: function (response) {
       console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData", response);
-       data_res=response;
-       display_data_of_booking();
-
+      $("#booking_successfully_completed").fadeOut("slow");
+      $("#mybookings").fadeIn("slow");
+      $("#loader_layout").modal('hide');
+      $.ajax({
+        url : 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings',
+        type : 'POST',
+        dataType : 'json',
+        success : function(data) {
+          console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings", data);
+          booked_data=data;
+          populate_rides(response,booked_data);
+        }
+    }); 
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log
       ("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
-  
 }
 
-function display_data_of_booking(){
+function populate_rides(data_resp,booked_data){
+  $('#populate_rides').append(
+    '<div class="container5">'+
+     ' <div class="time">Driver Alloted '+
+      '<img class="clock_img" src="../cab-booking/assets/tick.png">'+
+    '</div></div>'+
+    '<div class="container2">'+
+      '<div class="container02">'+
+        '<div class="container2_1">'+
+            '<img class="car" src="../cab-booking/assets/'+get_car_image(data_resp.vehicle_plan_selected.selected_vehicle)+'">'+
+        '</div>'+
+        '<div class="container2_2">'+
+            '<div class="route"><b>Pickup- '+data_resp.pickup+'</b></div>'+
+            '<div class="date_time">'+data_resp.pickup_date+' | '+data_resp.pickup_time+'</div>'+
+            '<div class="km">'+data_resp.vehicle_plan_selected.selected_vehicle+', put plan here</div>'+
+       ' </div>'+
+      '</div>'+  
+      '<div class="more"><a href="#">View More ></a></div>'+
+    '</div>  '
+  )
+  for (var i = 0; i < booked_data.length; i++){
+    if(booked_data[i].user.number=="8691860197"){
+      console.log("if is true");
+      $('#populate_rides_booked').append(
+        '<div class="container5">'+
+         ' <div class="time">Booked Rides-Driver Yet To Be Alloted '+
+          '<img class="clock_img" src="../cab-booking/assets/tick.png">'+
+        '</div></div>'+
+        '<div class="container2">'+
+          '<div class="container02">'+
+            '<div class="container2_1">'+
+                '<img class="car" src="../cab-booking/assets/'+get_car_image(booked_data[i].vehicle_plan_selected.selected_vehicle)+'">'+
+            '</div>'+
+            '<div class="container2_2">'+
+                '<div class="route"><b>Pickup- '+booked_data[i].pickup+'</b></div>'+
+                '<div class="date_time">'+booked_data[i].pickup_date+' | '+booked_data[i].pickup_time+'</div>'+
+                '<div class="km">'+booked_data[i].vehicle_plan_selected.selected_vehicle+', put plan here</div>'+
+           ' </div>'+
+          '</div>'+  
+          '<div class="more"><a href="#">View More ></a></div>'+
+        '</div>  '
+      )
+    }
+  }
+}
+
+
+
+
+
+
+  //  for (var i = 0; i < plans.length; i++) {
+  //   console.log(opened_vehicle_plans[i]);
+  //   var car_image = get_car_image(plans[i].selected_vehicle);
+  //   $('#vehicles_plan_list').append
+  //     (
+  //       '<li class="list-group-item" data-direction="bottom" onclick="vehicle_plan_selected(' + i + ')">' +
+  //       '<div class="car-block">' +
+  //       '<div class="car-image">' +
+  //       '<img class="img-fluid" src="../cab-booking/assets/' + car_image + '">' +
+  //       '</div>' +
+  //       '<div class="car-details">' +
+  //       '<div class="car-name">' + plans[i].no_of_seats + ' Seater</div>' +
+  //       '<div class="car-sub-name" id="car-sub-name-0">' + plans[i].selected_vehicle + ', ' + parent_plan_name + '.</div>' +
+  //       '</div>' +
+  //       '<div class="car-fare" id="car-far-0">₹ ' +
+  //       +plans[i].plan_baseprice +
+  //       '</div>' +
+  //       '</div>' +
+  //       '</li>'
+  //     );
+  // } 
+
+function display_data_of_booking(data_res){
 
   $("#day").val(data_res.pickup_date);
   document.getElementById("day").innerHTML = data_res.pickup_date;
@@ -58,12 +130,12 @@ function display_data_of_booking(){
   // $("#planned").val(data_res.vehicle_plan_selected.parent-plan-name);
   // document.getElementById("planned").innerHTML = data_res.vehicle_plan_selected.parent-plan-name;
   $("#seat").val(data_res.vehicle_plan_selected.no_of_seats);
-  document.getElementById("seat").innerHTML = data_res.vehicle_plan_selected.no_of_seats;
+  document.getElementById("seat").innerHTML = data_res.vehicle_plan_selected.no_of_seats+" seats";
   $("#km").val(data_res.vehicle_plan_selected.selected_vehicle);
   document.getElementById("km").innerHTML = data_res.vehicle_plan_selected.selected_vehicle;
   $("#cost").val(data_res.total_amount);
   document.getElementById("cost").innerHTML = data_res.total_amount;
-  $("#booked_car").attr("src", "../cab-booking/assets/" + get_car_image(data_res.vehicle_plan_selected.selected_vehicle));
+  $("#booked_car").attr("src", "../cab-booking/assets/" + get_car_image(data_res.vehicle_plan_selected.selected_vehicle));    
 }
 
 function submit_mobile_number() {
@@ -617,7 +689,7 @@ function summary_page_action() {
   
 }
 
-var user = { loggedIn: false };
+var user = { loggedIn: true };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
@@ -883,8 +955,26 @@ function send_orders_to_management() {
   });
  
   //var num=8691860197
-  mybookings(order_data.user.number);
+  // var usernumber={};
+  // usernumber.number=number;
+
+  $("#booking_summary").fadeOut("def", function () {
+    $("#plan_summary_modal").fadeOut();
+    $("#footer").fadeOut();
+    $("#content_holder").fadeOut();
+    $("#height").fadeOut();
+    $("#design_footer").fadeOut();
+    $(".modal-backdrop").remove();
+    $("#header").fadeOut();
+    $("#booking_completed_successfully").fadeIn("slow");
+  });
+  console.log("wakanda shit is this")
+  $(".booking_successfully_completed").show();
+  
+ 
+ // mybookings(order_data.user.number);
   //mybookings(num);
+  display_data_of_booking(order_data);
 }
 
 var otp_sent = false;

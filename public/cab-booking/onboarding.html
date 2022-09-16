@@ -703,9 +703,87 @@
     </div>
   </div>
 
+<div class="div" id="mybookings" style="display: none;">
+      <div id="header">
+        <div id="backmenu">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div id="logo_holder">
+          <img class="img-fluid" src="sports-car.png">
+          <div id="brandname">Gadigoda.com</div>
+        </div>
+        <div id="menu">
+          <i onclick="call_main_menu()" class="fas fa-bars"></i>
+        </div>
+    </div>
+    <div class="booking"><b>My Bookings</b></div>
+    <div class="rides"><b>Upcoming Rides -</b></div>
+    <div id="populate_rides">
+
+    </div>
+    <div class="rides"><b>Booked Rides -</b></div>
+    <div id="populate_rides_booked">
+
+    </div>
+    <div id="populate_rides_completed">
+
+    </div>
+    <!-- <div class="container5">
+      <div class="time1">Scheduled Tomorrow</div>
+      <img class="clock_img" src="Time.png">
+    </div>
+    <div class="container2">
+      <div class="container02">
+        <div class="container2_1">
+            <img class="car" src="dzire.png">
+        </div>
+        <div class="container2_2">
+            <div class="route"><b>Falna -  Pindwada</b></div>
+            <div class="date_time">17th June, 2022 | 3 PM</div>
+            <div class="km">Sedan, 50kms</div>
+        </div>
+      </div>  
+      <div class="more"><a href="#">View More ></a></div>
+    </div>  
+    <div class="ride">June, 2022</div>
+    <div class="container5">
+    <div class="time2">Ride Completed</div>
+    <img class="clock_img" src="../cab-booking/assets/tick.png">
+    </div>
+    <div class="container2">
+    <div class="container02">
+      <div class="container2_1">
+          <img class="car" src="dzire.png">
+      </div>
+      <div class="container2_2">
+          <div class="route"><b>Falna -  Pindwada</b></div>
+          <div class="date_time">17th June, 2022 | 3 PM</div>
+          <div class="km">Sedan, 50kms</div>
+      </div>
+    </div>  
+    <div class="more"><a href="#">View More ></a></div>
+    </div>  
+    <div class="container5">
+    <div class="time2">Ride Completed</div>
+    <img class="clock_img" src="../cab-booking/assets/tick.png">
+    </div>
+    <div class="container2">
+    <div class="container02">
+      <div class="container2_1">
+          <img class="car" src="dzire.png">
+      </div>
+      <div class="container2_2">
+          <div class="route"><b>Falna -  Pindwada</b></div>
+          <div class="date_time">17th June, 2022 | 3 PM</div>
+          <div class="km">Sedan, 50kms</div>
+      </div>
+    </div>  
+    <div class="more"><a href="#">View More ></a></div>
+    </div> -->
+</div>
 <div class="booking_successfully_completed" id="booking_successfully_completed" style="display: none; background-color: #EFCD02;">
   <img class="img_tick" src="../cab-booking/assets/tick.png">
-  <div id="booking_completed" style="white-space:pre-wrap"><b>Booking Completed Successfully</b></div>
+  <div id="booking_completed" style="white-space:pre-wrap"><br>Booking Completed Successfully<br>You will be alloted a Driver shortly</b></div>
   <div class="container">
     <div class="container1">
       <div class="container-1">
@@ -739,7 +817,7 @@
       </div> 
     </div>
     <img class="line" src="../cab-booking/assets/Line.png"> 
-    <button class="done"><b>Done</b></button>
+    <button class="done" onclick="mybookings_open()"><b>Done</b></button>
   </div>
 </div>
 
