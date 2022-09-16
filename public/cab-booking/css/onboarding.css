@@ -575,12 +575,7 @@ body {
     background: transparent;
 }
 
-body {
-    width: 100vw;
-    font-family: Poppins;
-    background-color: #EFCD02;
-    overflow-x: hidden; 
-}
+
 .img_tick{
     margin-left: 35%;
     margin-top: 20%;

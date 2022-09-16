@@ -474,7 +474,7 @@ function openplan(index) {
 
         $("#plan_alloted_kms").val(opened_plan.alloted_kms);
         $("#plan_charged_kms").val(opened_plan.kms_charged);
-        $("#parent-plan-name-input").val(opened_plan.name);
+        $("#parent_plan_name_input").val(opened_plan.name);
 
         setup_vehicle_view();
     }

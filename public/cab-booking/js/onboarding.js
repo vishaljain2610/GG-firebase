@@ -3,12 +3,13 @@ var received_plans;
 var data;
 var user_data;
 var order_data={};
-var toatal_amount;
+var total_amount;
 var selected_plan;
 var selected_package_index;
 var plans;
-
-
+var data_res;
+var payable_total_amount;
+var base_amt;
 
 function mybookings(number){
   var usernumber={};
@@ -18,6 +19,7 @@ function mybookings(number){
     $("#plan_summary_modal").fadeOut();
     $("#footer").fadeOut();
     $("#content_holder").fadeOut();
+    $("#height").fadeOut();
     $("#design_footer").fadeOut();
     $(".modal-backdrop").remove();
     $("#header").fadeOut();
@@ -31,21 +33,37 @@ function mybookings(number){
     data: usernumber,
     success: function (response) {
       console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData", response);
+       data_res=response;
+       display_data_of_booking();
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log
       ("ERROR ON NETWORK CALL", textStatus, errorThrown);
     }
   });
-  $("#day").val(data.pickup_date);
-  $("#pm").val(data.pickup_time);
-  $("#station").val(data.pickup);
-  //$("#amt").val(data.total_amount);
-  $("#plan").val(data.vehicle_plan_selected.parent-plan-name);
-  console.log(data.vehicle_plan_selected.parent-plan-name);
-  $("#seat").val(data.vehicle_plan_selected.no_of_seats);
-  $("#km").val(data.vehicle_plan_selected.selected_vehicle);
-  $("#cost").val(data.total_amount);
+  
+}
+
+function display_data_of_booking(){
+
+  $("#day").val(data_res.pickup_date);
+  document.getElementById("day").innerHTML = data_res.pickup_date;
+  $("#pm").val(data_res.pickup_time);
+  document.getElementById("pm").innerHTML = data_res.pickup_time;
+  $("#station").val(data_res.pickup);
+  document.getElementById("station").innerHTML = data_res.pickup;
+  $("#amt").val(payable_total_amount);
+  document.getElementById("amt").innerHTML = payable_total_amount;
+  // $("#planned").val(data_res.vehicle_plan_selected.parent-plan-name);
+  // document.getElementById("planned").innerHTML = data_res.vehicle_plan_selected.parent-plan-name;
+  $("#seat").val(data_res.vehicle_plan_selected.no_of_seats);
+  document.getElementById("seat").innerHTML = data_res.vehicle_plan_selected.no_of_seats;
+  $("#km").val(data_res.vehicle_plan_selected.selected_vehicle);
+  document.getElementById("km").innerHTML = data_res.vehicle_plan_selected.selected_vehicle;
+  $("#cost").val(data_res.total_amount);
+  document.getElementById("cost").innerHTML = data_res.total_amount;
+  $("#booked_car").attr("src", "../cab-booking/assets/" + get_car_image(data_res.vehicle_plan_selected.selected_vehicle));
 }
 
 function submit_mobile_number() {
@@ -441,7 +459,8 @@ function populate_summary_view() {
   $("#breakup_pd_payable_fare").text("₹ " + booking.selected_plan.selected_vehicle_plan.payable_post_discount);
   $("#breakup_booking_payable_amount").text("₹ " + booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount);
   total_amount=booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount;
-
+  payable_total_amount=total_amount;
+  base_amt=booking.selected_plan.selected_vehicle_plan.payable_post_discount;
   if (booking.selected_plan.selected_vehicle_plan.discount == 0) {
     $("#discount_li").hide();
   }
@@ -847,7 +866,7 @@ function send_orders_to_management() {
   console.log(user_data);
   order_data.user=user_data;
   order_data.vehicle_plan_selected=selected_plan.plans[selected_package_index];
-  order_data.total_amount=total_amount;
+  order_data.total_amount=base_amt;
   order_data.status="Booked"
   console.log(order_data);  
   //order_data.booking=booking; 
@@ -863,7 +882,9 @@ function send_orders_to_management() {
     }
   });
  
+  //var num=8691860197
   mybookings(order_data.user.number);
+  //mybookings(num);
 }
 
 var otp_sent = false;
