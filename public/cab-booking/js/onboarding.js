@@ -131,13 +131,13 @@ function display_data_of_booking(data_res){
   document.getElementById("amt").innerHTML = payable_total_amount;
   // $("#planned").val(data_res.vehicle_plan_selected.parent-plan-name);
   // document.getElementById("planned").innerHTML = data_res.vehicle_plan_selected.parent-plan-name;
-  $("#seat").val(data_res.vehicle_plan_selected.no_of_seats);
-  document.getElementById("seat").innerHTML = data_res.vehicle_plan_selected.no_of_seats+" seats";
-  $("#km").val(data_res.vehicle_plan_selected.selected_vehicle);
-  document.getElementById("km").innerHTML = data_res.vehicle_plan_selected.selected_vehicle;
+  $("#seat").val(data_res.selected_plan.selected_vehicle_plan.no_of_seats);
+  document.getElementById("seat").innerHTML = data_res.selected_plan.selected_vehicle_plan.no_of_seats+" seats";
+  $("#km").val(data_res.selected_plan.selected_vehicle_plan.selected_vehicle);
+  document.getElementById("km").innerHTML = data_res.selected_plan.selected_vehicle_plan.selected_vehicle;
   $("#cost").val(data_res.total_amount);
   document.getElementById("cost").innerHTML = data_res.total_amount;
-  $("#booked_car").attr("src", "../cab-booking/assets/" + get_car_image(data_res.vehicle_plan_selected.selected_vehicle));    
+  $("#booked_car").attr("src", "../cab-booking/assets/" + get_car_image(data_res.selected_plan.selected_vehicle_plan.selected_vehicle));    
 }
 
 function submit_mobile_number() {
@@ -939,7 +939,7 @@ function send_orders_to_management() {
   order_data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   console.log(user_data);
   order_data.user=user_data;
-  order_data.vehicle_plan_selected=selected_plan.plans[selected_package_index];
+  // order_data.vehicle_plan_selected=selected_plan.plans[selected_package_index];
   order_data.total_amount=base_amt;
   order_data.status="Booked"
   console.log(order_data);  
