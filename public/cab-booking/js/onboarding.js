@@ -18,22 +18,23 @@ function mybookings_open(){
   usernumber.number="8691860197";
 $("#loader_layout").modal();
   $.ajax({
-    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData",
+    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
     type: "post",
     data: usernumber,
     success: function (response) {
-      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData", response);
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber", response);
       $("#booking_successfully_completed").fadeOut("slow");
       $("#mybookings").fadeIn("slow");
       $("#loader_layout").modal('hide');
       $.ajax({
-        url : 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings',
+        url : 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings',
         type : 'POST',
-        dataType : 'json',
+        data : usernumber,
         success : function(data) {
-          console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings", data);
+          console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings", data);
           booked_data=data;
           populate_rides(response,booked_data);
+          $("#loader_layout").modal();
         }
     }); 
     },
@@ -45,8 +46,8 @@ $("#loader_layout").modal();
 }
 
 function populate_rides(data_resp,booked_data){
+  $("#loader_layout").modal('hide');
   for (var i = 0; i < data_resp.length; i++){
-    if(data_resp[i].user.number=="8691860197"){
   $('#populate_rides').append(
     '<div class="container5">'+
      ' <div class="time">Driver Alloted '+
@@ -66,15 +67,13 @@ function populate_rides(data_resp,booked_data){
       '<div class="more"><a href="#">View More ></a></div>'+
     '</div> '
   )
-  }
 }
   for (var i = 0; i < booked_data.length; i++){
-    if(booked_data[i].user.number=="8691860197"){
       console.log("if is true");
       $('#populate_rides_booked').append(
         '<div class="container5">'+
          ' <div class="time">Booked Rides-Driver Yet To Be Alloted '+
-          '<img class="clock_img" src="../cab-booking/assets/tick.png">'+
+          '<img class="clock_img" src="../cab-booking/assets/time.png">'+
         '</div></div>'+
         '<div class="container2">'+
           '<div class="container02">'+
@@ -91,7 +90,6 @@ function populate_rides(data_resp,booked_data){
         '</div>  '
       )
     }
-  }
 }
 
 
