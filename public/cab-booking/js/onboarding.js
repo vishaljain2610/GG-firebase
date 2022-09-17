@@ -13,6 +13,8 @@ var base_amt;
 var usernumber={}
 var booked_data;
 
+$("#cabBookingViewMoreModal").modal('hide');
+
 function mybookings_open(){
   console.log("in function");
   usernumber.number="8691860197";
@@ -43,7 +45,9 @@ $("#loader_layout").modal();
     }
   });
 }
-
+function viewMoreModal(){
+  $("#cabBookingViewMoreModal").fadeIn("slow");
+}
 function populate_rides(data_resp,booked_data){
   for (var i = 0; i < data_resp.length; i++){
   $('#populate_rides').append(
@@ -62,7 +66,88 @@ function populate_rides(data_resp,booked_data){
             '<div class="km">'+data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
        ' </div>'+
       '</div>'+  
-      '<div class="more"><a href="#">View More ></a></div>'+
+
+'<div class="modal fade" id="cabBookingViewMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">'+
+       ' <div class="modal-dialog" role="document">'+
+            '<div class="modal-content">'+
+                '<div class="modal-header">'+
+
+                    '<h6 class="modal-title w-100 text-center" id="exampleModalLongTitle">'+'Falna → Pindwada'+'</h6>'+
+                    '<hr>'+
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+                        '<span aria-hidden="true">&times;</span>'+
+                    '</button>'+
+                '</div>'+
+                '<div class="modal-body">'+
+                    '<h5><b>'+'Micro Plan - 100Km'+'</b></h5>'+
+                    '<div id="cab-plan">'+
+                        '<div id="image-title">'+
+                            '<img src='+'"/dzire 2.png"'+ 'alt='+'"car-image"' +'/>'+
+
+                        '</div>'+
+                        '<div id="car-details">'+
+                            '<h6><b>'+'4 Seater'+'</b></h6>'+
+                            '<p>'+'Sedans, 50kms for 2Hrs'+'</p>'+
+                        '</div>'+
+                        '<div id="price">'+
+                            '₹1100'+
+                        '</div>'+
+                    '</div>'+
+                    '<hr>'+
+                    '<h6><b>'+"Driver's Details"+'</b></h6>'+
+                    '<div id="driver-details">'+
+                        '<div id="driverContact">'+
+                            '<div id="driverName" class="blocks">'+
+                                '<div class="title-modal">'+'Driver Name'+'</div>'+
+                                '<div class="content-modal">'+'Sanjay'+'</div>'+
+                            '</div>'+
+                            '<div id="driverPhoneNo" class="blocks">'+
+                               ' <div class="title-modal">'+'Driver Contact'+'</div>'+
+                                '<div class="content-modal">'+'9865418768'+'</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div id="cabDetails">'+
+                            '<div id="carNumber" class="blocks">'+
+                                '<div class="title-modal">Car Number</div>'+
+                                '<div class="content-modal">'+'MH 05 AA 4896'+'</div>'+
+                            '</div>'+
+                        '<div id="carrierAvailable" class="blocks">'+
+                                '<div class="title-modal">Carrier</div>'+
+                                '<div class="content-modal">'+'Available'+'</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<hr>'+
+                    '<h6><b>Booking Details</b></h6>'+
+                    '<div id="booking-details">'+
+                        '<div id="booking-Date-Time">'+
+                            '<div id="bookingDate" class="blocks">'+
+                                '<div class="title-modal">Date</div>'+
+                                '<div class="content-modal">'+'12 April 2022'+'</div>'+
+                            '</div>'+
+                            '<div id="bookingTime" class="blocks">'+
+                                '<div class="title-modal">Time</div>'+
+                                '<div class="content-modal">'+'12 PM'+'</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<br>'+
+                        '<div id="booking-PickUp-Advance">'+
+                            '<div id="pickUp" class="blocks">'+
+                                '<div class="title-modal">Pick Up From</div>'+
+                                '<div class="content-modal">'+'Falna'+'</div>'+
+                            '</div>'+
+                            '<div id="advanceReceived" class="blocks">'+
+                                '<div class="title-modal">Advance Received</div>'+
+                                '<div class="content-modal">'+'₹600'+'</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>'+
+
+      '<div class="more"><a href="#" onclick="viewMoreModal()" >View More ></a></div>'+
     '</div> '
   )
 }
