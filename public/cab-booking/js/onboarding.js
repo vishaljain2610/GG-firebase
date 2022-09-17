@@ -54,12 +54,12 @@ function populate_rides(data_resp,booked_data){
     '<div class="container2">'+
       '<div class="container02">'+
         '<div class="container2_1">'+
-            '<img class="car" src="../cab-booking/assets/'+get_car_image(data_resp[i].vehicle_plan_selected.selected_vehicle)+'">'+
+            '<img class="car" src="../cab-booking/assets/'+get_car_image(data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle)+'">'+
         '</div>'+
         '<div class="container2_2">'+
             '<div class="route"><b>Pickup- '+data_resp[i].pickup+'</b></div>'+
             '<div class="date_time">'+data_resp[i].pickup_date+' | '+data_resp[i].pickup_time+'</div>'+
-            '<div class="km">'+data_resp[i].vehicle_plan_selected.selected_vehicle+', put plan here</div>'+
+            '<div class="km">'+data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
        ' </div>'+
       '</div>'+  
       '<div class="more"><a href="#">View More ></a></div>'+
@@ -67,6 +67,7 @@ function populate_rides(data_resp,booked_data){
   )
 }
   for (var i = 0; i < booked_data.length; i++){
+    if(booked_data[i].status=="Booked"){
       console.log("if is true");
       $('#populate_rides_booked').append(
         '<div class="container5">'+
@@ -76,18 +77,19 @@ function populate_rides(data_resp,booked_data){
         '<div class="container2">'+
           '<div class="container02">'+
             '<div class="container2_1">'+
-                '<img class="car" src="../cab-booking/assets/'+get_car_image(booked_data[i].vehicle_plan_selected.selected_vehicle)+'">'+
+                '<img class="car" src="../cab-booking/assets/'+get_car_image(booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle)+'">'+
             '</div>'+
             '<div class="container2_2">'+
                 '<div class="route"><b>Pickup- '+booked_data[i].pickup+'</b></div>'+
                 '<div class="date_time">'+booked_data[i].pickup_date+' | '+booked_data[i].pickup_time+'</div>'+
-                '<div class="km">'+booked_data[i].vehicle_plan_selected.selected_vehicle+', put plan here</div>'+
+                '<div class="km">'+booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
            ' </div>'+
           '</div>'+  
           '<div class="more"><a href="#">View More ></a></div>'+
         '</div>  '
       )
     }
+  }
 }
 
 
@@ -689,7 +691,7 @@ function summary_page_action() {
   
 }
 
-var user = { loggedIn: true };
+var user = { loggedIn: false };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;

@@ -4,7 +4,7 @@ var data2;
 var allotedData;
 var allotedData1;
 var selected;
-
+var new_data;
 $(document).ready(function () {
   $.ajax({
     url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings',
@@ -91,7 +91,7 @@ function editbooking(selected) {
 }
 
 function edit_booking(selected) {
-  var new_data = selected;
+  new_data = selected;
   new_data.user.name = $('#edit_booking_form #exampleFormControlInput1').val();
   new_data.user.number = $('#edit_booking_form #exampleFormControlInput2').val();
   new_data.pickup_date = $('#edit_booking_form #exampleFormControlInput3').val();
@@ -181,6 +181,19 @@ function assignToEventsColumns_partners(data) {
       ...data2
     };
     allotedData.status = "Alloted";
+    data1.status  = "Alloted";
+    $.ajax({
+      url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking",
+      type: "post",
+      data: data1,
+      success: function (response) {
+        console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking", response);
+        location.reload();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+      }
+    });
     console.log(allotedData);
     alert(allotedData.status)
     console.log(allotedData);
