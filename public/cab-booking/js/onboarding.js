@@ -34,7 +34,6 @@ $("#loader_layout").modal();
           console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings", data);
           booked_data=data;
           populate_rides(response,booked_data);
-          $("#loader_layout").modal();
         }
     }); 
     },
@@ -46,7 +45,6 @@ $("#loader_layout").modal();
 }
 
 function populate_rides(data_resp,booked_data){
-  $("#loader_layout").modal('hide');
   for (var i = 0; i < data_resp.length; i++){
   $('#populate_rides').append(
     '<div class="container5">'+

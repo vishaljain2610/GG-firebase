@@ -181,7 +181,7 @@ function assignToEventsColumns_partners(data) {
       ...data2
     };
     allotedData.status = "Alloted";
-    console.log(allotedData.status);
+    console.log(allotedData);
     alert(allotedData.status)
     console.log(allotedData);
     alert("this will allot booking to a partner");
