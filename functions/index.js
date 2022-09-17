@@ -51,11 +51,11 @@ exports.updateBooking = functions.https.onRequest((request, response) => {
 
 exports.getBookings = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    const userId = request.body.userId;
+    const number = request.body.number;
     admin
         .firestore()
-        .collection("Bookings")
-        .doc(userId)
+        .collection("Booking")
+        .where("user.number", "==", number)
         .get()
         .then((querySnapshot) => {
           const bookings = [];
@@ -102,11 +102,11 @@ exports.getAllBookings = functions.https
 exports.getBookingDetails = functions.https.onRequest((request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
   response.set("Access-Control-Allow-Headers", "Content-Type");
-  const bookingId = request.body.bookingId;
+  const number = request.body.number;
   admin
       .firestore()
       .collection("Bookings")
-      .doc(bookingId)
+      .where("user.number", "==", number)
       .get()
       .then((querySnapshot) => {
         const bookings = [];
@@ -118,7 +118,7 @@ exports.getBookingDetails = functions.https.onRequest((request, response) => {
         response.json(bookings);
       })
       .catch((error) => {
-        response.status(500).json({
+        response.status(500).json({  
           error: error.code,
         });
       });
@@ -418,26 +418,50 @@ exports.sendOTP = functions.https.onRequest((request, response) => {
 });
 
 exports.getAllotedData = functions.https
-.onRequest((request, response) => {
-  response.set("Access-Control-Allow-Origin", "*");
-  response.set("Access-Control-Allow-Headers", "Content-Type");
-  const number = request.body.number;
-  admin
-      .firestore()
-      .collection("Alloted Data")
-      .where("user.number", "==", number)
-      .get()
-      .then((querySnapshot) => {
-        const packages = [];
-        querySnapshot.forEach((doc) => {
-          const package = doc.data();
-          packages.push(package);
+    .onRequest((request, response) => {
+      response.set("Access-Control-Allow-Origin", "*");
+      response.set("Access-Control-Allow-Headers", "Content-Type");
+      admin
+          .firestore()
+          .collection("Alloted Data")
+          .get()
+          .then((querySnapshot) => {
+            const coupons = [];
+            querySnapshot.forEach((doc) => {
+              const coupon = doc.data();
+              coupons.push(coupon);
+            });
+            response.json(coupons);
+          })
+          .catch((error) => {
+            response.status(500).json({
+              error: error.code,
+            });
+          });
+    });
+
+exports.getAllotedDataByNumber = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set("Access-Control-Allow-Headers", "Content-Type");
+    const number = request.body.number;
+    admin
+        .firestore()
+        .collection("Alloted Data")
+        .where("user.number", "==", number)
+        .get()
+        .then((querySnapshot) => {
+          const coupons = [];
+          querySnapshot.forEach((doc) => {
+            const coupon = doc.data();
+            coupons.push(coupon);
+          });
+          response.json(coupons);
+        })
+        .catch((error) => {
+          response.status(500).json({
+            error: error.code,
+          });
         });
-        response.json(packages);
-      })
-      .catch((error) => {
-        response.status(500).json({
-          error: error.code,
-        });
-      });
+  });
 });
