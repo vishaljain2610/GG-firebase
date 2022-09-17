@@ -799,3 +799,58 @@ body {
     margin-left: 46%;
     padding-right: 10px;
 }
+*{
+    font-family: 'Poppins', sans-serif;  
+}
+.modal-title{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    font-size: 28px;
+}
+.modal {
+background-color:#F1F1F1
+}
+#cab-plan {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+  
+}
+#driver-details ,#booking-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#cab-plan > h5{
+font-weight: 700;
+}
+#cab-plan > p{
+    font-weight:200
+}
+#car-details{
+    align-items:center;
+    text-align:center
+}
+#price{
+    font-weight:700
+}
+#driverContact, #cabDetails , #booking-PickUp-Advance,#booking-Date-Time{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    margin:1rem
+
+}
+.title-modal{
+    color:	#818589;
+    font-weight:700;
+}
+.content-modal{
+    color:#1C1C1C;
+    font-weight:700;
+}
+.blocks {
+    margin-bottom: 1rem;
+} 
