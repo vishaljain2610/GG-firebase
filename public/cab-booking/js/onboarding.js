@@ -13,11 +13,13 @@ var base_amt;
 var usernumber={}
 var booked_data;
 
-$("#cabBookingViewMoreModal").modal('hide');
 
+
+$("#cabBookingViewMoreModal").modal("hide");
 function mybookings_open(){
   console.log("in function");
-  usernumber.number="8691860197";
+ // usernumber.number=order_data.user.number;
+   usernumber.number="8691860197";
 $("#loader_layout").modal();
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
@@ -45,9 +47,23 @@ $("#loader_layout").modal();
     }
   });
 }
-function viewMoreModal(){
-  $("#cabBookingViewMoreModal").fadeIn("slow");
+
+//to show the modal
+function viewMoreModal() {
+  $("#cabBookingViewMoreModal").modal("show");
 }
+
+
+//for scrolling to the fair price 
+function closeModal() {
+  $("#cabBookingViewMoreModal").modal("hide");
+}
+function scroll_to_fair_price_modalview(){
+  const element = $("#cost_breakup_list");
+  element.scrollIntoView();
+   
+}
+
 function populate_rides(data_resp,booked_data){
   for (var i = 0; i < data_resp.length; i++){
   $('#populate_rides').append(
@@ -66,90 +82,155 @@ function populate_rides(data_resp,booked_data){
             '<div class="km">'+data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
        ' </div>'+
       '</div>'+  
+      '<div class="more"><a href="#" onclick="viewMoreModal()" >View More ></a></div>' +
+      '<div class="modal" id="cabBookingViewMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
+      '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
+      '<div id="summary_holder" style="padding:30px;">' +
+      '<div class="modal-header">' +
+      "<hr>" +
+      '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+      '<span aria-hidden="true" onclick="closeModal()">&times;</span>' +
+      "</button>" +
+      "</div>" +
+      '<div style="margin-bottom: 4vh;font-size: larger;font-weight: bold;">' +
+      "Booking Details / बुकिंग डिटेल्स" +
+      "</div>" +
+      '<div class="car-block" style="margin-bottom: 2vh;">' +
+      '<div id="summarypage_img">' +
+      '<img class="car" src="../cab-booking/assets/' +
+      get_car_image(
+        data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle
+      ) +
+      '">' +
+      "</div>" +
+      '<div class="" style="margin-left: 20px;">' +
+      '<div class="" style="padding-right: 15px;font-size: larger;font-weight: bold;" id="summary_seat_label">' +
+      data_resp[i].selected_plan.selected_vehicle_plan.no_of_seats + ' Seater' +
+      "</div>" +
+      ' <div class="car-sub-name" style="width:55vw!important;padding-right:20px!important;" id="summary_plan_overview">' 
+      + data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle +',' +data_resp[i].selected_plan.name +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "पिक उप का स्टेशन / Pick up Station" +
+      "</div>" +
+      '<div id="pickup" style="margin-bottom: 2px;font-size: 1.3rem;">' +
+      data_resp[i].pickup +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "पिक उप की तरीक / Pick Up Date" +
+      "</div>" +
+      '<div id="pickup_date" style=" margin-bottom: 2px;font-size: 1.3rem;">' +
+      data_resp[i].pickup_date +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "पिक उप का समय / Pick Up Time" +
+      "</div>" +
+      '<div id="pickup_time" style=" margin-bottom: 2px;font-size: 1.3rem;">' +
+      data_resp[i].pickup_time +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "बुकिंग किराया / Booking Fare" +
+      " </div>" +
+      '<div style=" margin-bottom: 0px;font-size: 2rem;line-height: 1;display: inline-flex;">' +
+      '<div id="summary_payable_booking_amount">'+'₹ '+data_resp[i].selected_plan.selected_vehicle_plan.plan_baseprice +'</div>' +
+      '<div style="font-size:small;margin-top: 5px;" onclick="scroll_to_fair_price_modalview()">' +
+      '<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">' +
+      '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />' +
+      '<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />' +
+      "</svg>" +
+      "Fare Breakup" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      " Driver Details" +
+      "</div>" +
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body" id="driver-contact-card">' +
+      '<div id="driver-details">' +
+      ' <div id="driverContact">' +
+      '<div id="driverName" class="blocks">' +
+      '<div class="driver-icon"><img src="../cab-booking/assets/driver_icon.png" alt="driver-icon"/></div>' +
+      '<div class="content-modal">'+data_resp[i].car_Owner+'</div>' +
+      "</div>" +
+      '<div id="driverPhoneNo" class="blocks">' +
+      '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon (1).png" alt="contact-icon"/></div>' +
+      '<div class="content-modal">'+data_resp[i].contact_number+'</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+     '</div>'+
+      '<div id="seperator"></div>' +
+      '<div>' +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "बुकिंग प्लान / Booking Plan" +
+      "</div>" +
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body">' +
+      '<h5 class="card-title" id="summary_plan_name"><b>'+ data_resp[i].selected_plan.name+ '</b></h5>' +
+      '<p class="card-text" id="summary_plan_description">'+data_resp[i].selected_plan.package_description+ '</p>' +
+      "</div>" +
+      '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
+      '<ul class="list-group list-group-flush" id="package_terms">' +
+      "</ul>" +
+      "</div>" +
+      '<div style="font-size: 1.3rem;">' +
+      "</div>" +
+      '<div style="font-size: medium;line-height: 1.1;color: #888888;">' +
+      "</div>" +
+      "</div>" +
+      "<div>" +
+      '<div style="margin-bottom: 0px;font-size: large;color: darkgray;margin-top:25px;">' +
+      "किराया ब्रेकअप / Fare Breakup" +
+      "</div>" +
+      '<ul class="list-group list-group-flush" id="cost_breakup_list">' +
+      '<li class="list-group-item">' +
+      "<div>Base Fare</div>" +
+      '<div id="breakup_base_fare">₹ '+data_resp[i].selected_plan.selected_vehicle_plan.base_amount+'</div>' +
+      "</li>" +
+      '<li class="list-group-item" id="discount_li">' +
+      "<div>Discount</div>" +
+      '<div id="breakup_discount">' +
+      "₹ " +data_resp[i].selected_plan.selected_vehicle_plan.discount+
+      "</div>" +
+      "</li>" +
+      '<li class="list-group-item">' +
+      "<div>Allowance</div>" +
+      '<div id="breakup_allowance">₹ '+data_resp[i].selected_plan.selected_vehicle_plan.allowance_amount+'</div>' +
+      "</li>" +
+      '<li class="list-group-item">' +
+      "<div>Total Fare Amount</div>" +
+      '<div id="breakup_pd_payable_fare">₹ '+data_resp[i].selected_plan.selected_vehicle_plan.payable_post_discount+'</div>' +
+      "</li>" +
+      '<li class="list-group-item">' +
+      "<div>Amount Paid</div>" +
+      '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ '+data_resp[i].selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount+'</div>' +
+      "</li>" +
+      ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
+      "</li>" +
+      "</ul>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div> "
 
-'<div class="modal fade" id="cabBookingViewMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">'+
-       ' <div class="modal-dialog" role="document">'+
-            '<div class="modal-content">'+
-                '<div class="modal-header">'+
-
-                    '<h6 class="modal-title w-100 text-center" id="exampleModalLongTitle">'+'Falna → Pindwada'+'</h6>'+
-                    '<hr>'+
-                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
-                        '<span aria-hidden="true">&times;</span>'+
-                    '</button>'+
-                '</div>'+
-                '<div class="modal-body">'+
-                    '<h5><b>'+'Micro Plan - 100Km'+'</b></h5>'+
-                    '<div id="cab-plan">'+
-                        '<div id="image-title">'+
-                            '<img src='+'"/dzire 2.png"'+ 'alt='+'"car-image"' +'/>'+
-
-                        '</div>'+
-                        '<div id="car-details">'+
-                            '<h6><b>'+'4 Seater'+'</b></h6>'+
-                            '<p>'+'Sedans, 50kms for 2Hrs'+'</p>'+
-                        '</div>'+
-                        '<div id="price">'+
-                            '₹1100'+
-                        '</div>'+
-                    '</div>'+
-                    '<hr>'+
-                    '<h6><b>'+"Driver's Details"+'</b></h6>'+
-                    '<div id="driver-details">'+
-                        '<div id="driverContact">'+
-                            '<div id="driverName" class="blocks">'+
-                                '<div class="title-modal">'+'Driver Name'+'</div>'+
-                                '<div class="content-modal">'+'Sanjay'+'</div>'+
-                            '</div>'+
-                            '<div id="driverPhoneNo" class="blocks">'+
-                               ' <div class="title-modal">'+'Driver Contact'+'</div>'+
-                                '<div class="content-modal">'+'9865418768'+'</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div id="cabDetails">'+
-                            '<div id="carNumber" class="blocks">'+
-                                '<div class="title-modal">Car Number</div>'+
-                                '<div class="content-modal">'+'MH 05 AA 4896'+'</div>'+
-                            '</div>'+
-                        '<div id="carrierAvailable" class="blocks">'+
-                                '<div class="title-modal">Carrier</div>'+
-                                '<div class="content-modal">'+'Available'+'</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<hr>'+
-                    '<h6><b>Booking Details</b></h6>'+
-                    '<div id="booking-details">'+
-                        '<div id="booking-Date-Time">'+
-                            '<div id="bookingDate" class="blocks">'+
-                                '<div class="title-modal">Date</div>'+
-                                '<div class="content-modal">'+'12 April 2022'+'</div>'+
-                            '</div>'+
-                            '<div id="bookingTime" class="blocks">'+
-                                '<div class="title-modal">Time</div>'+
-                                '<div class="content-modal">'+'12 PM'+'</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<br>'+
-                        '<div id="booking-PickUp-Advance">'+
-                            '<div id="pickUp" class="blocks">'+
-                                '<div class="title-modal">Pick Up From</div>'+
-                                '<div class="content-modal">'+'Falna'+'</div>'+
-                            '</div>'+
-                            '<div id="advanceReceived" class="blocks">'+
-                                '<div class="title-modal">Advance Received</div>'+
-                                '<div class="content-modal">'+'₹600'+'</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-        '</div>'+
-    '</div>'+
-
-      '<div class="more"><a href="#" onclick="viewMoreModal()" >View More ></a></div>'+
-    '</div> '
-  )
+  );
 }
   for (var i = 0; i < booked_data.length; i++){
     if(booked_data[i].status=="Booked"){
@@ -177,32 +258,6 @@ function populate_rides(data_resp,booked_data){
   }
 }
 
-
-
-
-
-
-  //  for (var i = 0; i < plans.length; i++) {
-  //   console.log(opened_vehicle_plans[i]);
-  //   var car_image = get_car_image(plans[i].selected_vehicle);
-  //   $('#vehicles_plan_list').append
-  //     (
-  //       '<li class="list-group-item" data-direction="bottom" onclick="vehicle_plan_selected(' + i + ')">' +
-  //       '<div class="car-block">' +
-  //       '<div class="car-image">' +
-  //       '<img class="img-fluid" src="../cab-booking/assets/' + car_image + '">' +
-  //       '</div>' +
-  //       '<div class="car-details">' +
-  //       '<div class="car-name">' + plans[i].no_of_seats + ' Seater</div>' +
-  //       '<div class="car-sub-name" id="car-sub-name-0">' + plans[i].selected_vehicle + ', ' + parent_plan_name + '.</div>' +
-  //       '</div>' +
-  //       '<div class="car-fare" id="car-far-0">₹ ' +
-  //       +plans[i].plan_baseprice +
-  //       '</div>' +
-  //       '</div>' +
-  //       '</li>'
-  //     );
-  // } 
 
 function display_data_of_booking(data_res){
 
@@ -776,7 +831,7 @@ function summary_page_action() {
   
 }
 
-var user = { loggedIn: false };
+var user = { loggedIn: true };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;

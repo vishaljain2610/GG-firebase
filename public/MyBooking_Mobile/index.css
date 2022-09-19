@@ -12,6 +12,8 @@ body {
     width: 100vw;
     font-family: Poppins;
     overflow-x: hidden; 
+    background-color: #f8f8f8;
+
 }
 
 #gap {
@@ -85,13 +87,15 @@ body {
     color: gray;
 }
 .container1{
-    background-color: #D9D9D9;
+    background-color: white;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 15px;
     padding-bottom: 10px;
     padding-top: 10px;
     padding-left: 10px;
+    border-radius: 25px 25px 0px 0px;
+    border-bottom: 3px solid #f8f8f8;
     display: flex;
 }
 .clock_img{
@@ -102,12 +106,14 @@ body {
     padding-right: 10px;
 }
 .container2{
-    background-color: #F1F1F1;
+    background-color: white;
     margin-left: 20px;
     margin-right: 20px;
     padding-bottom: 10px;
     padding-top: 10px;
     padding-left: 10px;
+    border-radius: 0px 0px 25px 25px ;
+    
 }
 .container02{
     display: flex;
@@ -146,3 +152,22 @@ body {
     margin-left: 46%;
     padding-right: 10px;
 }
+.bottom_container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: aqua;
+}
+.booking_container{
+    height: 10%;
+    width: 90%;
+    background-color: blue;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    border-radius: 0px 0px 25px 25px ;
+
+}
+
