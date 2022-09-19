@@ -827,7 +827,9 @@ font-weight: 700;
 }
 #car-details{
     align-items:center;
-    text-align:center
+    text-align:center;
+    padding:0;
+    margin:0
 }
 #price{
     font-weight:700
@@ -869,5 +871,32 @@ font-weight: 700;
     margin-left:2rem
 }
 .driver-contact-card{
-    padding:0
+    padding:0;
+    margin:0;
 }
+#booking-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:0;
+    padding:0;
+    align-items: center;
+}
+#booking-PickUp-BasePrice,#booking-Date-Time{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    margin:1rem;
+    width:50%
+
+}
+.blocks {
+    margin-bottom: 1rem;
+} 
+.car-number > h5{
+    color:#1C1C1C;
+    font-weight:700;
+    font-size: 1.5rem;
+
+}
+ 

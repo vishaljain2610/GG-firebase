@@ -15,7 +15,7 @@ var booked_data;
 
 
 
-$("#cabBookingViewMoreModal").modal("hide");
+$("#cabBookingViewMoreAllotedModal").modal("hide");
 function mybookings_open(){
   console.log("in function");
  // usernumber.number=order_data.user.number;
@@ -49,14 +49,14 @@ $("#loader_layout").modal();
 }
 
 //to show the modal
-function viewMoreModal() {
-  $("#cabBookingViewMoreModal").modal("show");
+function viewMoreAllotedModal() {
+  $("#cabBookingViewMoreAllotedModal").modal("show");
 }
 
 
 //for scrolling to the fair price 
 function closeModal() {
-  $("#cabBookingViewMoreModal").modal("hide");
+  $("#cabBookingViewMoreAllotedModal").modal("hide");
 }
 function scroll_to_fair_price_modalview(){
   const element = $("#cost_breakup_list");
@@ -82,20 +82,20 @@ function populate_rides(data_resp,booked_data){
             '<div class="km">'+data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
        ' </div>'+
       '</div>'+  
-      '<div class="more"><a href="#" onclick="viewMoreModal()" >View More ></a></div>' +
-      '<div class="modal" id="cabBookingViewMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
+      '<div class="more"><a href="#" onclick="viewMoreAllotedModal()" >View More ></a></div>' +
+      '<div class="modal" id="cabBookingViewMoreAllotedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
       '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
       '<div id="summary_holder" style="padding:30px;">' +
       '<div class="modal-header">' +
-      "<hr>" +
-      '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+        "<span style='margin-left:0' ><h5><b>Booking Details</b></h5></span>"+"<span>"+
+      '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +"</span>"+
       '<span aria-hidden="true" onclick="closeModal()">&times;</span>' +
       "</button>" +
       "</div>" +
-      '<div style="margin-bottom: 4vh;font-size: larger;font-weight: bold;">' +
-      "Booking Details / बुकिंग डिटेल्स" +
-      "</div>" +
-      '<div class="car-block" style="margin-bottom: 2vh;">' +
+      // '<div style="margin-bottom: 4vh;font-size: larger;font-weight: bold;">' +
+      // "Booking Details / बुकिंग डिटेल्स" +
+      // "</div>" +
+      '<div class="car-block" style="margin-top:1vh">' +
       '<div id="summarypage_img">' +
       '<img class="car" src="../cab-booking/assets/' +
       get_car_image(
@@ -112,55 +112,16 @@ function populate_rides(data_resp,booked_data){
       "</div>" +
       "</div>" +
       "</div>" +
-      "<div>" +
-      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-      "पिक उप का स्टेशन / Pick up Station" +
-      "</div>" +
-      '<div id="pickup" style="margin-bottom: 2px;font-size: 1.3rem;">' +
-      data_resp[i].pickup +
-      "</div>" +
-      "</div>" +
+       
+       
+     
       '<div id="seperator"></div>' +
       "<div>" +
       '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-      "पिक उप की तरीक / Pick Up Date" +
-      "</div>" +
-      '<div id="pickup_date" style=" margin-bottom: 2px;font-size: 1.3rem;">' +
-      data_resp[i].pickup_date +
-      "</div>" +
-      "</div>" +
-      '<div id="seperator"></div>' +
-      "<div>" +
-      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-      "पिक उप का समय / Pick Up Time" +
-      "</div>" +
-      '<div id="pickup_time" style=" margin-bottom: 2px;font-size: 1.3rem;">' +
-      data_resp[i].pickup_time +
-      "</div>" +
-      "</div>" +
-      '<div id="seperator"></div>' +
-      "<div>" +
-      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-      "बुकिंग किराया / Booking Fare" +
-      " </div>" +
-      '<div style=" margin-bottom: 0px;font-size: 2rem;line-height: 1;display: inline-flex;">' +
-      '<div id="summary_payable_booking_amount">'+'₹ '+data_resp[i].selected_plan.selected_vehicle_plan.plan_baseprice +'</div>' +
-      '<div style="font-size:small;margin-top: 5px;" onclick="scroll_to_fair_price_modalview()">' +
-      '<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">' +
-      '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />' +
-      '<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />' +
-      "</svg>" +
-      "Fare Breakup" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      '<div id="seperator"></div>' +
-      "<div>" +
-      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-      " Driver Details" +
+      "चालक संपर्क / Driver Contact" +
       "</div>" +
       '<div class="card" style="margin-top: 5px;">' +
-      '<div class="card-body" id="driver-contact-card">' +
+      '<div class="card-body" id="driver-contact-card" style="padding:0">' +
       '<div id="driver-details">' +
       ' <div id="driverContact">' +
       '<div id="driverName" class="blocks">' +
@@ -168,7 +129,7 @@ function populate_rides(data_resp,booked_data){
       '<div class="content-modal">'+data_resp[i].car_Owner+'</div>' +
       "</div>" +
       '<div id="driverPhoneNo" class="blocks">' +
-      '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon (1).png" alt="contact-icon"/></div>' +
+      '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon.png" alt="contact-icon"/></div>' +
       '<div class="content-modal">'+data_resp[i].contact_number+'</div>' +
       '</div>' +
       '</div>' +
@@ -176,6 +137,33 @@ function populate_rides(data_resp,booked_data){
       '</div>' +
       '</div>' +
      '</div>'+
+      '<div id="seperator"></div>' +
+      
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body" style="padding:0" >'+'<div id="booking-details">'+
+      '<div id="booking-Date-Time">'+
+          '<div id="bookingDate" class="blocks">'+
+              '<div class="title-modal">PickUp Date</div>'+
+              '<div class="content-modal">'+data_resp[i].pickup_date+'</div>'+
+          '</div>'+
+          '<div id="bookingTime" class="blocks">'+
+              '<div class="title-modal">PickUp Time</div>'+
+              '<div class="content-modal">'+data_resp[i].pickup_time+'</div>'+
+          '</div>'+'</div>'+
+      '<br>'+
+      '<div id="booking-PickUp-BasePrice">'+
+          '<div id="pickUp" class="blocks">'+
+              '<div class="title-modal">PickUp Station</div>'+
+              '<div class="content-modal" style="overflow-wrap: break-word">'+data_resp[i].pickup+'</div>'+
+          '</div>'+
+          '<div id="basePrice" class="blocks">'+
+              '<div class="title-modal">Base Price</div>'+
+              '<div class="content-modal"> ₹ '+data_resp[i].total_amount+'</div>'+
+          '</div>'+
+      '</div>'+
+      '</div>'+
+      '</div>'+'</div>'+
+       
       '<div id="seperator"></div>' +
       '<div>' +
       '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
@@ -196,6 +184,21 @@ function populate_rides(data_resp,booked_data){
       "</div>" +
       "</div>" +
       "<div>" +
+      '<div id="seperator"></div>'+
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "गाडी नंबर / Vehicle Number" +
+      "</div>"+
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body">' +
+      '<div class="car-number" style="font-weight:bolder;text-align:center"><h5>' +'MH-05 AA 0490'+'</h5></div>'+
+
+      "</div>" +
+      "</div>" +
+
+
+
+
+      '<div id="seperator"></div>'+
       '<div style="margin-bottom: 0px;font-size: large;color: darkgray;margin-top:25px;">' +
       "किराया ब्रेकअप / Fare Breakup" +
       "</div>" +
