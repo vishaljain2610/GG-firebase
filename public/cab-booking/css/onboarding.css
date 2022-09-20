@@ -899,4 +899,9 @@ font-weight: 700;
     font-size: 1.5rem;
 
 }
- 
+.user-menu-items > a{
+    color:#000000;
+    text-decoration:none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+} 

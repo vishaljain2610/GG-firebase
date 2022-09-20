@@ -13,7 +13,7 @@ var base_amt;
 var usernumber={}
 var booked_data;
 
-$('.unallotedmodals').modal('hide')//hides all the modal at 1st
+$('.unallotedmodals').modal('hide')//hides all the unalloted modals at 1st
 $("#cabBookingViewMoreAllotedModal").modal("hide");
 function mybookings_open(){
   console.log("in function");
