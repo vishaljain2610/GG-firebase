@@ -737,15 +737,16 @@ body {
     color: gray;
 }
 .container5{
-    background-color: #D9D9D9;
+    background-color: white;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 15px;
     padding-bottom: 10px;
     padding-top: 10px;
     padding-left: 10px;
+    border-radius: 25px 25px 0px 0px;
+    border-bottom: 3px solid #f8f8f8;
     display: flex;
-    flex-direction: row-reverse;
 }
 .clock_img{
     height: 3vh;
@@ -755,12 +756,13 @@ body {
     padding-right: 10px;
 }
 .container2{
-    background-color: #F1F1F1;
+    background-color: white;
     margin-left: 20px;
     margin-right: 20px;
     padding-bottom: 10px;
     padding-top: 10px;
     padding-left: 10px;
+    border-radius: 0px 0px 25px 25px ;
 }
 .container02{
     display: flex;

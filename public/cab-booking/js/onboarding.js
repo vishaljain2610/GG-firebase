@@ -13,12 +13,42 @@ var base_amt;
 var usernumber={}
 var booked_data;
 
+
+$(document).ready(function(){
+  $('#menuitem_myBookings').click(function() {
+    alert("haa kiya click")
+    $('#new_account_layout').fadeOut("slow");
+    $("#account_details_layout").fadeOut("slow")
+    $('#main_menu').fadeOut("slow");("slow")
+    $("#time_selection_list_layout").fadeOut();
+    $("#account_type_layout").fadeOut();
+$("#car_details_layout").fadeOut();
+ $("#account_details_layout").fadeOut();
+ $("#header").fadeOut();
+ $("#new_account_layout").fadeOut();
+ $(".modal-backdrop").fadeOut();
+ $(".fade").fadeOut();
+ $(".show").fadeOut();
+ 
+$("#booking_summary").fadeOut();
+$("#plan_summary_modal").fadeOut();
+    $("#footer").fadeOut();
+    $("#content_holder").fadeOut();
+    $("#height").fadeOut();
+    $("#design_footer").fadeOut();
+$("#booking_successfully_completed").fadeOut("slow");
+    $('#mybookings').fadeIn("slow");
+    $("#account_details_layout").fadeOut("slow")
+    $("#station_selection").fadeOut("slow")
+  });
+});
+
 $('.unallotedmodals').modal('hide')//hides all the unalloted modals at 1st
 $("#cabBookingViewMoreAllotedModal").modal("hide");
 function mybookings_open(){
   console.log("in function");
- // usernumber.number=order_data.user.number;
-   usernumber.number="8691860197";
+ usernumber.number=order_data.user.number;
+  // usernumber.number="8691860197";
 $("#loader_layout").modal();
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
@@ -36,6 +66,7 @@ $("#loader_layout").modal();
         success : function(data) {
           console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings", data);
           booked_data=data;
+          document.body.style.backgroundColor = '#f5f4f4';
           populate_rides(response,booked_data);
         }
     }); 
@@ -962,7 +993,7 @@ function summary_page_action() {
   
 }
 
-var user = { loggedIn: true };
+var user = { loggedIn: false };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
