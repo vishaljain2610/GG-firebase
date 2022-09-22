@@ -45,6 +45,7 @@ $("#booking_successfully_completed").fadeOut("slow");
 
 $('.unallotedmodals').modal('hide')//hides all the unalloted modals at 1st
 $("#cabBookingViewMoreAllotedModal").modal("hide");
+$('#couponOffers').modal('hide');
 function mybookings_open(){
   console.log("in function");
  usernumber.number=order_data.user.number;
@@ -993,7 +994,7 @@ function summary_page_action() {
   
 }
 
-var user = { loggedIn: false };
+var user = { loggedIn: true };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
@@ -1348,3 +1349,15 @@ function populate_cities() {
 
   $("#login_modal").modal();
 }
+
+//to copy coupon code 
+
+let copybtn = document.querySelector(".copybtn");
+
+function copyIt(){
+  let copyInput = document.querySelector('#copyvalue');
+  copyInput.select();
+  document.execCommand("copy");
+  copybtn.textContent = "COPIED";
+}
+
