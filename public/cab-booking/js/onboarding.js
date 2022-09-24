@@ -46,6 +46,53 @@ $(document).ready(function () {
 $(".unallotedmodals").modal("hide"); //hides all the unalloted modals at 1st
 $("#cabBookingViewMoreAllotedModal").modal("hide");
 $("#couponOffers").modal("hide");
+
+function couponOffers(){
+  $.ajax({
+    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
+    method: "POST", //First change type to method here
+    success: function (response) {
+      console.log(
+        "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
+        response
+      );
+      received_coupons = response;
+      populateCoupons(received_coupons)
+       
+    },
+    error: function () {
+      $("#loader_layout").modal("hide");
+      alert("error");
+    },
+  });
+}
+
+function populateCoupons(received_coupons) {
+  for (var i = 0; i < received_coupons.length; i++) {
+    if(received_coupons[i].isActive== "true"){
+    $("#couponHolder").append(
+     ' <div class="card-coupon">'+
+            '<div class="main">'+
+              '<div class="co-img">'+
+                '<img src="../cab-booking/assets/sports-car.png"'+'alt="logo"'+'/>'+
+              '</div>'+
+              '<div class="vertical"></div>'+
+              '<div class="card-content">'+
+                '<h2>Gadigoda</h2>'+
+                '<h1>'+received_coupons[i].amount+'% <span>Off Coupon</span></h1>'+
+                '<p>Valid till '+received_coupons[i].validity_date+' , '+received_coupons[i].validity_time+'</p>'+  
+              '</div>'+
+            '</div>'+
+           ' <div class="copy-button">'+
+              '<input id="copyvalue'+i+'" type="text" readonly value="'+received_coupons[i].code+'" />'+
+              '<button onclick="copyIt('+i+')" id="copybtn'+i+'" >COPY</button>'+
+            '</div>'+
+          '</div>'
+          );
+}
+}
+}
+
 function mybookings_open() {
   console.log("in function");
   usernumber.number = order_data.user.number;
@@ -1151,7 +1198,7 @@ function summary_page_action() {
   }
 }
 
-var user = { loggedIn: false };
+var user = { loggedIn: true };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
@@ -1523,11 +1570,14 @@ function populate_cities() {
 
 //to copy coupon code
 
-let copybtn = document.querySelector(".copybtn");
+ 
 
-function copyIt() {
-  let copyInput = document.querySelector("#copyvalue");
-  copyInput.select();
+function copyIt(i) {
+  let copyText =$("#copyvalue"+i).val();
   document.execCommand("copy");
+  //coping code to clipboard
+  navigator.clipboard.writeText(copyText);
+
+  let copybtn= document.querySelector("#copybtn"+i)
   copybtn.textContent = "COPIED";
 }

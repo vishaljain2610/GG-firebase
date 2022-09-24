@@ -532,7 +532,7 @@
             <div style="color: black;
             font-size: small;
             overflow-wrap: break-word;
-            text-decoration: underline;" data-toggle="modal" data-target="#couponOffers">View Offers</div>
+            text-decoration: underline;" data-toggle="modal" data-target="#couponOffers" onclick="couponOffers()" >View Offers</div>
             </div> 
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Coupon Code"
@@ -829,13 +829,6 @@
 </div>
 
 <!-- //modal for coupons view offers section -->
-
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#couponOffers">
-  Launch demo modal
-</button> -->
-
-<!-- Modal -->
 <div class="modal fade" id="couponOffers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -846,8 +839,9 @@
         </button>
       </div>
       <div class="modal-body coupon-body">
-        <div class="coupon-container" style="display:flex;flex-direction:column;">
-          <div class="card-coupon">
+        <div class="coupon-container" id="couponHolder" style="display:flex;flex-direction:column;">
+          
+          <!-- <div class="card-coupon">
             <div class="main">
               <div class="co-img">
                 <img
@@ -859,78 +853,17 @@
               <div class="card-content">
                 <h2>Gadigoda</h2>
                 <h1>10% <span>Coupon</span></h1>
-                <p>Valid till 30 April 2021</p>
+                <p>Valid till 30 April 2021 , 19:00</p>
+                 
               </div>
             </div>
             <div class="copy-button">
               <input id="copyvalue" type="text" readonly value="GOFREE" />
               <button onclick="copyIt()" class="copybtn">COPY</button>
             </div>
-          </div>
-          <div class="card-coupon">
-            <div class="main">
-              <div class="co-img">
-                <img
-                  src="../cab-booking/assets/sports-car.png"
-                  alt="logo"
-                />
-              </div>
-              <div class="vertical"></div>
-              <div class="card-content">
-                <h2>Gadigoda</h2>
-                <h1>10% <span>Coupon</span></h1>
-                <p>Valid till 30 April 2021</p>
-              </div>
-            </div>
-            <div class="copy-button">
-              <input id="copyvalue" type="text" readonly value="GOFREE" />
-              <button onclick="copyIt()" class="copybtn">COPY</button>
-            </div>
-          </div>
-          <div class="card-coupon">
-            <div class="main">
-              <div class="co-img">
-                <img
-                src="../cab-booking/assets/sports-car.png"
-                alt="logo"
-                />
-              </div>
-              <div class="vertical"></div>
-              <div class="card-content">
-                <h2>Gadigoda</h2>
-                <h1>10% <span>Coupon</span></h1>
-                <p>Valid till 30 April 2021</p>
-              </div>
-            </div>
-            <div class="copy-button">
-              <input id="copyvalue" type="text" readonly value="GOFREE" />
-              <button onclick="copyIt()" class="copybtn">COPY</button>
-            </div>
-          </div>
-          <div class="card-coupon">
-            <div class="main">
-              <div class="co-img">
-                <img
-                src="../cab-booking/assets/sports-car.png"
-                alt="logo"
-                />
-              </div>
-              <div class="vertical"></div>
-              <div class="card-content">
-                <h2>Gadigoda</h2>
-                <h1>10% <span>Coupon</span></h1>
-                <p>Valid till 30 April 2021</p>
-              </div>
-            </div>
-            <div class="copy-button">
-              <input id="copyvalue" type="text" readonly value="GOFREE" />
-              <button onclick="copyIt()" class="copybtn">COPY</button>
-            </div>
-          </div>
+          </div> -->
+          
         </div>
-    
-     
-    
       </div>
        
     </div>
