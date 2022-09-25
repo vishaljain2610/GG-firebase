@@ -946,15 +946,11 @@ function vehicle_plan_selected(index) {
     booking.selected_plan.selected_vehicle_plan.plan_baseprice;
 
   if (booking.selected_plan.selected_vehicle_plan.plan_baseprice > 2500) {
-    $("#booking_amount_note_label").text(
-      "20% Payment of Total Booking Amount to be paid to confirm the booking."
-    );
+    $("#booking_amount_note_label").text("20% Payment of Total Booking Amount to be paid to confirm the booking.");
     booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount =
       booking.selected_plan.selected_vehicle_plan.plan_baseprice * 0.2;
   } else {
-    $("#booking_amount_note_label").text(
-      "₹ 500 to be paid to confirm the booking."
-    );
+    $("#booking_amount_note_label").text("₹ 500 to be paid to confirm the booking.");
     booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount = 500;
   }
 
@@ -1104,7 +1100,6 @@ function openplan(index) {
     data = received_plans;
     opened_plan = data[index];
     opened_plan_index = index;
-    //console.log(opened_plan);
 
     $("#opened_plan").text(opened_plan.name);
 
@@ -1586,40 +1581,35 @@ function copyIt(i) {
   copybtn.textContent = "COPIED";
 }
 
+
+$("#applyCoupon").click(function(){
+  alert("The paragraph was clicked.");
+  applyCoupon();
+});
+
 function applyCoupon(){
-  let couponCode = document.getElementById("couponCode").value;
-  let couponAmount = document.getElementById("couponAmount").value;
-  let couponType = document.getElementById("couponType").value;
-  let couponMinAmount = document.getElementById("couponMinAmount").value;
-  let couponMaxAmount = document.getElementById("couponMaxAmount").value;
-  let couponExpiryDate = document.getElementById("couponExpiryDate").value;
-  let couponStatus = document.getElementById("couponStatus").value;
-  let couponDescription = document.getElementById("couponDescription").value;
-  let couponId = document.getElementById("couponId").value;
+  var discountedData;
+  let code = document.getElementById("couponCode").value;
+  let amount = booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount;
+  console.log(code);
+  console.log(amount);
   let couponData = {
-    couponCode: couponCode,
-    couponAmount: couponAmount,
-    couponType: couponType,
-    couponMinAmount: couponMinAmount,
-    couponMaxAmount: couponMaxAmount,
-    couponExpiryDate: couponExpiryDate,
-    couponStatus: couponStatus,
-    couponDescription: couponDescription,
-    couponId: couponId
+    code: code,
+    amount: amount
   }
-  console.log(couponData);
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",
     type: "post",
     data: couponData,
     success: function (response) {
-      console.log(
-        "https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",
-        response
-      );
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",response);
+      discountedData = response
+      console.log(discountedData);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
     },
   });
+
+  
 }
