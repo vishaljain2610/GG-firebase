@@ -72,6 +72,7 @@
                     <tr>
                         <th scope="col">Code</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Amount/Percentage</th>
                         <th scope="col">Max Discount</th>
                         <th scope="col">Min Value</th>
@@ -101,11 +102,16 @@
                 <div class="modal-body">
 
                     <div class="" id="make_new_partner">
-                        <h3>Create New Coupon</h3>
+                        <h3>Edit Coupon</h3>
                         <form id="edit_coupon_form">
 
                             <div class="form-group">
-                                <label for="couponcode">Coupon Code</label>
+                                <label for="couponcode">Description</label>
+                                <input type="text" name="description" class="form-control" id="description"
+                                    placeholder="Description" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Coupon Code</label>
                                 <input type="text" name="code" class="form-control" id="couponcode"
                                     placeholder="Coupon Code" autocomplete="off">
                             </div>
@@ -181,6 +187,12 @@
                                 <label for="couponcode">Coupon Code</label>
                                 <input type="text" name="code" class="form-control" id="couponcode"
                                     placeholder="Coupon Code" autocomplete="off">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="couponcode">Description</label>
+                                <input type="text" name="discount" class="form-control" id="description"
+                                    placeholder="Description" autocomplete="off">
                             </div>
 
                             <div class="form-group">

@@ -19,6 +19,8 @@ $(document).ready(function () {
         }, {
             "data" : "selected_coupon_type"
         }, {
+          "data" : "description"
+      },{
             "data" : "amount"
         }, {
             "data" : "maximum_amount"
@@ -84,6 +86,8 @@ function editcoupon(data) {
     $("#edit_coupon_form #exampleFormControlInput3").val(data.validity_time);
     $("#edit_coupon_form #exampleFormControlInput4").val(data.validity_date);
     $("#edit_coupon_form #exampleFormControlInput5").val(data.minimum_amount);
+    $("#edit_coupon_form #description").val(data.description);
+
     
     $('#save_edit_button').click(function () {
       edit_coupon(data);
