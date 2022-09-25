@@ -100,7 +100,7 @@ function populateCoupons(received_coupons) {
                  '</div>'+
                  '<div class="vertical"></div>'+
                  '<div class="card-content">'+
-                   '<h1>'+received_coupons[i].amount+'₹ <span>Off Coupon</span></h1>'+
+                   '<h1>'+'₹'+received_coupons[i].amount+' <span>Off Coupon</span></h1>'+
                    '<p>'+received_coupons[i].description+'</p>'+
                    '<p>Valid till '+received_coupons[i].validity_date+' , '+received_coupons[i].validity_time+'</p>'+  
                  '</div>'+
