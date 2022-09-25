@@ -535,10 +535,10 @@
             text-decoration: underline;" data-toggle="modal" data-target="#couponOffers" onclick="couponOffers()" >View Offers</div>
             </div> 
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Coupon Code"
+              <input type="text" id="couponCode" class="form-control" placeholder="Coupon Code"
                 aria-label="Amount (to the nearest dollar)">
               <div class="input-group-append">
-                <span class="input-group-text">Apply Coupon</span>
+                <span id="applyCoupon" onclick="applyCoupon()" class="input-group-text">Apply Coupon</span>
               </div>
             </div>
           </div>
@@ -565,7 +565,7 @@
                 <div>Total Fare Amount</div>
                 <div id="breakup_pd_payable_fare">₹ 0.00</div>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" >
                 <div>Booking Amount</div>
                 <div id="breakup_booking_payable_amount" style="font-weight:bold">₹ 0.00</div>
               </li>
