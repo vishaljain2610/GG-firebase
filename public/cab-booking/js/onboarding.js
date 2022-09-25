@@ -103,7 +103,6 @@ function mybookings_open() {
   
   usernumber.number = getLoggedInUserNumber();
   // usernumber.number="8691860197";
-  $("#loader_layout").modal();
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
     type: "post",
@@ -115,7 +114,6 @@ function mybookings_open() {
       );
       $("#booking_successfully_completed").fadeOut("slow");
       $("#mybookings").fadeIn("slow");
-      $("#loader_layout").modal("hide");
       $.ajax({
         url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
         type: "POST",
@@ -1204,7 +1202,7 @@ function summary_page_action() {
   }
 }
 
-var user = { loggedIn: true };
+var user = { loggedIn: false };
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
