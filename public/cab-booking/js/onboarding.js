@@ -93,9 +93,15 @@ function populateCoupons(received_coupons) {
 }
 }
 
+function getLoggedInUserNumber(){
+  var usernumber = JSON.parse(localStorage.getItem("loggedInUserNumber"));
+  console.log(usernumber.phoneNumber);
+  return usernumber.phoneNumber;
+}
 function mybookings_open() {
   console.log("in function");
-  usernumber.number = order_data.user.number;
+  
+  usernumber.number = getLoggedInUserNumber();
   // usernumber.number="8691860197";
   $("#loader_layout").modal();
   $.ajax({
