@@ -70,6 +70,7 @@ function couponOffers(){
 function populateCoupons(received_coupons) {
   for (var i = 0; i < received_coupons.length; i++) {
     if(received_coupons[i].isActive== "true"){
+      if(received_coupons[i].selected_coupon_type=="Percentage"){
     $("#couponHolder").append(
      ' <div class="card-coupon">'+
             '<div class="main">'+
@@ -89,6 +90,28 @@ function populateCoupons(received_coupons) {
             '</div>'+
           '</div>'
           );
+    }
+    else if(received_coupons[i].selected_coupon_type=="Price"){
+      $("#couponHolder").append(
+        ' <div class="card-coupon">'+
+               '<div class="main">'+
+                 '<div class="co-img">'+
+                   '<img src="../cab-booking/assets/sports-car.png"'+'alt="logo"'+'/>'+
+                 '</div>'+
+                 '<div class="vertical"></div>'+
+                 '<div class="card-content">'+
+                   '<h1>'+received_coupons[i].amount+'₹ <span>Off Coupon</span></h1>'+
+                   '<p>'+received_coupons[i].description+'</p>'+
+                   '<p>Valid till '+received_coupons[i].validity_date+' , '+received_coupons[i].validity_time+'</p>'+  
+                 '</div>'+
+               '</div>'+
+              ' <div class="copy-button">'+
+                 '<input id="copyvalue'+i+'" type="text" readonly value="'+received_coupons[i].code+'" />'+
+                 '<button onclick="copyIt('+i+')" id="copybtn'+i+'" >COPY</button>'+
+               '</div>'+
+             '</div>'
+             );
+    }
 }
 }
 }
@@ -1197,7 +1220,7 @@ function summary_page_action() {
   }
 }
 
-var user = { loggedIn: false };
+var user = { loggedIn: true};
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
@@ -1590,7 +1613,9 @@ $("#applyCoupon").click(function(){
 function applyCoupon(){
   var discountedData;
   let code = document.getElementById("couponCode").value;
-  let amount = booking.selected_plan.selected_vehicle_plan.payable_post_discount_booking_amount;
+  let amount = booking.selected_plan.selected_vehicle_plan.payable_post_discount
+
+  
   console.log(code);
   console.log(amount);
   let couponData = {
@@ -1605,6 +1630,17 @@ function applyCoupon(){
       console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",response);
       discountedData = response
       console.log(discountedData);
+      $("#breakup_pd_payable_fare").text(
+        "₹ " + discountedData.total 
+           
+      );
+      $("#breakup_discount").text(
+        "₹ " + discountedData.discount
+      );
+      console.log($('#discount_li'));
+      $("#discount_li").fadeIn();
+     
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
