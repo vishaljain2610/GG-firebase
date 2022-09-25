@@ -1208,11 +1208,12 @@ function summary_page_action() {
       };
 
       //console.log(options);
-      send_orders_to_management();
-      console.log("Moving to Payment", booking);
+
 
       // var propay = new Razorpay(options);
       // propay.open();
+      send_orders_to_management();
+      console.log("Moving to Payment", booking);
     } else {
       $("#plan_summary_modal").modal("hide");
       $("#login_modal").modal();
@@ -1611,6 +1612,7 @@ $("#applyCoupon").click(function(){
 });
 
 function applyCoupon(){
+  $("#loader_layout").modal("show");
   var discountedData;
   let code = document.getElementById("couponCode").value;
   let amount = booking.selected_plan.selected_vehicle_plan.payable_post_discount
@@ -1627,8 +1629,10 @@ function applyCoupon(){
     type: "post",
     data: couponData,
     success: function (response) {
+      $("#loader_layout").modal("hide");
       console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",response);
       discountedData = response
+      base_amt=discountedData.total ;
       console.log(discountedData);
       $("#breakup_pd_payable_fare").text(
         "₹ " + discountedData.total 
