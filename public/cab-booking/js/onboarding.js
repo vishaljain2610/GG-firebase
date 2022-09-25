@@ -1587,3 +1587,41 @@ function copyIt(i) {
   let copybtn= document.querySelector("#copybtn"+i)
   copybtn.textContent = "COPIED";
 }
+
+function applyCoupon(){
+  let couponCode = document.getElementById("couponCode").value;
+  let couponAmount = document.getElementById("couponAmount").value;
+  let couponType = document.getElementById("couponType").value;
+  let couponMinAmount = document.getElementById("couponMinAmount").value;
+  let couponMaxAmount = document.getElementById("couponMaxAmount").value;
+  let couponExpiryDate = document.getElementById("couponExpiryDate").value;
+  let couponStatus = document.getElementById("couponStatus").value;
+  let couponDescription = document.getElementById("couponDescription").value;
+  let couponId = document.getElementById("couponId").value;
+  let couponData = {
+    couponCode: couponCode,
+    couponAmount: couponAmount,
+    couponType: couponType,
+    couponMinAmount: couponMinAmount,
+    couponMaxAmount: couponMaxAmount,
+    couponExpiryDate: couponExpiryDate,
+    couponStatus: couponStatus,
+    couponDescription: couponDescription,
+    couponId: couponId
+  }
+  console.log(couponData);
+  $.ajax({
+    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",
+    type: "post",
+    data: couponData,
+    success: function (response) {
+      console.log(
+        "https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",
+        response
+      );
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+    },
+  });
+}

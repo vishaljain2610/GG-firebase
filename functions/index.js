@@ -366,16 +366,22 @@ exports.getDiscountCoupon = functions.https.onRequest((request, response) => {
 });
 
 
-exports.getCoupon = functions.https.onRequest((request, response) => {
+exports.getActiveCoupon = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    const code = request.body.code;
+    // const code = request.body.code;
     admin
       .firestore()
       .collection("Discount Coupon")
-      .doc(code)
+      // .doc(code)
+      .where("isActive","==","true")
       .get()
-      .then((doc) => {
-        response.json(doc.data());
+      .then((querySnapshot) => {
+        const packages = [];
+        querySnapshot.forEach((doc) => {
+          const package = doc.data();
+          packages.push(package);
+        });
+        response.json(packages);
       })
       .catch((error) => {
         response.status(500).json({
@@ -477,45 +483,37 @@ exports.applyCoupon = functions.https.onRequest((request, response) => {
       .firestore()
       .collection("Discount Coupon")
       .where("code", "==", code)
-      .get()
-      .then((doc) => {
-        const coupon = doc.data();
-        response.json(coupon)
-
-          if (coupon) {
-            if (coupon.isActive == "true") {
-              if (coupon.selected_coupon_type == "Percentage") {
-                const discount = (coupon.amount * amount) / 100;
-                const total = amount - discount;
-                response.json({
-                  code: code,
-                  discount: discount,
-                  total: total,
-                });
-              } else {
-                const discount = coupon.amount;
-                const total = amount - discount;
-                response.json({
-                  code : code,
-                  discount: discount,
-                  total: total,
-                });
-              }
+      .onSnapshot((querySnapshot) => {
+        const coupon = querySnapshot.docs[0].data()
+        if (coupon) {
+          if (coupon.isActive == "true") {
+            if (coupon.selected_coupon_type == "Percentage") {
+              const discount = (coupon.amount * amount) / 100;
+              const total = amount - discount;
+              response.json({
+                code: code,
+                discount: discount,
+                total: total,
+              });
             } else {
-              response.status(500).json({
-                error: "Coupon is not active",
+              const discount = coupon.amount;
+              const total = amount - discount;
+              response.json({
+                code : code,
+                discount: discount,
+                total: total,
               });
             }
           } else {
             response.status(500).json({
-              error: "Coupon not found",
+              error: "Coupon is not active",
             });
           }
-        })
-        .catch((error) => {
+        } else {
           response.status(500).json({
-            error: error.code,
+            error: "Coupon not found",
           });
+        }
       });
   });
 });
