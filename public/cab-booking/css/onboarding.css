@@ -598,7 +598,7 @@ body {
     padding-left: 2rem;
 }
 .container-2{
-    padding-left: 5rem;
+    padding-left: 2rem;
 }
 .date{
     color: gray;
@@ -635,7 +635,7 @@ body {
     margin-left: 20px;
 }
 .container001{
-    margin-left: 25px;
+    margin-left: 16px;
 }
 .container0001{
     margin-left: 25px;
@@ -752,8 +752,10 @@ body {
     height: 3vh;
 }
 .time{
-    margin-left: 45%;
+    /* margin-left: 45%; */
     padding-right: 10px;
+    color: gray;
+
 }
 .container2{
     background-color: white;
@@ -779,7 +781,7 @@ body {
 }
 .km{
     font-size: small;
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 .more{
     font-size: x-small;
@@ -788,7 +790,7 @@ body {
     margin-right: 15px;
 }
 .time1{
-    margin-left: 34%;
+    /* margin-left: 34%; */
     padding-right: 10px;
 }
 .ride{
@@ -1018,6 +1020,9 @@ font-weight: 700;
   }
   .coupon-body{
     background-color: #f5f4f4
+  }
+  #cost{
+    margin-left:3px
   }
   
    

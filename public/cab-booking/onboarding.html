@@ -27,14 +27,14 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
 
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+  <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 
   <script src="../cab-booking/js/index.js"></script>
   <script src="../cab-booking/js/cities.js"></script>
@@ -115,8 +115,10 @@
           <li class="list-group-item" onclick="station_selected('Balotra, Rajasthan')">Balotra, Rajasthan</li>
           <li class="list-group-item" onclick="station_selected('Nathudwara, Rajasthan')">Nathudwara, Rajasthan</li>
           <li class="list-group-item" onclick="station_selected('Ajmer, Rajasthan')">Ajmer, Rajasthan</li>
-          <li class="list-group-item" onclick="station_selected('Mahesana Junction, Gujarat')">Mahesana Junction, Gujarat</li>
-          <li class="list-group-item" onclick="station_selected('Palanpur Junction, Gujarat')">Palanpur Junction, Gujarat</li>
+          <li class="list-group-item" onclick="station_selected('Mahesana Junction, Gujarat')">Mahesana Junction,
+            Gujarat</li>
+          <li class="list-group-item" onclick="station_selected('Palanpur Junction, Gujarat')">Palanpur Junction,
+            Gujarat</li>
           <li class="list-group-item" onclick="station_selected('Sojat Road, Rajasthan')">Sojat Road, Rajasthan</li>
           <li class="list-group-item" onclick="station_selected('Beawar, Rajasthan')">Beawar, Rajasthan</li>
           <li class="list-group-item" onclick="station_selected('Mavli, Rajasthan')">Mavli, Rajasthan</li>
@@ -409,13 +411,15 @@
 
         <div class="modal-body">
           <ul class="list-group list-group-flush">
-            <li id="menuitem_home" class="list-group-item user-menu-items" ><a href="../cab-booking/index.html">Home</a></li>
+            <li id="menuitem_home" class="list-group-item user-menu-items"><a href="../cab-booking/index.html">Home</a>
+            </li>
             <!-- <li id="menuitem_partnerguide" class="list-group-item">Partner Guide</li>
             <li id="menuitem_faqs" class="list-group-item">F.A.Q.s</li>
             <li id="menuitem_contactus" class="list-group-item">Contact Us</li>
             <li id="menuitem_tnc" class="list-group-item">Terms & Conditions</li> -->
-            <li id="menuitem_myBookings" class="list-group-item user-menu-items" onclick="mybookings_open()">My Bookings</a></li>
-            
+            <li id="menuitem_myBookings" class="list-group-item user-menu-items" onclick="mybookings_open()">My
+              Bookings</a></li>
+
           </ul>
         </div>
       </div>
@@ -532,13 +536,14 @@
 
           <div>
             <div style="display:flex;flex-direction:row;align-items: baseline;justify-content: space-between;">
-            <div style="margin-top:25px;margin-bottom: 2px;font-size:large;color: darkgray;">
-              कूपन लगाइये / Apply Coupon </div>
-            <div style="color: black;
+              <div style="margin-top:25px;margin-bottom: 2px;font-size:large;color: darkgray;">
+                कूपन लगाइये / Apply Coupon </div>
+              <div style="color: black;
             font-size: small;
             overflow-wrap: break-word;
-            text-decoration: underline;" data-toggle="modal" data-target="#couponOffers" onclick="couponOffers()" >View Offers</div>
-            </div> 
+            text-decoration: underline;" data-toggle="modal" data-target="#couponOffers" onclick="couponOffers()">View
+                Offers</div>
+            </div>
             <div class="input-group">
               <input type="text" id="couponCode" class="form-control" placeholder="Coupon Code"
                 aria-label="Amount (to the nearest dollar)">
@@ -570,7 +575,7 @@
                 <div>Total Fare Amount</div>
                 <div id="breakup_pd_payable_fare">₹ 0.00</div>
               </li>
-              <li class="list-group-item" >
+              <li class="list-group-item">
                 <div>Booking Amount</div>
                 <div id="breakup_booking_payable_amount" style="font-weight:bold">₹ 0.00</div>
               </li>
@@ -598,9 +603,8 @@
       </div>
     </div>
   </div>
-  
-  <div class="modal bs-example-modal-lg" id="login_modal" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel">
+
+  <div class="modal bs-example-modal-lg" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document" style="margin: 0px!important;" id="plan_summary_modal_holder">
       <div class="modal-content" style="background-color: #f0f0f0!important;height: 85vh;margin-top: 15vh;">
 
@@ -617,55 +621,65 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">+91</span>
                 </div>
-                <input name="number" type="number" class="form-control" style="padding: 25px;" id="login_mobile_number_input" aria-describedby="emailHelp" placeholder="Enter 10 Digit Number">
+                <input name="number" type="number" class="form-control" style="padding: 25px;"
+                  id="login_mobile_number_input" aria-describedby="emailHelp" placeholder="Enter 10 Digit Number">
               </div>
-              
-              <small id="emailHelp" style="display: none;"  class="form-text text-muted">We'll never share your details with anyone else.</small>
+
+              <small id="emailHelp" style="display: none;" class="form-text text-muted">We'll never share your details
+                with anyone else.</small>
             </div>
 
 
             <div class="form-group register_variable" id="name_layout">
-              <label for="exampleInputEmail1" >Name / नाम* </label>
+              <label for="exampleInputEmail1">Name / नाम* </label>
               <div class="input-group mb-3">
-                <input name="name" type="text" class="form-control" style="padding: 25px;" id="login_name" aria-describedby="emailHelp" placeholder="FullName / अपना  नाम लिखिए ">
+                <input name="name" type="text" class="form-control" style="padding: 25px;" id="login_name"
+                  aria-describedby="emailHelp" placeholder="FullName / अपना  नाम लिखिए ">
               </div>
-              <small id="emailHelp" style="display: none;"  class="form-text text-muted">We'll never share your details with anyone else.</small>
+              <small id="emailHelp" style="display: none;" class="form-text text-muted">We'll never share your details
+                with anyone else.</small>
             </div>
 
 
             <div class="form-group" id="city_layout" style="display: none;">
               <label for="exampleInputEmail1">City / शहर </label>
               <div class="input-group mb-3">
-                <select title="Select City / शहर " class="selectpicker" data-live-search="true" id="register_city_select" disabled>
-                 
-                  
-                </select>  
+                <select title="Select City / शहर " class="selectpicker" data-live-search="true"
+                  id="register_city_select" disabled>
+
+
+                </select>
               </div>
-              
+
             </div>
 
             <div class="form-group register_variable" id="email_layout">
-              <label for="exampleInputEmail1" >Email / ईमेल </label>
+              <label for="exampleInputEmail1">Email / ईमेल </label>
               <div class="input-group mb-3">
-                <input name="email" autocomplete="on" type="email" class="form-control" style="padding: 25px;" id="login_email_input" aria-describedby="emailHelp" placeholder="Email / अपना ईमेल लिखिए ">
+                <input name="email" autocomplete="on" type="email" class="form-control" style="padding: 25px;"
+                  id="login_email_input" aria-describedby="emailHelp" placeholder="Email / अपना ईमेल लिखिए ">
               </div>
-              <small id="emailHelp" style="display: none;"  class="form-text text-muted">We'll never share your details with anyone else.</small>
+              <small id="emailHelp" style="display: none;" class="form-text text-muted">We'll never share your details
+                with anyone else.</small>
             </div>
 
             <div class="form-group register_variable" id="email_layout">
-              <label for="exampleInputEmail1" >Pincode / पिनकोड*  </label>
+              <label for="exampleInputEmail1">Pincode / पिनकोड* </label>
               <div class="input-group mb-3">
-                <input name="pincode" autocomplete="on" type="number" class="form-control" style="padding: 25px;" id="login_email_input" aria-describedby="emailHelp" placeholder="Pincode / अपना पिनकोड लिखिए ">
+                <input name="pincode" autocomplete="on" type="number" class="form-control" style="padding: 25px;"
+                  id="login_email_input" aria-describedby="emailHelp" placeholder="Pincode / अपना पिनकोड लिखिए ">
               </div>
-              <small id="emailHelp" style="display: none;"  class="form-text text-muted">We'll never share your details with anyone else.</small>
+              <small id="emailHelp" style="display: none;" class="form-text text-muted">We'll never share your details
+                with anyone else.</small>
             </div>
 
             <div class="form-group" style="display: none;" id="region_layout">
-              <label for="exampleInputEmail1" >Area / एरिया*  </label>
+              <label for="exampleInputEmail1">Area / एरिया* </label>
               <div class="input-group mb-3">
-                <input name="area" type="text" class="form-control" style="padding: 25px;" id="area_view"  disabled>
+                <input name="area" type="text" class="form-control" style="padding: 25px;" id="area_view" disabled>
               </div>
-              <small id="emailHelp" style="display: none;"  class="form-text text-muted">We'll never share your details with anyone else.</small>
+              <small id="emailHelp" style="display: none;" class="form-text text-muted">We'll never share your details
+                with anyone else.</small>
             </div>
 
 
@@ -675,9 +689,11 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">OTP</span>
                 </div>
-                <input type="number" class="form-control" style="padding: 25px;" id="login_otp_input" aria-describedby="emailHelp" placeholder="Enter OTP sent to Phone">
+                <input type="number" class="form-control" style="padding: 25px;" id="login_otp_input"
+                  aria-describedby="emailHelp" placeholder="Enter OTP sent to Phone">
               </div>
-              <small id="emailHelp" style="display: none;"  class="form-text text-muted">We'll never share your details with anyone else.</small>
+              <small id="emailHelp" style="display: none;" class="form-text text-muted">We'll never share your details
+                with anyone else.</small>
             </div>
           </form>
           <div id="seperator"></div>
@@ -685,8 +701,8 @@
           <div style="text-align: center!important;color: gray;font-size: smaller;">
             I agree to the <a href="">T&C</a> by clicking on button.
           </div>
-          <button type="button" onclick="login_now()" style="margin-top: 10px;"
-            id="login_page_action_button" class="btn btn-default summary_page_action_button_active">SEND OTP
+          <button type="button" onclick="login_now()" style="margin-top: 10px;" id="login_page_action_button"
+            class="btn btn-default summary_page_action_button_active">SEND OTP
           </button>
 
 
@@ -699,12 +715,12 @@
   </div>
 
   <div class="modal fade" id="list_view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" style="font-size: 1.5rem!important;padding: 10px;" id="list_view_modal_title"></h5>
-          
+
         </div>
 
         <div class="modal-body">
@@ -715,18 +731,18 @@
     </div>
   </div>
 
-<div class="div" id="mybookings" style="display: none;">
-      <div id="header">
-        <div id="backmenu">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-        <div id="logo_holder">
-          <img class="img-fluid" src="../cab-booking/assets/sports-car.svg">
-          <div id="brandname">Gadigoda.com</div>
-        </div>
-        <div id="menu">
-          <i onclick="call_main_menu()" class="fas fa-bars"></i>
-        </div>
+  <div class="div" id="mybookings" style="display: none;">
+    <div id="header">
+      <div id="backmenu">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+      <div id="logo_holder">
+        <img class="img-fluid" src="../cab-booking/assets/sports-car.svg">
+        <div id="brandname">Gadigoda.com</div>
+      </div>
+      <div id="menu">
+        <i onclick="call_main_menu()" class="fas fa-bars"></i>
+      </div>
     </div>
     <div class="booking"><b>My Bookings</b></div>
     <div class="rides"><b>Upcoming Rides -</b></div>
@@ -792,61 +808,66 @@
     </div>  
     <div class="more"><a href="#">View More ></a></div>
     </div> -->
-</div>
-<div class="booking_successfully_completed" id="booking_successfully_completed" style="display: none; background-color: #EFCD02;">
-  <img class="img_tick" src="../cab-booking/assets/tick.png">
-  <div id="booking_completed" style="white-space:pre-wrap"><br>Booking Completed Successfully<br>You will be alloted a Driver shortly</b></div>
-  <div class="container">
-    <div class="container1">
-      <div class="container-1">
-        <div class="date" id="date"><b>Date</b></div>
-        <div class="day" id="day"><b></b></div>
-        <br>
-        <div class="time" id="time"><b>Time</b></div>
-        <div class="pm" id="pm"><b></b></div>
-      </div>  
-      <div class="container-2">
-        <div class="pick" id="pick"><b>Pickup From</b></div>
-        <div class="station" id="station"><b></b></div>
-        <br>
-        <div class="received" id="received" style="white-space:pre-wrap"><b>Advance Received</b></div>
-        <div class="amt" id="amt"><b></b></div>
+  </div>
+  <div class="booking_successfully_completed" id="booking_successfully_completed"
+    style="display: none; background-color: #EFCD02;">
+    <img class="img_tick" src="../cab-booking/assets/tick.png">
+    <div id="booking_completed" style="white-space:pre-wrap"><br>Booking Completed Successfully<br>You will be alloted a Driver shortly</b></div>
+    <div class="container">
+      <div class="container1">
+        <div class="container-1">
+          <div class="date" id="date"><b>Date</b></div>
+          <div class="day" id="day"><b></b></div>
+          <br>
+          <div class="time" id="time"><b>Time</b></div>
+          <div class="pm" id="pm"><b></b></div>
+        </div>
+        <div class="container-2">
+          <div class="pick" id="pick"><b>Pickup From</b></div>
+          <div class="station" id="station"><b></b></div>
+          <br>
+          <div class="received" id="received" style="white-space:pre-wrap"><b>Advance Received</b></div>
+          <div class="amt" id="amt"><b></b></div>
+        </div>
       </div>
-    </div> 
-    <img class="line" src="../cab-booking/assets/Line.png"> 
-    <div class="plan" id="#planned"><b></b></div>  
-    <div class="container01">
-      <img class="img_car" id="booked_car">
-      <div class="container_1">
+      <img class="line" src="../cab-booking/assets/Line.png">
+      <div class="plan" id="#planned"><b></b></div>
+      <div class="container01">
+        <img class="img_car" id="booked_car">
+        <div class="container_1">
           <div class="container001">
-              <div class="seat" id="seat"><b></b></div>
-              <div class="km" id="km" style="white-space:pre-wrap"></div>
+            <div class="seat" id="seat"><b></b></div>
+            <div class="km" id="km" style="white-space:pre-wrap"></div>
           </div>
           <div class="container0001">
-              <div class="price" id="price"><b>Price</b></div>
+            <div class="price" id="price"><b>Price</b></div>
+            <div style="display:flex;flex-direction:row">
+              <div>₹ </div>
               <div class="cost" id="cost"><b></b></div>
+            </div>
           </div>
-      </div> 
-    </div>
-    <img class="line" src="../cab-booking/assets/Line.png"> 
-    <button class="done" onclick="mybookings_open()"><b>Done</b></button>
-  </div>
-</div>
-
-<!-- //modal for coupons view offers section -->
-<div class="modal fade" id="couponOffers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Offers</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        </div>
       </div>
-      <div class="modal-body coupon-body">
-        <div class="coupon-container" id="couponHolder" style="display:flex;flex-direction:column;">
-          
-          <!-- <div class="card-coupon">
+      <img class="line" src="../cab-booking/assets/Line.png">
+      <button class="done" onclick="mybookings_open()"><b>Done</b></button>
+    </div>
+  </div>
+
+  <!-- //modal for coupons view offers section -->
+  <div class="modal fade" id="couponOffers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Offers</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body coupon-body">
+          <div class="coupon-container" id="couponHolder" style="display:flex;flex-direction:column;">
+
+            <!-- <div class="card-coupon">
             <div class="main">
               <div class="co-img">
                 <img
@@ -867,15 +888,15 @@
               <button onclick="copyIt()" class="copybtn">COPY</button>
             </div>
           </div> -->
-          
+
+          </div>
         </div>
+
       </div>
-       
     </div>
   </div>
-</div>
   <script>
-    
+
     var element = document.getElementById("summary_holder");
     element.addEventListener('scroll', function (event) {
       var element = event.target;
