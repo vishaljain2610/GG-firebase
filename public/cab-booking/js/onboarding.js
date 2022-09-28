@@ -176,6 +176,7 @@ function scroll_to_fair_price_modalview() {
 }
 
 function populate_rides(data_resp, booked_data) {
+  console.log(data_resp)
   for (var i = 0; i < data_resp.length; i++) {
     $("#populate_rides").append(
       '<div class="container5">' +
@@ -373,7 +374,7 @@ function populate_rides(data_resp, booked_data) {
         '<li class="list-group-item">' +
         "<div>Total Fare Amount</div>" +
         '<div id="breakup_pd_payable_fare">₹ ' +
-        data_resp[i].selected_plan.selected_vehicle_plan.payable_post_discount +
+        data_resp[i].total_amount +
         "</div>" +
         "</li>" +
         '<li class="list-group-item">' +
@@ -396,6 +397,7 @@ function populate_rides(data_resp, booked_data) {
     if (booked_data[i].status == "Booked") {
       // console.log(booked_data);
       console.log("if is true");
+      console.log(booked_data)
       $("#populate_rides_booked").append(
         '<div class="container5">' +
           ' <div class="time">Booked Rides-Driver Yet To Be Alloted ' +
@@ -558,8 +560,7 @@ function populate_rides(data_resp, booked_data) {
           '<li class="list-group-item">' +
           "<div>Total Fare Amount</div>" +
           '<div id="breakup_pd_payable_fare">₹ ' +
-          booked_data[i].selected_plan.selected_vehicle_plan
-            .payable_post_discount +
+          booked_data[i].total_amount +
           "</div>" +
           "</li>" +
           '<li class="list-group-item">' +
@@ -1231,7 +1232,7 @@ function summary_page_action() {
   }
 }
 
-var user = { loggedIn: true};
+var user = { loggedIn: false};
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
