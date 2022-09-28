@@ -735,7 +735,7 @@ function populate_time_list() {
 
     minutenToAdd = minutenToAdd * MIN_IN_MS;
     var next_30min_rounded_hour = moment(jetzt + minutenToAdd);
-    next_30min_rounded_hour = next_30min_rounded_hour.add(2, "hours");
+    next_30min_rounded_hour = next_30min_rounded_hour.add(6, "hours");
 
     if (next_30min_rounded_hour.isSame(moment(), "day")) {
       while (next_30min_rounded_hour.isSame(moment(), "day")) {
