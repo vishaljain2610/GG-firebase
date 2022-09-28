@@ -295,7 +295,10 @@ body {
     font-size: x-large;
 }
 
-
+.display_packages{
+    padding: 12%;
+    text-align: center;
+}
 #content_holder {
     min-height: 60vh;
 }
@@ -324,14 +327,22 @@ body {
 }
 
 #support_layout {
+    background-color: #000000;
     color: white;
     line-height: 1;
-    width: 100vw;
-    padding-top: 13px;
+    /* width: 100vw; */
+    padding: 13px;
     text-align: center;
-    font-size: large;
-}
+    font-size: medium;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 
+}
+.watsapp {
+    font-size: small;
+}
 #support_layout i {
     font-size: larger;
 }
@@ -354,7 +365,6 @@ body {
     width: 45vw;
     background: black;
 }
-
 
 #footer #rhs {
     height: 48vh;
@@ -468,7 +478,6 @@ body {
 .plan-header {
     width: max-content;
     text-align: center;
-    margin-top: 20px;
     margin-bottom: 0px;
     padding-bottom: 2px;
     font-weight: bold;

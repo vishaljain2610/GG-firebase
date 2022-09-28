@@ -860,19 +860,29 @@ function load_packages() {
           if (package.special_package == "true") {
           } else {
             var li =
+              // '<li name="' +
+              // i +
+              // '" id="' +
+              // package.id +
+              // '" class="list-group-item" style="text-align: center;padding-left: 30px;padding-right: 30px;">' +
+              // '<p class="plan-header">' +
+              // package.alloted_time +
+              // " " +
+              // package.alloted_time_unit +
+              // "</p>" +
+              // "<p>" +
+              // package.alloted_kms +
+              // "Kms</p>" +
+              // "</li>";
+              
               '<li name="' +
               i +
               '" id="' +
               package.id +
-              '" class="list-group-item" style="text-align: center;padding-left: 30px;padding-right: 30px;">' +
+              '" class="list-group-item display_packages" style="text-align: center;padding-left: 30px;padding-right: 30px;">' +
               '<p class="plan-header">' +
-              package.alloted_time +
-              " " +
-              package.alloted_time_unit +
+              package.name +
               "</p>" +
-              "<p>" +
-              package.alloted_kms +
-              "Kms</p>" +
               "</li>";
 
             //console.log(li)
