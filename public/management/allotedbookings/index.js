@@ -1,9 +1,17 @@
+//disabling datatable warning alerts and using console instead of it 
+$.fn.dataTable.ext.errMode = 'none';
+$('#table').on( 'error.dt', function ( e, settings, techNote, message ) {
+  console.log( 'An error has been reported by DataTables: ', message );
+  } ) ;
+
 $(document).ready(function () {
+    $("#loader_layout").modal();
     $.ajax({
         url : 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData',
         type : 'POST',
         dataType : 'json',
         success : function(data) {
+            $("#loader_layout").modal("hide");
             assignToEventsColumns(data);
         }
     }); 

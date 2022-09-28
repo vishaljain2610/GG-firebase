@@ -5,13 +5,24 @@ var allotedData;
 var allotedData1;
 var selected;
 var new_data;
+
+//disabling datatable warning alerts and using console instead of it 
+$.fn.dataTable.ext.errMode = 'none';
+$('#table').on( 'error.dt', function ( e, settings, techNote, message ) {
+  console.log( 'An error has been reported by DataTables: ', message );
+  } ) ;
+
 $(document).ready(function () {
+
+  $("#loader_layout").modal();
   $.ajax({
     url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings',
     type: 'POST',
     dataType: 'json',
     success: function (data) {
+      $("#loader_layout").modal("hide");
       assignToEventsColumns(data);
+      
     }
   });
 
@@ -131,6 +142,7 @@ function update_partner_table() {
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+      
     }
   });
 }
@@ -195,7 +207,7 @@ function assignToEventsColumns_partners(data) {
       }
     });
     console.log(allotedData);
-    alert(allotedData.status)
+    // alert(allotedData.status)
     console.log(allotedData);
     alert("this will allot booking to a partner");
     $.ajax({
