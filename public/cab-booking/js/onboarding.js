@@ -14,6 +14,7 @@ var usernumber = {};
 var booked_data;
 
 $(document).ready(function () {
+  $("#loader_layout").modal("show");
   $("#menuitem_myBookings").click(function () {
     alert("haa kiya click");
     $("#new_account_layout").fadeOut("slow");
