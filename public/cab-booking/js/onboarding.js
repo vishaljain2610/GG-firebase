@@ -12,15 +12,33 @@ var payable_total_amount;
 var base_amt;
 var usernumber = {};
 var booked_data;
+var vehicles_received;
+var user = { loggedIn: false };
+var booking = {};
+var booking_date_set = [];
+var booking_date_object_set = [];
+var booking_time_set = [];
+var booking_time_set_display = [];
+booking.station_is = "Pickup";
+var otp_sent = false;
+var register_activated = false;
+var login_cities_populated = false;
+var userData;
 
 $(document).ready(function () {
-  $("#loader_layout").modal("show");
+  userData = JSON.parse(localStorage.getItem("user"));
+  console.log(userData);
+  if (userData != null) {
+    user = { loggedIn: true };
+    console.log(user);
+  }
   $("#menuitem_myBookings").click(function () {
-    alert("haa kiya click");
+    $(".unallotedmodals").modal("hide");
+    $("#cabBookingViewMoreAllotedModal").modal("hide");
+    $("#couponOffers").modal("hide");
     $("#new_account_layout").fadeOut("slow");
     $("#account_details_layout").fadeOut("slow");
     $("#main_menu").fadeOut("slow");
-    ("slow");
     $("#time_selection_list_layout").fadeOut();
     $("#account_type_layout").fadeOut();
     $("#car_details_layout").fadeOut();
@@ -30,7 +48,6 @@ $(document).ready(function () {
     $(".modal-backdrop").fadeOut();
     $(".fade").fadeOut();
     $(".show").fadeOut();
-
     $("#booking_summary").fadeOut();
     $("#plan_summary_modal").fadeOut();
     $("#footer").fadeOut();
@@ -44,14 +61,10 @@ $(document).ready(function () {
   });
 });
 
-$(".unallotedmodals").modal("hide"); //hides all the unalloted modals at 1st
-$("#cabBookingViewMoreAllotedModal").modal("hide");
-$("#couponOffers").modal("hide");
-
-function couponOffers(){
+function couponOffers() {
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
-    method: "POST", //First change type to method here
+    method: "POST",
     success: function (response) {
       console.log(
         "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
@@ -59,7 +72,7 @@ function couponOffers(){
       );
       received_coupons = response;
       populateCoupons(received_coupons)
-       
+
     },
     error: function () {
       $("#loader_layout").modal("hide");
@@ -70,72 +83,67 @@ function couponOffers(){
 
 function populateCoupons(received_coupons) {
   for (var i = 0; i < received_coupons.length; i++) {
-    if(received_coupons[i].isActive== "true"){
-      if(received_coupons[i].selected_coupon_type=="Percentage"){
-    $("#couponHolder").append(
-     ' <div class="card-coupon">'+
-            '<div class="main">'+
-              '<div class="co-img">'+
-                '<img src="../cab-booking/assets/sports-car.png"'+'alt="logo"'+'/>'+
-              '</div>'+
-              '<div class="vertical"></div>'+
-              '<div class="card-content">'+
-                '<h1>'+received_coupons[i].amount+'% <span>Off Coupon</span></h1>'+
-                '<p>'+received_coupons[i].description+'</p>'+
-                '<p>Valid till '+received_coupons[i].validity_date+' , '+received_coupons[i].validity_time+'</p>'+  
-              '</div>'+
-            '</div>'+
-           ' <div class="copy-button">'+
-              '<input id="copyvalue'+i+'" type="text" readonly value="'+received_coupons[i].code+'" />'+
-              '<button onclick="copyIt('+i+')" id="copybtn'+i+'" >COPY</button>'+
-            '</div>'+
+    if (received_coupons[i].isActive == "true") {
+      if (received_coupons[i].selected_coupon_type == "Percentage") {
+        $("#couponHolder").append(
+          ' <div class="card-coupon">' +
+          '<div class="main">' +
+          '<div class="co-img">' +
+          '<img src="../cab-booking/assets/sports-car.png"' + 'alt="logo"' + '/>' +
+          '</div>' +
+          '<div class="vertical"></div>' +
+          '<div class="card-content">' +
+          '<h1>' + received_coupons[i].amount + '% <span>Off Coupon</span></h1>' +
+          '<p>' + received_coupons[i].description + '</p>' +
+          '<p>Valid till ' + received_coupons[i].validity_date + ' , ' + received_coupons[i].validity_time + '</p>' +
+          '</div>' +
+          '</div>' +
+          ' <div class="copy-button">' +
+          '<input id="copyvalue' + i + '" type="text" readonly value="' + received_coupons[i].code + '" />' +
+          '<button onclick="copyIt(' + i + ')" id="copybtn' + i + '" >COPY</button>' +
+          '</div>' +
           '</div>'
-          );
+        );
+      }
+      else if (received_coupons[i].selected_coupon_type == "Price") {
+        $("#couponHolder").append(
+          ' <div class="card-coupon">' +
+          '<div class="main">' +
+          '<div class="co-img">' +
+          '<img src="../cab-booking/assets/sports-car.png"' + 'alt="logo"' + '/>' +
+          '</div>' +
+          '<div class="vertical"></div>' +
+          '<div class="card-content">' +
+          '<h1>' + '₹' + received_coupons[i].amount + ' <span>Off Coupon</span></h1>' +
+          '<p>' + received_coupons[i].description + '</p>' +
+          '<p>Valid till ' + received_coupons[i].validity_date + ' , ' + received_coupons[i].validity_time + '</p>' +
+          '</div>' +
+          '</div>' +
+          ' <div class="copy-button">' +
+          '<input id="copyvalue' + i + '" type="text" readonly value="' + received_coupons[i].code + '" />' +
+          '<button onclick="copyIt(' + i + ')" id="copybtn' + i + '" >COPY</button>' +
+          '</div>' +
+          '</div>'
+        );
+      }
     }
-    else if(received_coupons[i].selected_coupon_type=="Price"){
-      $("#couponHolder").append(
-        ' <div class="card-coupon">'+
-               '<div class="main">'+
-                 '<div class="co-img">'+
-                   '<img src="../cab-booking/assets/sports-car.png"'+'alt="logo"'+'/>'+
-                 '</div>'+
-                 '<div class="vertical"></div>'+
-                 '<div class="card-content">'+
-                   '<h1>'+'₹'+received_coupons[i].amount+' <span>Off Coupon</span></h1>'+
-                   '<p>'+received_coupons[i].description+'</p>'+
-                   '<p>Valid till '+received_coupons[i].validity_date+' , '+received_coupons[i].validity_time+'</p>'+  
-                 '</div>'+
-               '</div>'+
-              ' <div class="copy-button">'+
-                 '<input id="copyvalue'+i+'" type="text" readonly value="'+received_coupons[i].code+'" />'+
-                 '<button onclick="copyIt('+i+')" id="copybtn'+i+'" >COPY</button>'+
-               '</div>'+
-             '</div>'
-             );
-    }
-}
-}
+  }
 }
 
-function getLoggedInUserNumber(){
-  var usernumber = JSON.parse(localStorage.getItem("loggedInUserNumber"));
-  console.log(usernumber.phoneNumber);
-  return usernumber.phoneNumber;
+function getLoggedInUserData() {
+  console.log(userData);
+  return userData.number;
 }
+
 function mybookings_open() {
-  console.log("in function");
-  
-  usernumber.number = getLoggedInUserNumber();
-  // usernumber.number="8691860197";
+  usernumber.number = getLoggedInUserData();
+  console.log(usernumber);
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
     type: "post",
     data: usernumber,
     success: function (response) {
-      console.log(
-        "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
-        response
-      );
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber", response);
       $("#booking_successfully_completed").fadeOut("slow");
       $("#mybookings").fadeIn("slow");
       $.ajax({
@@ -143,10 +151,7 @@ function mybookings_open() {
         type: "POST",
         data: usernumber,
         success: function (data) {
-          console.log(
-            "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
-            data
-          );
+          console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",data);
           booked_data = data;
           document.body.style.backgroundColor = "#f5f4f4";
           populate_rides(response, booked_data);
@@ -159,18 +164,18 @@ function mybookings_open() {
   });
 }
 
-//to show the modal of alloted drivers
 function viewMoreAllotedModal() {
   $("#cabBookingViewMoreAllotedModal").modal("show");
 }
+
 function viewMoreUnAllotedModal(i) {
   $("#cabBookingViewMoreUnAllotedModal" + i).modal("show");
 }
 
-//for scrolling to the fair price
 function closeModal() {
   $("#cabBookingViewMoreAllotedModal").modal("hide");
 }
+
 function scroll_to_fair_price_modalview() {
   const element = $("#cost_breakup_list");
   element.scrollIntoView();
@@ -181,40 +186,265 @@ function populate_rides(data_resp, booked_data) {
   for (var i = 0; i < data_resp.length; i++) {
     $("#populate_rides").append(
       '<div class="container5">' +
-        ' <div class="time">Driver Alloted ' +
-        '<img class="clock_img" src="../cab-booking/assets/tick.png">' +
+      ' <div class="time">Driver Alloted ' +
+      '<img class="clock_img" src="../cab-booking/assets/tick.png">' +
+      "</div></div>" +
+      '<div class="container2">' +
+      '<div class="container02">' +
+      '<div class="container2_1">' +
+      '<img class="car" src="../cab-booking/assets/' +
+      get_car_image(
+        data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle
+      ) +
+      '">' +
+      "</div>" +
+      '<div class="container2_2">' +
+      '<div class="route"><b>Pickup- ' +
+      data_resp[i].pickup +
+      "</b></div>" +
+      '<div class="date_time">' +
+      data_resp[i].pickup_date +
+      " | " +
+      data_resp[i].pickup_time +
+      "</div>" +
+      '<div class="km">' +
+      data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle +
+      ", put plan here</div>" +
+      " </div>" +
+      "</div>" +
+      //view more button
+      '<div class="more"><a href="#" onclick="viewMoreAllotedModal()" >View More ></a></div>' +
+      //View More MODAL
+      '<div class="modal" id="cabBookingViewMoreAllotedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
+      '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
+      '<div id="summary_holder" style="padding:30px;">' +
+      '<div class="modal-header">' +
+      "<span style='margin-left:0' ><h5><b>Allotment Details</b></h5></span>" +
+      "<span>" +
+      '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+      "</span>" +
+      '<span aria-hidden="true" onclick="closeModal()">&times;</span>' +
+      "</button>" +
+      "</div>" +
+      // '<div style="margin-bottom: 4vh;font-size: larger;font-weight: bold;">' +
+      // "Booking Details / बुकिंग डिटेल्स" +
+      // "</div>" +
+
+      //Car Block
+      '<div class="car-block" style="margin-top:1vh">' +
+      '<div id="summarypage_img">' +
+      '<img class="car" src="../cab-booking/assets/' +
+      get_car_image(
+        data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle
+      ) +
+      '">' +
+      "</div>" +
+      '<div class="" style="margin-left: 20px;">' +
+      '<div class="" style="padding-right: 15px;font-size: larger;font-weight: bold;" id="summary_seat_label">' +
+      data_resp[i].selected_plan.selected_vehicle_plan.no_of_seats +
+      " Seater" +
+      "</div>" +
+      ' <div class="car-sub-name" style="width:55vw!important;padding-right:20px!important;" id="summary_plan_overview">' +
+      data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle +
+      "," +
+      data_resp[i].selected_plan.name +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      //Driver Contact
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "चालक संपर्क / Driver Contact" +
+      "</div>" +
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body" id="driver-contact-card" style="padding:0">' +
+      '<div id="driver-details">' +
+      ' <div id="driverContact">' +
+      '<div id="driverName" class="blocks">' +
+      '<div class="driver-icon"><img src="../cab-booking/assets/driver_icon.png" alt="driver-icon"/></div>' +
+      '<div class="content-modal">' +
+      data_resp[i].car_Owner +
+      "</div>" +
+      "</div>" +
+      '<div id="driverPhoneNo" class="blocks">' +
+      '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon.png" alt="contact-icon"/></div>' +
+      '<div class="content-modal">' +
+      data_resp[i].contact_number +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      //Booking date time station and price
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body" style="padding:0" >' +
+      '<div id="booking-details">' +
+      '<div id="booking-Date-Time">' +
+      '<div id="bookingDate" class="blocks">' +
+      '<div class="title-modal">PickUp Date</div>' +
+      '<div class="content-modal">' +
+      data_resp[i].pickup_date +
+      "</div>" +
+      "</div>" +
+      '<div id="bookingTime" class="blocks">' +
+      '<div class="title-modal">PickUp Time</div>' +
+      '<div class="content-modal">' +
+      data_resp[i].pickup_time +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "<br>" +
+      '<div id="booking-PickUp-BasePrice">' +
+      '<div id="pickUp" class="blocks">' +
+      '<div class="title-modal">PickUp Station</div>' +
+      '<div class="content-modal" style="overflow-wrap: break-word">' +
+      data_resp[i].pickup +
+      "</div>" +
+      "</div>" +
+      '<div id="basePrice" class="blocks">' +
+      '<div class="title-modal">Base Fare</div>' +
+      '<div class="content-modal"> ₹ ' +
+      data_resp[i].total_amount +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      //Booking Plan Block
+      "<div>" +
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "बुकिंग प्लान / Booking Plan" +
+      "</div>" +
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body">' +
+      '<h5 class="card-title" id="summary_plan_name"><b>' +
+      data_resp[i].selected_plan.name +
+      "</b></h5>" +
+      '<p class="card-text" id="summary_plan_description">' +
+      data_resp[i].selected_plan.package_description +
+      "</p>" +
+      "</div>" +
+      '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
+      '<ul class="list-group list-group-flush" id="package_terms">' +
+      "</ul>" +
+      "</div>" +
+      '<div style="font-size: 1.3rem;">' +
+      "</div>" +
+      '<div style="font-size: medium;line-height: 1.1;color: #888888;">' +
+      "</div>" +
+      "</div>" +
+      "<div>" +
+      '<div id="seperator"></div>' +
+      //Vehicle Number Block
+      '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
+      "गाडी नंबर / Vehicle Number" +
+      "</div>" +
+      '<div class="card" style="margin-top: 5px;">' +
+      '<div class="card-body">' +
+      '<div class="car-number" style="font-weight:bolder;text-align:center"><h5>' +
+      data_resp[i].vehicle_number +
+      "</h5></div>" +
+      "</div>" +
+      "</div>" +
+      '<div id="seperator"></div>' +
+      //Fair BreakUp
+      '<div style="margin-bottom: 0px;font-size: large;color: darkgray;margin-top:25px;">' +
+      "किराया ब्रेकअप / Fare Breakup" +
+      "</div>" +
+      '<ul class="list-group list-group-flush" id="cost_breakup_list">' +
+      '<li class="list-group-item">' +
+      "<div>Base Fare</div>" +
+      '<div id="breakup_base_fare">₹ ' +
+      data_resp[i].selected_plan.selected_vehicle_plan.base_amount +
+      "</div>" +
+      "</li>" +
+      '<li class="list-group-item" id="discount_li">' +
+      "<div>Discount</div>" +
+      '<div id="breakup_discount">' +
+      "₹ " +
+      data_resp[i].selected_plan.selected_vehicle_plan.discount +
+      "</div>" +
+      "</li>" +
+      '<li class="list-group-item">' +
+      "<div>Allowance</div>" +
+      '<div id="breakup_allowance">₹ ' +
+      data_resp[i].selected_plan.selected_vehicle_plan.allowance_amount +
+      "</div>" +
+      "</li>" +
+      '<li class="list-group-item">' +
+      "<div>Total Fare Amount</div>" +
+      '<div id="breakup_pd_payable_fare">₹ ' +
+      data_resp[i].total_amount +
+      "</div>" +
+      "</li>" +
+      '<li class="list-group-item">' +
+      "<div>Amount Paid</div>" +
+      '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ ' +
+      data_resp[i].selected_plan.selected_vehicle_plan
+        .payable_post_discount_booking_amount +
+      "</div>" +
+      "</li>" +
+      ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
+      "</li>" +
+      "</ul>" +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "</div> "
+    );
+  }
+  for (var i = 0; i < booked_data.length; i++) {
+    if (booked_data[i].status == "Booked") {
+      // console.log(booked_data);
+      console.log("if is true");
+      console.log(booked_data)
+      $("#populate_rides_booked").append(
+        '<div class="container5">' +
+        ' <div class="time">Booked Rides-Driver Yet To Be Alloted ' +
+        '<img class="clock_img" src="../cab-booking/assets/time.png">' +
         "</div></div>" +
         '<div class="container2">' +
         '<div class="container02">' +
         '<div class="container2_1">' +
         '<img class="car" src="../cab-booking/assets/' +
         get_car_image(
-          data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle
+          booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle
         ) +
         '">' +
         "</div>" +
         '<div class="container2_2">' +
         '<div class="route"><b>Pickup- ' +
-        data_resp[i].pickup +
+        booked_data[i].station +
         "</b></div>" +
         '<div class="date_time">' +
-        data_resp[i].pickup_date +
+        booked_data[i].pickup_date +
         " | " +
-        data_resp[i].pickup_time +
+        booked_data[i].pickup_time +
         "</div>" +
         '<div class="km">' +
-        data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle +
+        booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle +
         ", put plan here</div>" +
         " </div>" +
         "</div>" +
         //view more button
-        '<div class="more"><a href="#" onclick="viewMoreAllotedModal()" >View More ></a></div>' +
+        '<div class="more"><a href="#" onclick="viewMoreUnAllotedModal(' +
+        i +
+        ')" >View More ></a></div>' +
+        "</div>" +
         //View More MODAL
-        '<div class="modal" id="cabBookingViewMoreAllotedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
+        '<div class="modal unallotedmodals" id="cabBookingViewMoreUnAllotedModal' +
+        i +
+        '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
         '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
         '<div id="summary_holder" style="padding:30px;">' +
         '<div class="modal-header">' +
-        "<span style='margin-left:0' ><h5><b>Allotment Details</b></h5></span>" +
+        "<span style='margin-left:0' ><h5><b>Booking Details</b></h5></span>" +
         "<span>" +
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
         "</span>" +
@@ -230,46 +460,19 @@ function populate_rides(data_resp, booked_data) {
         '<div id="summarypage_img">' +
         '<img class="car" src="../cab-booking/assets/' +
         get_car_image(
-          data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle
+          booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle
         ) +
         '">' +
         "</div>" +
         '<div class="" style="margin-left: 20px;">' +
         '<div class="" style="padding-right: 15px;font-size: larger;font-weight: bold;" id="summary_seat_label">' +
-        data_resp[i].selected_plan.selected_vehicle_plan.no_of_seats +
+        booked_data[i].selected_plan.selected_vehicle_plan.no_of_seats +
         " Seater" +
         "</div>" +
         ' <div class="car-sub-name" style="width:55vw!important;padding-right:20px!important;" id="summary_plan_overview">' +
-        data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle +
+        booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle +
         "," +
-        data_resp[i].selected_plan.name +
-        "</div>" +
-        "</div>" +
-        "</div>" +
-        '<div id="seperator"></div>' +
-        //Driver Contact
-        "<div>" +
-        '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-        "चालक संपर्क / Driver Contact" +
-        "</div>" +
-        '<div class="card" style="margin-top: 5px;">' +
-        '<div class="card-body" id="driver-contact-card" style="padding:0">' +
-        '<div id="driver-details">' +
-        ' <div id="driverContact">' +
-        '<div id="driverName" class="blocks">' +
-        '<div class="driver-icon"><img src="../cab-booking/assets/driver_icon.png" alt="driver-icon"/></div>' +
-        '<div class="content-modal">' +
-        data_resp[i].car_Owner +
-        "</div>" +
-        "</div>" +
-        '<div id="driverPhoneNo" class="blocks">' +
-        '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon.png" alt="contact-icon"/></div>' +
-        '<div class="content-modal">' +
-        data_resp[i].contact_number +
-        "</div>" +
-        "</div>" +
-        "</div>" +
-        "</div>" +
+        booked_data[i].selected_plan.name +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -282,13 +485,13 @@ function populate_rides(data_resp, booked_data) {
         '<div id="bookingDate" class="blocks">' +
         '<div class="title-modal">PickUp Date</div>' +
         '<div class="content-modal">' +
-        data_resp[i].pickup_date +
+        booked_data[i].pickup_date +
         "</div>" +
         "</div>" +
         '<div id="bookingTime" class="blocks">' +
         '<div class="title-modal">PickUp Time</div>' +
         '<div class="content-modal">' +
-        data_resp[i].pickup_time +
+        booked_data[i].pickup_time +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -297,13 +500,13 @@ function populate_rides(data_resp, booked_data) {
         '<div id="pickUp" class="blocks">' +
         '<div class="title-modal">PickUp Station</div>' +
         '<div class="content-modal" style="overflow-wrap: break-word">' +
-        data_resp[i].pickup +
+        booked_data[i].station +
         "</div>" +
         "</div>" +
         '<div id="basePrice" class="blocks">' +
         '<div class="title-modal">Base Fare</div>' +
         '<div class="content-modal"> ₹ ' +
-        data_resp[i].total_amount +
+        booked_data[i].total_amount +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -319,10 +522,10 @@ function populate_rides(data_resp, booked_data) {
         '<div class="card" style="margin-top: 5px;">' +
         '<div class="card-body">' +
         '<h5 class="card-title" id="summary_plan_name"><b>' +
-        data_resp[i].selected_plan.name +
+        booked_data[i].selected_plan.name +
         "</b></h5>" +
         '<p class="card-text" id="summary_plan_description">' +
-        data_resp[i].selected_plan.package_description +
+        booked_data[i].selected_plan.package_description +
         "</p>" +
         "</div>" +
         '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
@@ -336,18 +539,6 @@ function populate_rides(data_resp, booked_data) {
         "</div>" +
         "<div>" +
         '<div id="seperator"></div>' +
-        //Vehicle Number Block
-        '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-        "गाडी नंबर / Vehicle Number" +
-        "</div>" +
-        '<div class="card" style="margin-top: 5px;">' +
-        '<div class="card-body">' +
-        '<div class="car-number" style="font-weight:bolder;text-align:center"><h5>' +
-        data_resp[i].vehicle_number +
-        "</h5></div>" +
-        "</div>" +
-        "</div>" +
-        '<div id="seperator"></div>' +
         //Fair BreakUp
         '<div style="margin-bottom: 0px;font-size: large;color: darkgray;margin-top:25px;">' +
         "किराया ब्रेकअप / Fare Breakup" +
@@ -356,32 +547,32 @@ function populate_rides(data_resp, booked_data) {
         '<li class="list-group-item">' +
         "<div>Base Fare</div>" +
         '<div id="breakup_base_fare">₹ ' +
-        data_resp[i].selected_plan.selected_vehicle_plan.base_amount +
+        booked_data[i].selected_plan.selected_vehicle_plan.base_amount +
         "</div>" +
         "</li>" +
         '<li class="list-group-item" id="discount_li">' +
         "<div>Discount</div>" +
         '<div id="breakup_discount">' +
         "₹ " +
-        data_resp[i].selected_plan.selected_vehicle_plan.discount +
+        booked_data[i].selected_plan.selected_vehicle_plan.discount +
         "</div>" +
         "</li>" +
         '<li class="list-group-item">' +
         "<div>Allowance</div>" +
         '<div id="breakup_allowance">₹ ' +
-        data_resp[i].selected_plan.selected_vehicle_plan.allowance_amount +
+        booked_data[i].selected_plan.selected_vehicle_plan.allowance_amount +
         "</div>" +
         "</li>" +
         '<li class="list-group-item">' +
         "<div>Total Fare Amount</div>" +
         '<div id="breakup_pd_payable_fare">₹ ' +
-        data_resp[i].total_amount +
+        booked_data[i].total_amount +
         "</div>" +
         "</li>" +
         '<li class="list-group-item">' +
         "<div>Amount Paid</div>" +
         '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ ' +
-        data_resp[i].selected_plan.selected_vehicle_plan
+        booked_data[i].selected_plan.selected_vehicle_plan
           .payable_post_discount_booking_amount +
         "</div>" +
         "</li>" +
@@ -392,192 +583,6 @@ function populate_rides(data_resp, booked_data) {
         "</div>" +
         "</div>" +
         "</div> "
-    );
-  }
-  for (var i = 0; i < booked_data.length; i++) {
-    if (booked_data[i].status == "Booked") {
-      // console.log(booked_data);
-      console.log("if is true");
-      console.log(booked_data)
-      $("#populate_rides_booked").append(
-        '<div class="container5">' +
-          ' <div class="time">Booked Rides-Driver Yet To Be Alloted ' +
-          '<img class="clock_img" src="../cab-booking/assets/time.png">' +
-          "</div></div>" +
-          '<div class="container2">' +
-          '<div class="container02">' +
-          '<div class="container2_1">' +
-          '<img class="car" src="../cab-booking/assets/' +
-          get_car_image(
-            booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle
-          ) +
-          '">' +
-          "</div>" +
-          '<div class="container2_2">' +
-          '<div class="route"><b>Pickup- ' +
-          booked_data[i].station +
-          "</b></div>" +
-          '<div class="date_time">' +
-          booked_data[i].pickup_date +
-          " | " +
-          booked_data[i].pickup_time +
-          "</div>" +
-          '<div class="km">' +
-          booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle +
-          ", put plan here</div>" +
-          " </div>" +
-          "</div>" +
-          //view more button
-          '<div class="more"><a href="#" onclick="viewMoreUnAllotedModal(' +
-          i +
-          ')" >View More ></a></div>' +
-          "</div>" +
-          //View More MODAL
-          '<div class="modal unallotedmodals" id="cabBookingViewMoreUnAllotedModal' +
-          i +
-          '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
-          '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
-          '<div id="summary_holder" style="padding:30px;">' +
-          '<div class="modal-header">' +
-          "<span style='margin-left:0' ><h5><b>Booking Details</b></h5></span>" +
-          "<span>" +
-          '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
-          "</span>" +
-          '<span aria-hidden="true" onclick="closeModal()">&times;</span>' +
-          "</button>" +
-          "</div>" +
-          // '<div style="margin-bottom: 4vh;font-size: larger;font-weight: bold;">' +
-          // "Booking Details / बुकिंग डिटेल्स" +
-          // "</div>" +
-
-          //Car Block
-          '<div class="car-block" style="margin-top:1vh">' +
-          '<div id="summarypage_img">' +
-          '<img class="car" src="../cab-booking/assets/' +
-          get_car_image(
-            booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle
-          ) +
-          '">' +
-          "</div>" +
-          '<div class="" style="margin-left: 20px;">' +
-          '<div class="" style="padding-right: 15px;font-size: larger;font-weight: bold;" id="summary_seat_label">' +
-          booked_data[i].selected_plan.selected_vehicle_plan.no_of_seats +
-          " Seater" +
-          "</div>" +
-          ' <div class="car-sub-name" style="width:55vw!important;padding-right:20px!important;" id="summary_plan_overview">' +
-          booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle +
-          "," +
-          booked_data[i].selected_plan.name +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          '<div id="seperator"></div>' +
-          //Booking date time station and price
-          '<div class="card" style="margin-top: 5px;">' +
-          '<div class="card-body" style="padding:0" >' +
-          '<div id="booking-details">' +
-          '<div id="booking-Date-Time">' +
-          '<div id="bookingDate" class="blocks">' +
-          '<div class="title-modal">PickUp Date</div>' +
-          '<div class="content-modal">' +
-          booked_data[i].pickup_date +
-          "</div>" +
-          "</div>" +
-          '<div id="bookingTime" class="blocks">' +
-          '<div class="title-modal">PickUp Time</div>' +
-          '<div class="content-modal">' +
-          booked_data[i].pickup_time +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "<br>" +
-          '<div id="booking-PickUp-BasePrice">' +
-          '<div id="pickUp" class="blocks">' +
-          '<div class="title-modal">PickUp Station</div>' +
-          '<div class="content-modal" style="overflow-wrap: break-word">' +
-          booked_data[i].station +
-          "</div>" +
-          "</div>" +
-          '<div id="basePrice" class="blocks">' +
-          '<div class="title-modal">Base Fare</div>' +
-          '<div class="content-modal"> ₹ ' +
-          booked_data[i].total_amount +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          '<div id="seperator"></div>' +
-          //Booking Plan Block
-          "<div>" +
-          '<div style=" margin-bottom: 0px;font-size: large;color: darkgray;">' +
-          "बुकिंग प्लान / Booking Plan" +
-          "</div>" +
-          '<div class="card" style="margin-top: 5px;">' +
-          '<div class="card-body">' +
-          '<h5 class="card-title" id="summary_plan_name"><b>' +
-          booked_data[i].selected_plan.name +
-          "</b></h5>" +
-          '<p class="card-text" id="summary_plan_description">' +
-          booked_data[i].selected_plan.package_description +
-          "</p>" +
-          "</div>" +
-          '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-          '<ul class="list-group list-group-flush" id="package_terms">' +
-          "</ul>" +
-          "</div>" +
-          '<div style="font-size: 1.3rem;">' +
-          "</div>" +
-          '<div style="font-size: medium;line-height: 1.1;color: #888888;">' +
-          "</div>" +
-          "</div>" +
-          "<div>" +
-          '<div id="seperator"></div>' +
-          //Fair BreakUp
-          '<div style="margin-bottom: 0px;font-size: large;color: darkgray;margin-top:25px;">' +
-          "किराया ब्रेकअप / Fare Breakup" +
-          "</div>" +
-          '<ul class="list-group list-group-flush" id="cost_breakup_list">' +
-          '<li class="list-group-item">' +
-          "<div>Base Fare</div>" +
-          '<div id="breakup_base_fare">₹ ' +
-          booked_data[i].selected_plan.selected_vehicle_plan.base_amount +
-          "</div>" +
-          "</li>" +
-          '<li class="list-group-item" id="discount_li">' +
-          "<div>Discount</div>" +
-          '<div id="breakup_discount">' +
-          "₹ " +
-          booked_data[i].selected_plan.selected_vehicle_plan.discount +
-          "</div>" +
-          "</li>" +
-          '<li class="list-group-item">' +
-          "<div>Allowance</div>" +
-          '<div id="breakup_allowance">₹ ' +
-          booked_data[i].selected_plan.selected_vehicle_plan.allowance_amount +
-          "</div>" +
-          "</li>" +
-          '<li class="list-group-item">' +
-          "<div>Total Fare Amount</div>" +
-          '<div id="breakup_pd_payable_fare">₹ ' +
-          booked_data[i].total_amount +
-          "</div>" +
-          "</li>" +
-          '<li class="list-group-item">' +
-          "<div>Amount Paid</div>" +
-          '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ ' +
-          booked_data[i].selected_plan.selected_vehicle_plan
-            .payable_post_discount_booking_amount +
-          "</div>" +
-          "</li>" +
-          ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
-          "</li>" +
-          "</ul>" +
-          "</div>" +
-          "</div>" +
-          "</div>" +
-          "</div> "
       );
     }
   }
@@ -592,8 +597,6 @@ function display_data_of_booking(data_res) {
   document.getElementById("station").innerHTML = data_res.pickup;
   $("#amt").val(payable_total_amount);
   document.getElementById("amt").innerHTML = payable_total_amount;
-  // $("#planned").val(data_res.vehicle_plan_selected.parent-plan-name);
-  // document.getElementById("planned").innerHTML = data_res.vehicle_plan_selected.parent-plan-name;
   $("#seat").val(data_res.selected_plan.selected_vehicle_plan.no_of_seats);
   document.getElementById("seat").innerHTML =
     data_res.selected_plan.selected_vehicle_plan.no_of_seats + " seats";
@@ -605,9 +608,9 @@ function display_data_of_booking(data_res) {
   $("#booked_car").attr(
     "src",
     "../cab-booking/assets/" +
-      get_car_image(
-        data_res.selected_plan.selected_vehicle_plan.selected_vehicle
-      )
+    get_car_image(
+      data_res.selected_plan.selected_vehicle_plan.selected_vehicle
+    )
   );
 }
 
@@ -630,16 +633,7 @@ function submit_otp() {
   }
 }
 
-//for saving the logged in user's number to local storage that we can make the user stay logged in until he logs out
-function savetolocal(mobile_number) {
-  var loggedInUserNumber = {};
-  loggedInUserNumber.phoneNumber = mobile_number;
-  console.log(loggedInUserNumber);
-  localStorage.setItem(
-    "loggedInUserNumber",
-    JSON.stringify(loggedInUserNumber)
-  );
-}
+
 function car_selected(car) {
   $("#select_car_model").fadeOut("def", function () {
     $("#car_details_layout").fadeIn("slow");
@@ -876,7 +870,7 @@ function load_packages() {
               // package.alloted_kms +
               // "Kms</p>" +
               // "</li>";
-              
+
               '<li name="' +
               i +
               '" id="' +
@@ -946,34 +940,34 @@ function populate_vehicles_list(parent_plan_name) {
     var car_image = get_car_image(plans[i].selected_vehicle);
     $("#vehicles_plan_list").append(
       '<li class="list-group-item" data-direction="bottom" onclick="vehicle_plan_selected(' +
-        i +
-        ')">' +
-        '<div class="car-block">' +
-        '<div class="car-image">' +
-        '<img class="img-fluid" src="../cab-booking/assets/' +
-        car_image +
-        '">' +
-        "</div>" +
-        '<div class="car-details">' +
-        '<div class="car-name">' +
-        plans[i].no_of_seats +
-        " Seater</div>" +
-        '<div class="car-sub-name" id="car-sub-name-0">' +
-        plans[i].selected_vehicle +
-        ", " +
-        parent_plan_name +
-        ".</div>" +
-        "</div>" +
-        '<div class="car-fare" id="car-far-0">₹ ' +
-        +plans[i].plan_baseprice +
-        "</div>" +
-        "</div>" +
-        "</li>"
+      i +
+      ')">' +
+      '<div class="car-block">' +
+      '<div class="car-image">' +
+      '<img class="img-fluid" src="../cab-booking/assets/' +
+      car_image +
+      '">' +
+      "</div>" +
+      '<div class="car-details">' +
+      '<div class="car-name">' +
+      plans[i].no_of_seats +
+      " Seater</div>" +
+      '<div class="car-sub-name" id="car-sub-name-0">' +
+      plans[i].selected_vehicle +
+      ", " +
+      parent_plan_name +
+      ".</div>" +
+      "</div>" +
+      '<div class="car-fare" id="car-far-0">₹ ' +
+      +plans[i].plan_baseprice +
+      "</div>" +
+      "</div>" +
+      "</li>"
     );
   }
 }
 
-var vehicles_received;
+
 function vehicle_plan_selected(index) {
   booking.selected_plan.selected_vehicle_plan = vehicles_received[index];
   booking.selected_plan.selected_vehicle_plan.discount = 0;
@@ -991,11 +985,9 @@ function vehicle_plan_selected(index) {
 
   console.log("Vehicle Plan Selected", booking);
   if (!isLoggedIn()) {
-    //$("#login_modal").modal();
     populate_cities();
   } else {
-    booking.customer = user;
-    booking.customer_id = user.id;
+    booking.user = userData;
     populate_summary_view();
     $("#plan_summary_modal").modal("show");
   }
@@ -1006,9 +998,9 @@ function populate_summary_view() {
   $("#summary_car_image").attr(
     "src",
     "../cab-booking/assets/" +
-      get_car_image(
-        booking.selected_plan.selected_vehicle_plan.selected_vehicle
-      )
+    get_car_image(
+      booking.selected_plan.selected_vehicle_plan.selected_vehicle
+    )
   );
   $("#summary_seat_label").text(
     booking.selected_plan.selected_vehicle_plan.no_of_seats + " Seater"
@@ -1020,10 +1012,10 @@ function populate_summary_view() {
 
   $("#summary_plan_overview").text(
     booking.selected_plan.selected_vehicle_plan.selected_vehicle +
-      ", " +
-      ac +
-      ", " +
-      booking.selected_plan.name
+    ", " +
+    ac +
+    ", " +
+    booking.selected_plan.name
   );
   $("#pickup").text(booking.pickup);
   $("#pickup_date").text(booking.pickup_date);
@@ -1062,8 +1054,8 @@ function populate_summary_view() {
   );
   $("#breakup_booking_payable_amount").text(
     "₹ " +
-      booking.selected_plan.selected_vehicle_plan
-        .payable_post_discount_booking_amount
+    booking.selected_plan.selected_vehicle_plan
+      .payable_post_discount_booking_amount
   );
   total_amount =
     booking.selected_plan.selected_vehicle_plan
@@ -1233,19 +1225,11 @@ function summary_page_action() {
   }
 }
 
-var user = { loggedIn: false};
 function isLoggedIn() {
   if (user.loggedIn) {
     return true;
   } else return false;
 }
-
-var booking = {};
-var booking_date_set = [];
-var booking_date_object_set = [];
-var booking_time_set = [];
-var booking_time_set_display = [];
-booking.station_is = "Pickup";
 
 function select_station_pickup() {
   booking.station_is = "Pickup";
@@ -1348,15 +1332,10 @@ function account_details_valid() {
 
 function go_to_account() {
   window.location.href = "../cab-booking/modules/account/index.html";
-
-  //if(partner_profile.type='')
-  {
-  }
 }
 
-function make_payment() {}
+function make_payment() { }
 
-//login
 function login_now() {
   if (otp_sent) {
     console.log($("#login_otp_input").val().length);
@@ -1368,24 +1347,16 @@ function login_now() {
     }
   } else if (register_activated) {
     user.loggedIn = true;
-    data = $("#login_form")
-      .serializeArray()
-      .reduce(function (obj, item) {
-        obj[item.name] = item.value;
-        return obj;
-      }, {});
-
+    data = $("#login_form").serializeArray().reduce(function (obj, item) {obj[item.name] = item.value;return obj;}, {});
     var proceed = true;
     if (!data.name) {
       proceed = false;
       alert("Invalid Name");
     }
-
     if (data.pincode.length != 6) {
       proceed = false;
       alert("Invalid Pincode");
     }
-
     if (user.location_object) {
       $("#login_modal").modal("hide");
       populate_summary_view();
@@ -1396,21 +1367,18 @@ function login_now() {
       $.ajax({
         url: "https://api.postalpincode.in/pincode/" + data.pincode,
         success: function (response) {
-          //console.log(response);
           $("#loader_layout").modal("hide");
           var postoffices = [];
           postoffices = response[0].PostOffice;
           console.log(postoffices);
           console.log(data);
-          user_data = data;
-
+          localStorage.setItem("user", JSON.stringify(data));
+          userData = data;
           if (postoffices.length < 2) {
             user.region = postoffices[0].District;
             user.state = postoffices[0].State;
             user.location_object = postoffices[0];
-            $("#area_view").val(
-              postoffices[0].Name + ", " + postoffices[0].District
-            );
+            $("#area_view").val(postoffices[0].Name + ", " + postoffices[0].District);
             $("#region_layout").show();
             $("#login_modal").modal();
             console.log("user", user);
@@ -1475,34 +1443,23 @@ function login_now() {
 
 function send_orders_to_management() {
   order_data = { ...booking };
+  order_data.user = userData;
   console.log(order_data);
-  order_data.id =
-    Date.now().toString(36) + Math.random().toString(36).substr(2);
-  console.log(user_data);
-  order_data.user = user_data;
-  // order_data.vehicle_plan_selected=selected_plan.plans[selected_package_index];
+  order_data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   order_data.total_amount = base_amt;
   order_data.status = "Booked";
   console.log(order_data);
-  //order_data.booking=booking;
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",
     type: "post",
     data: order_data,
     success: function (response) {
-      console.log(
-        "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",
-        response
-      );
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",response);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
     },
   });
-
-  //var num=8691860197
-  // var usernumber={};
-  // usernumber.number=number;
 
   $("#booking_summary").fadeOut("def", function () {
     $("#plan_summary_modal").fadeOut();
@@ -1522,9 +1479,7 @@ function send_orders_to_management() {
   display_data_of_booking(order_data);
 }
 
-var otp_sent = false;
 function sendOTP() {
-  //ajax call
   var data_packet = {};
   data_packet.phoneNumber = user.number;
   $("#login_modal").modal("hide");
@@ -1556,11 +1511,9 @@ function sendOTP() {
   });
 }
 
-var register_activated = false;
 function verifyOTP() {
   var already_a_user = false;
   var otp = $("#login_otp_input").val();
-  //ajax call
   if (already_a_user) {
   } else {
     otp_sent = false;
@@ -1570,7 +1523,7 @@ function verifyOTP() {
     $("#login_page_action_button").text("PROCEED");
     $("#login_mobile_number_input").attr("readonly", "readonly");
     alert("Welcome to Gadigoda / गाडीगोडा में आपका स्वागत है ");
-    savetolocal(userNumber);
+    // savetolocal(user);
     $("#login_modal_header").text(
       "Complete your Profile / अपनी प्रोफाइल पूरी कीजिए "
     );
@@ -1579,19 +1532,18 @@ function verifyOTP() {
   }
 }
 
-var login_cities_populated = false;
 function populate_cities() {
   if (login_cities_populated) {
     var items = [];
     for (var i = 0; i < cities.length; i++) {
       items.push(
         '<option name="' +
-          i +
-          '" data-subtext="' +
-          cities[i].state +
-          '">' +
-          cities[i].name +
-          "</option>"
+        i +
+        '" data-subtext="' +
+        cities[i].state +
+        '">' +
+        cities[i].name +
+        "</option>"
       );
     }
     document.getElementById("register_city_select").innerHTML = "";
@@ -1603,33 +1555,24 @@ function populate_cities() {
   $("#login_modal").modal();
 }
 
-//to copy coupon code
-
- 
-
 function copyIt(i) {
-  let copyText =$("#copyvalue"+i).val();
+  let copyText = $("#copyvalue" + i).val();
   document.execCommand("copy");
-  //coping code to clipboard
   navigator.clipboard.writeText(copyText);
 
-  let copybtn= document.querySelector("#copybtn"+i)
+  let copybtn = document.querySelector("#copybtn" + i)
   copybtn.textContent = "COPIED";
 }
 
-
-$("#applyCoupon").click(function(){
-  alert("The paragraph was clicked.");
+$("#applyCoupon").click(function () {
   applyCoupon();
 });
 
-function applyCoupon(){
+function applyCoupon() {
   $("#loader_layout").modal("show");
   var discountedData;
   let code = document.getElementById("couponCode").value;
   let amount = booking.selected_plan.selected_vehicle_plan.payable_post_discount
-
-  
   console.log(code);
   console.log(amount);
   let couponData = {
@@ -1642,20 +1585,20 @@ function applyCoupon(){
     data: couponData,
     success: function (response) {
       $("#loader_layout").modal("hide");
-      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon",response);
+      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/applyCoupon", response);
       discountedData = response
-      base_amt=discountedData.total ;
+      base_amt = discountedData.total;
       console.log(discountedData);
       $("#breakup_pd_payable_fare").text(
-        "₹ " + discountedData.total 
-           
+        "₹ " + discountedData.total
+
       );
       $("#breakup_discount").text(
         "₹ " + discountedData.discount
       );
       console.log($('#discount_li'));
       $("#discount_li").fadeIn();
-     
+
 
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -1663,5 +1606,5 @@ function applyCoupon(){
     },
   });
 
-  
+
 }
