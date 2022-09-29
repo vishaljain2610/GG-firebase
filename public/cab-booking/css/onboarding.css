@@ -875,7 +875,7 @@ font-weight: 700;
 }
 #driverName , #driverPhoneNo{
     display:flex;
-    align-items: center;
+    align-items:center;
 }
 .driver-icon> img{
     height: 20px;

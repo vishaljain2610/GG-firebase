@@ -14,7 +14,6 @@ var usernumber = {};
 var booked_data;
 
 $(document).ready(function () {
-  $("#loader_layout").modal("show");
   $("#menuitem_myBookings").click(function () {
     alert("haa kiya click");
     $("#new_account_layout").fadeOut("slow");
@@ -204,7 +203,7 @@ function populate_rides(data_resp, booked_data) {
         "</div>" +
         '<div class="km">' +
         data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle +
-        ", put plan here</div>" +
+        "</div>" +
         " </div>" +
         "</div>" +
         //view more button
@@ -262,6 +261,7 @@ function populate_rides(data_resp, booked_data) {
         data_resp[i].car_Owner +
         "</div>" +
         "</div>" +
+        "<a href="+"tel:"+data_resp[i].contact_number+""+">"+
         '<div id="driverPhoneNo" class="blocks">' +
         '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon.png" alt="contact-icon"/></div>' +
         '<div class="content-modal">' +
@@ -269,6 +269,7 @@ function populate_rides(data_resp, booked_data) {
         "</div>" +
         "</div>" +
         "</div>" +
+        "</a>"+
         "</div>" +
         "</div>" +
         "</div>" +
@@ -379,7 +380,7 @@ function populate_rides(data_resp, booked_data) {
         "</div>" +
         "</li>" +
         '<li class="list-group-item">' +
-        "<div>Amount Paid</div>" +
+        "<div>Advanced Paid</div>" +
         '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ ' +
         data_resp[i].selected_plan.selected_vehicle_plan
           .payable_post_discount_booking_amount +
@@ -424,7 +425,7 @@ function populate_rides(data_resp, booked_data) {
           "</div>" +
           '<div class="km">' +
           booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle +
-          ", put plan here</div>" +
+          "</div>" +
           " </div>" +
           "</div>" +
           //view more button
@@ -565,7 +566,7 @@ function populate_rides(data_resp, booked_data) {
           "</div>" +
           "</li>" +
           '<li class="list-group-item">' +
-          "<div>Amount Paid</div>" +
+          "<div>Advanced Paid</div>" +
           '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ ' +
           booked_data[i].selected_plan.selected_vehicle_plan
             .payable_post_discount_booking_amount +
