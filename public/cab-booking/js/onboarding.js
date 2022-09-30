@@ -61,31 +61,8 @@ $(document).ready(function () {
   });
 });
  
-function showterminAllotedModal(booking){
-  var package_notes =
-  booking.selected_plan.selected_vehicle_plan.description.split(";");
-  console.log(package_notes)
-var ul = document.getElementById("package_terms_in_modal_alloted");
-document.getElementById("package_terms_in_modal_alloted").innerHTML = "";
-for (var i = 0; i < package_notes.length; i++) {
-  var li = document.createElement("li");
-  li.className = "list-group-item";
-  li.appendChild(document.createTextNode(package_notes[i]));
-  ul.appendChild(li);
-}
-}
-function showterminUnAllotedModal(booking){
-  var package_notes =
-  booking.selected_plan.selected_vehicle_plan.description.split(";");
-var ul = document.getElementById("package_terms_in_modal");
-document.getElementById("package_terms_in_modal").innerHTML = "";
-for (var i = 0; i < package_notes.length; i++) {
-  var li = document.createElement("li");
-  li.className = "list-group-item";
-  li.appendChild(document.createTextNode(package_notes[i]));
-  ul.appendChild(li);
-}
-}
+ 
+ 
 function couponOffers() {
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
@@ -210,7 +187,7 @@ function populate_rides(data_resp, booked_data) {
   
   console.log(data_resp)
   for (var i = 0; i < data_resp.length; i++) {
-    showterminAllotedModal(data_resp[i])
+    // showterminAllotedModal(data_resp[i])
     $("#populate_rides").append(
       '<div class="container5">' +
       ' <div class="time">Driver Alloted ' +
@@ -358,7 +335,7 @@ function populate_rides(data_resp, booked_data) {
       "</p>" +
       "</div>" +
       '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-      '<ul class="list-group list-group-flush" id="package_terms_in_modal_alloted">' +
+      '<ul class="list-group list-group-flush" id="package_terms_in_modal_alloted">' +data_resp[i].selected_plan.selected_vehicle_plan.description+
       "</ul>" +
       "</div>" +
       '<div style="font-size: 1.3rem;">' +
@@ -430,7 +407,7 @@ function populate_rides(data_resp, booked_data) {
   }
   for (var i = 0; i < booked_data.length; i++) {
     if (booked_data[i].status == "Booked") {
-      showterminUnAllotedModal(booked_data[i])
+      // showterminUnAllotedModal(booked_data[i])
       // console.log(booked_data);
       console.log("if is true");
       console.log(booked_data)
@@ -559,7 +536,7 @@ function populate_rides(data_resp, booked_data) {
         "</p>" +
         "</div>" +
         '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-        '<ul class="list-group list-group-flush" id="package_terms_in_modal">' +
+        '<ul class="list-group list-group-flush" id="package_terms_in_modal">' +booked_data[i].selected_plan.selected_vehicle_plan.description+
         "</ul>" +
         "</div>" +
         '<div style="font-size: 1.3rem;">' +
