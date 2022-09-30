@@ -13,7 +13,7 @@ var base_amt;
 var usernumber = {};
 var booked_data;
 var vehicles_received;
-var user = { loggedIn: false };
+var user = { loggedIn: true };
 var booking = {};
 var booking_date_set = [];
 var booking_date_object_set = [];
@@ -60,7 +60,32 @@ $(document).ready(function () {
     $("#station_selection").fadeOut("slow");
   });
 });
-
+ 
+function showterminAllotedModal(booking){
+  var package_notes =
+  booking.selected_plan.selected_vehicle_plan.description.split(";");
+  console.log(package_notes)
+var ul = document.getElementById("package_terms_in_modal_alloted");
+document.getElementById("package_terms_in_modal_alloted").innerHTML = "";
+for (var i = 0; i < package_notes.length; i++) {
+  var li = document.createElement("li");
+  li.className = "list-group-item";
+  li.appendChild(document.createTextNode(package_notes[i]));
+  ul.appendChild(li);
+}
+}
+function showterminUnAllotedModal(booking){
+  var package_notes =
+  booking.selected_plan.selected_vehicle_plan.description.split(";");
+var ul = document.getElementById("package_terms_in_modal");
+document.getElementById("package_terms_in_modal").innerHTML = "";
+for (var i = 0; i < package_notes.length; i++) {
+  var li = document.createElement("li");
+  li.className = "list-group-item";
+  li.appendChild(document.createTextNode(package_notes[i]));
+  ul.appendChild(li);
+}
+}
 function couponOffers() {
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
@@ -182,8 +207,10 @@ function scroll_to_fair_price_modalview() {
 }
 
 function populate_rides(data_resp, booked_data) {
+  
   console.log(data_resp)
   for (var i = 0; i < data_resp.length; i++) {
+    showterminAllotedModal(data_resp[i])
     $("#populate_rides").append(
       '<div class="container5">' +
       ' <div class="time">Driver Alloted ' +
@@ -331,7 +358,7 @@ function populate_rides(data_resp, booked_data) {
       "</p>" +
       "</div>" +
       '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-      '<ul class="list-group list-group-flush" id="package_terms">' +
+      '<ul class="list-group list-group-flush" id="package_terms_in_modal_alloted">' +
       "</ul>" +
       "</div>" +
       '<div style="font-size: 1.3rem;">' +
@@ -390,6 +417,8 @@ function populate_rides(data_resp, booked_data) {
         .payable_post_discount_booking_amount +
       "</div>" +
       "</li>" +
+      '<a href="https://wa.me/message/YM67TEN2MEW3A1">' +
+        '<button type="button" class="btn btn-danger" id="cancelRide" >Cancel Ride</button>'+'</a>'+
       ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
       "</li>" +
       "</ul>" +
@@ -401,6 +430,7 @@ function populate_rides(data_resp, booked_data) {
   }
   for (var i = 0; i < booked_data.length; i++) {
     if (booked_data[i].status == "Booked") {
+      showterminUnAllotedModal(booked_data[i])
       // console.log(booked_data);
       console.log("if is true");
       console.log(booked_data)
@@ -529,7 +559,7 @@ function populate_rides(data_resp, booked_data) {
         "</p>" +
         "</div>" +
         '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-        '<ul class="list-group list-group-flush" id="package_terms">' +
+        '<ul class="list-group list-group-flush" id="package_terms_in_modal">' +
         "</ul>" +
         "</div>" +
         '<div style="font-size: 1.3rem;">' +
@@ -574,8 +604,9 @@ function populate_rides(data_resp, booked_data) {
         '<div id="breakup_booking_payable_amount" style="font-weight:bold">₹ ' +
         booked_data[i].selected_plan.selected_vehicle_plan
           .payable_post_discount_booking_amount +
-        "</div>" +
-        "</li>" +
+        "</div>" + 
+        '</li>' +'<a href="https://wa.me/message/YM67TEN2MEW3A1">' +
+        '<button type="button" class="btn btn-danger" id="cancelRide" >Cancel Ride</button>'+'</a>'+
         ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
         "</li>" +
         "</ul>" +
