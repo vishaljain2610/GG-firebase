@@ -543,3 +543,51 @@ exports.applyCtrial = functions.https
       });
     });
 });
+
+
+exports.updateAllotedData = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set("Access-Control-Allow-Headers", "Content-Type");
+    const booking = request.body;
+    admin
+      .firestore()
+      .collection("Alloted Data")
+      .doc(booking.id)
+      .update(booking)
+      .then(() => {
+        response.json();
+      })
+      .catch((error) => {
+        response.status(500).json({
+          error: error.code,
+        });
+      });
+  });
+});
+
+exports.checkUsers = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set("Access-Control-Allow-Headers", "Content-Type");
+    const number = request.body.number;
+    admin
+      .firestore()
+      .collection("Users")
+      .where("number", "==", number)
+      .get()
+      .then((querySnapshot) => {
+        const users = [];
+        querySnapshot.forEach((doc) => {
+          const user = doc.data();
+          users.push(user);
+        });
+        response.json(users);
+      })
+      .catch((error) => {
+        response.status(500).json({
+          error: error.code,
+        });
+      });
+  });
+});
