@@ -745,6 +745,7 @@ body {
     margin-left: 20px;
     padding-bottom: 10px;
     font-size: larger;
+   
 }
 .rides{
     margin-left: 20px;
@@ -752,12 +753,13 @@ body {
 }
 .container5{
     background-color: white;
-    margin-left: 20px;
-    margin-right: 20px;
+    /* margin-left: 20px; */
+    /* margin-right: 20px; */
     margin-top: 15px;
     padding-bottom: 10px;
     padding-top: 10px;
-    padding-left: 10px;
+    margin-bottom: 15px;
+    /* padding-left: 10px; */
     border-radius: 25px 25px 0px 0px;
     border-bottom: 3px solid #f8f8f8;
     display: flex;
@@ -775,13 +777,15 @@ body {
     background-color: white;
     margin-left: 20px;
     margin-right: 20px;
-    padding-bottom: 10px;
+    margin-bottom:10px;
+    padding-bottom: 2.5rem;
     padding-top: 10px;
     padding-left: 10px;
-    border-radius: 0px 0px 25px 25px ;
+    border-radius: 25px ;
 }
 .container02{
     display: flex;
+    margin-top:1rem;
 }
 .car{
     height: 9vh;
@@ -795,7 +799,7 @@ body {
 }
 .km{
     font-size: small;
-    /* padding-left: 10px; */
+    padding-left: 10px;
 }
 .more{
     font-size: x-small;
@@ -1037,6 +1041,21 @@ font-weight: 700;
   }
   #cost{
     margin-left:3px
+  }
+
+  .badge-viewmore{
+    color: #fff;
+    background-color: #007bff;
+    font-size: small;
+    border-radius: 5px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 12px;
+    padding-left: 12px;
+    float:right;
+  }
+  #populate_rides_completed{
+    margin-bottom: 5rem;
   }
   
    

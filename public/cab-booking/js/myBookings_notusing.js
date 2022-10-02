@@ -122,23 +122,25 @@ element.scrollIntoView();
 function populate_rides(data_resp,booked_data){
 for (var i = 0; i < data_resp.length; i++){
 $('#populate_rides').append(
-  '<div class="container5">'+
-   ' <div class="time">Driver Alloted '+
-    '<img class="clock_img" src="../cab-booking/assets/tick.png">'+
-  '</div></div>'+
+  
   '<div class="container2">'+
+  '<div class="container5" style="display:none">'+
+   ' <div class="time">Driver Alloted '+
+    '<img class="clock_img" src="../../assets/tick.png">'+
+  '</div></div>'+
     '<div class="container02">'+
       '<div class="container2_1">'+
-          '<img class="car" src="../cab-booking/assets/'+get_car_image(data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle)+'">'+
+          '<img class="car" src="../../assets/'+get_car_image(data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle)+'">'+
       '</div>'+
       '<div class="container2_2">'+
-          '<div class="route"><b>Pickup- '+data_resp[i].pickup+'</b></div>'+
+          '<div class="route"><b>'+data_resp[i].pickup+'</b></div>'+
           '<div class="date_time">'+data_resp[i].pickup_date+' | '+data_resp[i].pickup_time+'</div>'+
-          '<div class="km">'+data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
+          '<div class="km">'+data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle+'</div>'+
      ' </div>'+
     '</div>'+ 
     //view more button 
-    '<div class="more"><a href="#" onclick="viewMoreAllotedModal()" >View More ></a></div>' +
+    '<div class="more">'+
+    '<span class="badge badge-pill badge-viewmore" onclick="viewMoreAllotedModal()">View Details</span></div>' +
     //View More MODAL
     '<div class="modal" id="cabBookingViewMoreAllotedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
     '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
@@ -156,7 +158,7 @@ $('#populate_rides').append(
     //Car Block
     '<div class="car-block" style="margin-top:1vh">' +
     '<div id="summarypage_img">' +
-    '<img class="car" src="../cab-booking/assets/' +
+    '<img class="car" src="../../assets/' +
     get_car_image(
       data_resp[i].selected_plan.selected_vehicle_plan.selected_vehicle
     ) +
@@ -183,11 +185,11 @@ $('#populate_rides').append(
     '<div id="driver-details">' +
     ' <div id="driverContact">' +
     '<div id="driverName" class="blocks">' +
-    '<div class="driver-icon"><img src="../cab-booking/assets/driver_icon.png" alt="driver-icon"/></div>' +
+    '<div class="driver-icon"><img src="../../assets/driver_icon.png" alt="driver-icon"/></div>' +
     '<div class="content-modal">'+data_resp[i].car_Owner+'</div>' +
     "</div>" +
     '<div id="driverPhoneNo" class="blocks">' +
-    '<div class="contact-icon"><img src="../cab-booking/assets/contact_icon.png" alt="contact-icon"/></div>' +
+    '<div class="contact-icon"><img src="../../assets/contact_icon.png" alt="contact-icon"/></div>' +
     '<div class="content-modal">'+data_resp[i].contact_number+'</div>' +
     '</div>' +
     '</div>' +
@@ -299,23 +301,24 @@ for (var i = 0; i < booked_data.length; i++){
     // console.log(booked_data);
     console.log("if is true");
     $('#populate_rides_booked').append(
+      
+      '<div class="container2">'+
       '<div class="container5">'+
        ' <div class="time">Booked Rides-Driver Yet To Be Alloted '+
-        '<img class="clock_img" src="../cab-booking/assets/time.png">'+
+        '<img class="clock_img" src="../../assets/time.png">'+
       '</div></div>'+
-      '<div class="container2">'+
         '<div class="container02">'+
           '<div class="container2_1">'+
-              '<img class="car" src="../cab-booking/assets/'+get_car_image(booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle)+'">'+
+              '<img class="car" src="../../assets/'+get_car_image(booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle)+'">'+
           '</div>'+
           '<div class="container2_2">'+
-              '<div class="route"><b>Pickup- '+booked_data[i].station+'</b></div>'+
+              '<div class="route"><b>'+booked_data[i].station+'</b></div>'+
               '<div class="date_time">'+booked_data[i].pickup_date+' | '+booked_data[i].pickup_time+'</div>'+
-              '<div class="km">'+booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle+', put plan here</div>'+
+              '<div class="km">'+booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle+'</div>'+
          ' </div>'+
         '</div>'+  
           //view more button 
-    '<div class="more"><a href="#" onclick="viewMoreUnAllotedModal('+i+')" >View More ></a></div>' +'</div>'+
+    '<div><span class="badge badge-pill badge-viewmore" onclick="viewMoreUnAllotedModal('+i+')">View Details</span></div>' +'</div>'+
     //View More MODAL
     '<div class="modal unallotedmodals" id="cabBookingViewMoreUnAllotedModal'+i+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">' +
     '<div id="booking_summary" class="modal-content" style="height: 85vh;margin-top: 15vh;">' +
@@ -333,7 +336,7 @@ for (var i = 0; i < booked_data.length; i++){
     //Car Block
     '<div class="car-block" style="margin-top:1vh">' +
     '<div id="summarypage_img">' +
-    '<img class="car" src="../cab-booking/assets/' +
+    '<img class="car" src="../../assets/' +
     get_car_image(
       booked_data[i].selected_plan.selected_vehicle_plan.selected_vehicle
     ) +
