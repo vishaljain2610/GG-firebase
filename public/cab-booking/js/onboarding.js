@@ -12,10 +12,13 @@ var payable_total_amount;
 var base_amt;
 var usernumber = {};
 var booked_data;
+var userData;
+
 
 $(document).ready(function () {
+  userData = JSON.parse(localStorage.getItem("user"));
+  console.log("userData", userData);
   $("#menuitem_myBookings").click(function () {
-    alert("haa kiya click");
     $("#new_account_layout").fadeOut("slow");
     $("#account_details_layout").fadeOut("slow");
     $("#main_menu").fadeOut("slow");
@@ -42,15 +45,14 @@ $(document).ready(function () {
     $("#station_selection").fadeOut("slow");
   });
 });
-
-$(".unallotedmodals").modal("hide"); //hides all the unalloted modals at 1st
+$(".unallotedmodals").modal("hide"); 
 $("#cabBookingViewMoreAllotedModal").modal("hide");
 $("#couponOffers").modal("hide");
 
 function couponOffers(){
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
-    method: "POST", //First change type to method here
+    method: "POST",
     success: function (response) {
       console.log(
         "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
@@ -116,20 +118,11 @@ function populateCoupons(received_coupons) {
 }
 }
 
-function getLoggedInUserNumber(){
-  var usernumber = JSON.parse(localStorage.getItem("loggedInUserNumber"));
-  console.log(usernumber.phoneNumber);
-  return usernumber.phoneNumber;
-}
 function mybookings_open() {
-  console.log("in function");
-  
-  usernumber.number = getLoggedInUserNumber();
-  // usernumber.number="8691860197";
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
     type: "post",
-    data: usernumber,
+    data: userData,
     success: function (response) {
       console.log(
         "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
@@ -631,16 +624,7 @@ function submit_otp() {
   }
 }
 
-//for saving the logged in user's number to local storage that we can make the user stay logged in until he logs out
-function savetolocal(mobile_number) {
-  var loggedInUserNumber = {};
-  loggedInUserNumber.phoneNumber = mobile_number;
-  console.log(loggedInUserNumber);
-  localStorage.setItem(
-    "loggedInUserNumber",
-    JSON.stringify(loggedInUserNumber)
-  );
-}
+
 function car_selected(car) {
   $("#select_car_model").fadeOut("def", function () {
     $("#car_details_layout").fadeIn("slow");
@@ -1226,7 +1210,7 @@ function summary_page_action() {
       // var propay = new Razorpay(options);
       // propay.open();
       send_orders_to_management();
-      console.log("Moving to Payment", booking);
+      console.log("Moving to Payment", order_data);
     } else {
       $("#plan_summary_modal").modal("hide");
       $("#login_modal").modal();
@@ -1236,7 +1220,7 @@ function summary_page_action() {
 
 var user = { loggedIn: false};
 function isLoggedIn() {
-  if (user.loggedIn) {
+  if (userData.number != null) {
     return true;
   } else return false;
 }
@@ -1369,7 +1353,7 @@ function login_now() {
     }
   } else if (register_activated) {
     user.loggedIn = true;
-    data = $("#login_form")
+    userData = $("#login_form")
       .serializeArray()
       .reduce(function (obj, item) {
         obj[item.name] = item.value;
@@ -1476,16 +1460,13 @@ function login_now() {
 
 function send_orders_to_management() {
   order_data = { ...booking };
-  console.log(order_data);
-  order_data.id =
-    Date.now().toString(36) + Math.random().toString(36).substr(2);
-  console.log(user_data);
+  order_data.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   order_data.user = user_data;
-  // order_data.vehicle_plan_selected=selected_plan.plans[selected_package_index];
   order_data.total_amount = base_amt;
   order_data.status = "Booked";
+  order_data.user = userData;
   console.log(order_data);
-  //order_data.booking=booking;
+  localStorage.setItem("user", JSON.stringify(userData));
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",
     type: "post",
@@ -1501,10 +1482,6 @@ function send_orders_to_management() {
     },
   });
 
-  //var num=8691860197
-  // var usernumber={};
-  // usernumber.number=number;
-
   $("#booking_summary").fadeOut("def", function () {
     $("#plan_summary_modal").fadeOut();
     $("#footer").fadeOut();
@@ -1515,17 +1492,13 @@ function send_orders_to_management() {
     $("#header").fadeOut();
     $("#booking_completed_successfully").fadeIn("slow");
   });
-  console.log("wakanda shit is this");
   $(".booking_successfully_completed").show();
 
-  // mybookings(order_data.user.number);
-  //mybookings(num);
   display_data_of_booking(order_data);
 }
 
 var otp_sent = false;
 function sendOTP() {
-  //ajax call
   var data_packet = {};
   data_packet.phoneNumber = user.number;
   $("#login_modal").modal("hide");
@@ -1604,10 +1577,6 @@ function populate_cities() {
   $("#login_modal").modal();
 }
 
-//to copy coupon code
-
- 
-
 function copyIt(i) {
   let copyText =$("#copyvalue"+i).val();
   document.execCommand("copy");
@@ -1620,7 +1589,6 @@ function copyIt(i) {
 
 
 $("#applyCoupon").click(function(){
-  alert("The paragraph was clicked.");
   applyCoupon();
 });
 
@@ -1629,8 +1597,6 @@ function applyCoupon(){
   var discountedData;
   let code = document.getElementById("couponCode").value;
   let amount = booking.selected_plan.selected_vehicle_plan.payable_post_discount
-
-  
   console.log(code);
   console.log(amount);
   let couponData = {
