@@ -1,6 +1,6 @@
 $(document).ready(function () {
     
-    alert((localStorage.getItem("user")));
+    // alert((localStorage.getItem("user")));
     userData = JSON.parse(localStorage.getItem("user"));
     if(userData==null){
         alert('Please Login!Redirecting to Home Page');

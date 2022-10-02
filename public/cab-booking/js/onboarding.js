@@ -1502,7 +1502,7 @@ function send_orders_to_management() {
 var otp_sent = false;
 function sendOTP() {
   var data_packet = {};
-  data_packet.phoneNumber = user.number;
+  data_packet.number = user.number;
   $("#login_modal").modal("hide");
   $("#loader_layout").modal();
   $.ajax({
