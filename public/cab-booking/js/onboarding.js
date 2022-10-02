@@ -119,6 +119,7 @@ function populateCoupons(received_coupons) {
 
 function mybookings_open() {
   usernumber.number=user.number;
+  console.log(usernumber)
   $("#loader_layout").modal("show");
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
@@ -1469,9 +1470,9 @@ function send_orders_to_management() {
   order_data.user = user_data;
   order_data.total_amount = base_amt;
   order_data.status = "Booked";
-  order_data.user = userData;
+  console.log(user.number);
   console.log(order_data);
-  localStorage.setItem("user", JSON.stringify(userData));
+  console.log(user.number);
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createBooking",
     type: "post",
@@ -1506,6 +1507,7 @@ var otp_sent = false;
 function sendOTP() {
   var data_packet = {};
   data_packet.number = user.number;
+  localStorage.setItem("user", JSON.stringify(user.number));
   $("#login_modal").modal("hide");
   $("#loader_layout").modal();
   $.ajax({

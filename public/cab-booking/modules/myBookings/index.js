@@ -1,13 +1,14 @@
+var userData = {}
 $(document).ready(function () {
-    
-    // alert((localStorage.getItem("user")));
-    userData = JSON.parse(localStorage.getItem("user"));
+     var number = JSON.parse(localStorage.getItem("user"));
+    userData.number = number;
     if(userData==null){
         alert('Please Login!Redirecting to Home Page');
         location.href="../../index.html"
     }
-    mybookings_open(userData) ;
+  
     console.log("userData", userData);
+    mybookings_open();
     $("#menuitem_myBookings").click(function () {
       $("#new_account_layout").fadeOut("slow");
       $("#account_details_layout").fadeOut("slow");
@@ -107,8 +108,8 @@ function couponOffers(){
   }
   }
   
-  function mybookings_open(userData) {
-    console.log(userData.number);
+  function mybookings_open() {
+    console.log(userData);
     $.ajax({
       url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
       type: "post",
