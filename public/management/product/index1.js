@@ -4,7 +4,6 @@ var isEditOn = false;
 var editIndex = -1;
 
 $(document).ready(function () {
-  $("#loader_layout").modal();
   update_products_list();
 });
 
@@ -16,7 +15,6 @@ function update_products_list() {
       url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllProducts",
       method: "POST",
       success: function (response) {
-        $("#loader_layout").modal('hide');
         console.log(
           "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllProducts",
           response

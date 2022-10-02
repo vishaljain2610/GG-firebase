@@ -1,12 +1,10 @@
 var data;
 $(document).ready(function () {
-  $("#loader_layout").modal();
   $.ajax({
       url : 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getDiscountCoupons',
       type : 'POST',
       dataType : 'json',
       success : function(data) {
-        $("#loader_layout").modal("hide");
           assignToEventsColumns(data);
 
       }
