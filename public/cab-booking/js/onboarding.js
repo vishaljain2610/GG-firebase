@@ -13,6 +13,7 @@ var base_amt;
 var usernumber = {};
 var booked_data;
 var userData;
+var new_user=false;
 
 
 $(document).ready(function () {
@@ -117,11 +118,12 @@ function populateCoupons(received_coupons) {
 }
 
 function mybookings_open() {
+  usernumber.number=user.number;
   $("#loader_layout").modal("show");
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
     type: "post",
-    data: userData,
+    data: usernumber,
     success: function (response) {
       console.log(
         "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
@@ -1449,7 +1451,8 @@ function login_now() {
         },
       });
     }
-  } else {
+  }
+  else {
     if ($("#login_mobile_number_input").val().length == 10) {
       user.number = $("#login_mobile_number_input").val();
       sendOTP();
@@ -1502,7 +1505,7 @@ function send_orders_to_management() {
 var otp_sent = false;
 function sendOTP() {
   var data_packet = {};
-  data_packet.phoneNumber = user.number;
+  data_packet.number = user.number;
   $("#login_modal").modal("hide");
   $("#loader_layout").modal();
   $.ajax({
@@ -1517,6 +1520,8 @@ function sendOTP() {
         data_packet,
         response
       );
+      new_user=response.new_user;
+      console.log(new_user)
       $("#login_page_label").text(
         "Verify Mobile Number / मोबाइल नंबर वेरीफाई करे "
       );
@@ -1533,11 +1538,25 @@ function sendOTP() {
 }
 
 var register_activated = false;
+var check_user=false;
 function verifyOTP() {
-  var already_a_user = false;
   var otp = $("#login_otp_input").val();
   //ajax call
-  if (already_a_user) {
+  if (new_user==false) {
+    otp_sent = false;
+    check_user=true;
+    user.loggedIn = true;
+    user.number = $("#login_mobile_number_input").val();
+    console.log(user.number);
+    $("#otp_layout").hide();
+    alert("Welcome to Gadigoda / गाडीगोडा में आपका स्वागत है ");
+    $("#login_modal").modal("hide");
+    $(".modal-backdrop").fadeOut();
+    $(".fade").fadeOut();
+    $(".show").fadeOut();
+    populate_summary_view();
+    $("#plan_summary_modal").modal();
+
   } else {
     otp_sent = false;
     register_activated = true;
