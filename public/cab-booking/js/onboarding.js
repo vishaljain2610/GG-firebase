@@ -119,6 +119,7 @@ function populateCoupons(received_coupons) {
 }
 
 function mybookings_open() {
+  $("#loader_layout").modal("show");
   $.ajax({
     url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
     type: "post",
@@ -142,6 +143,7 @@ function mybookings_open() {
           booked_data = data;
           document.body.style.backgroundColor = "#f5f4f4";
           populate_rides(response, booked_data);
+          $("#loader_layout").modal("hide");
         },
       });
     },
