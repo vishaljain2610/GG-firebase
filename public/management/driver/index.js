@@ -1,3 +1,5 @@
+var goAhead = true;
+
 $(document).ready(function () {
   $("#loader_layout").modal();
 $.fn.dataTable.ext.errMode = 'none'; $('#table-id').on('error.dt', function(e, settings, techNote, message) { console.log( 'An error occurred: ', message); });
@@ -89,25 +91,66 @@ function edit_partner(new_data) {
 }
 
 function create_new_partner() {
-  alert("this will create new partner");
   var data = $('#make_new_partner_form').serializeArray().reduce(function (obj, item) {
     obj[item.name] = item.value;
     return obj;
   }, {});
   console.log(data);
-  $.ajax({
-    url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPartner",
-    type: "post",
-    data: data,
-    success: function (response) {
-      console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPartner", response);
-      $('#create_new_partner_modal').modal('hide');
-      location.reload();
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
-    }
-  });
+  if(!data.car_owner){
+    goAhead = false;
+    alert("Please enter car owner name");
+  }
+  if(!data.contact_number){
+    goAhead = false;
+    alert("Please enter contact number");
+  }
+  if(!data.model){
+    goAhead = false;
+    alert("Please enter model");
+  }
+  if(!data.rate){
+    goAhead = false;
+    alert("Please enter rate");
+  }
+  if(!data.region){
+    goAhead = false;
+    alert("Please enter region");
+  }
+  if(!data.seater){
+    goAhead = false;
+    alert("Please enter seater");
+  }
+  if(!data.t_permit){
+    goAhead = false;
+    alert("Please enter t permit");
+  }
+  if(!data.vehicle_number){
+    goAhead = false;
+    alert("Please enter vehicle number");
+  }
+  if(!data.cars_under_management){
+    goAhead = false;
+    alert("Please enter cars under management");
+  }
+  if(!data.carrier_available){
+    goAhead = false;
+    alert("Please enter carrier available");
+  }
+  if(goAhead){
+    $.ajax({
+      url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPartner",
+      type: "post",
+      data: data,
+      success: function (response) {
+        console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createPartner", response);
+        $('#create_new_partner_modal').modal('hide');
+        location.reload();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+      }
+    });
+  }
 }
 
 
