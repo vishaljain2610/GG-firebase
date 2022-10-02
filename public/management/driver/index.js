@@ -1,11 +1,14 @@
 $(document).ready(function () {
+  $("#loader_layout").modal();
 $.fn.dataTable.ext.errMode = 'none'; $('#table-id').on('error.dt', function(e, settings, techNote, message) { console.log( 'An error occurred: ', message); });
   $.ajax({
     url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllPartners',
     type: 'POST',
     dataType: 'json',
     success: function (data) {
+      $("#loader_layout").modal('hide');
       assignToEventsColumns(data);
+      
     }
   });
 
