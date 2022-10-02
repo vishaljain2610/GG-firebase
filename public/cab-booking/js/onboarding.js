@@ -16,8 +16,6 @@ var userData;
 
 
 $(document).ready(function () {
-  userData = JSON.parse(localStorage.getItem("user"));
-  console.log("userData", userData);
   $("#menuitem_myBookings").click(function () {
     $("#new_account_layout").fadeOut("slow");
     $("#account_details_layout").fadeOut("slow");
@@ -1158,12 +1156,14 @@ function check_summary_view_scroll(e) {
 }
 
 function summary_page_action() {
+  console.log("in function");
   if (
-    $("#summary_page_action_button").hasClass(
-      "summary_page_action_button_inactive"
-    )
+    $("#summary_page_action_button").hasClass("summary_page_action_button_inactive")
   ) {
+    console.log("in if");
   } else {
+    console.log("in else");
+    console.log(isLoggedIn())
     if (isLoggedIn()) {
       console.log(
         booking.selected_plan.selected_vehicle_plan
@@ -1222,7 +1222,7 @@ function summary_page_action() {
 
 var user = { loggedIn: false};
 function isLoggedIn() {
-  if (userData.number != null) {
+  if (user.loggedIn == true) {
     return true;
   } else return false;
 }
@@ -1355,7 +1355,7 @@ function login_now() {
     }
   } else if (register_activated) {
     user.loggedIn = true;
-    userData = $("#login_form")
+    data = $("#login_form")
       .serializeArray()
       .reduce(function (obj, item) {
         obj[item.name] = item.value;
@@ -1546,7 +1546,6 @@ function verifyOTP() {
     $("#login_page_action_button").text("PROCEED");
     $("#login_mobile_number_input").attr("readonly", "readonly");
     alert("Welcome to Gadigoda / गाडीगोडा में आपका स्वागत है ");
-    savetolocal(userNumber);
     $("#login_modal_header").text(
       "Complete your Profile / अपनी प्रोफाइल पूरी कीजिए "
     );
