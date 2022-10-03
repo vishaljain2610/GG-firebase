@@ -1445,6 +1445,20 @@ function login_now() {
             populate_summary_view();
             $("#plan_summary_modal").modal();
           }
+          $.ajax({
+            url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateUsers",
+            type: "post",
+            data: user_data,
+            success: function (response) {
+              console.log(
+                "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateUsers",
+                response
+              );
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+            },
+          });
         },
         error: function () {
           $("#loader_layout").modal("hide");

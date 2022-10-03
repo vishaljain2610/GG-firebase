@@ -244,7 +244,7 @@ function couponOffers(){
           '<div id="driverName" class="blocks">' +
           '<div class="driver-icon"><img src="../../assets/driver_icon.png" alt="driver-icon"/></div>' +
           '<div class="content-modal">' +
-          data_resp[i].car_Owner +
+          data_resp[i].car_owner +
           "</div>" +
           "</div>" +
           "<a href="+"tel:"+data_resp[i].contact_number+""+">"+
