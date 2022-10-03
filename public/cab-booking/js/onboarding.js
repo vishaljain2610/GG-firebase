@@ -1,7 +1,7 @@
 var partner_profile = {};
 var received_plans;
 var data;
-var user_data;
+var user_data={};
 var order_data = {};
 var total_amount;
 var selected_plan;
@@ -1452,6 +1452,7 @@ function login_now() {
         },
       });
     }
+    
   }
   else {
     if ($("#login_mobile_number_input").val().length == 10) {
@@ -1523,6 +1524,10 @@ function sendOTP() {
         response
       );
       new_user=response.new_user;
+      if(new_user==false){
+        user_data=response.users;
+      }
+      console.log(user_data);
       console.log(new_user)
       $("#login_page_label").text(
         "Verify Mobile Number / मोबाइल नंबर वेरीफाई करे "
@@ -1547,6 +1552,7 @@ function verifyOTP() {
   if (new_user==false) {
     otp_sent = false;
     check_user=true;
+    console.log(user_data)
     user.loggedIn = true;
     user.number = $("#login_mobile_number_input").val();
     console.log(user.number);

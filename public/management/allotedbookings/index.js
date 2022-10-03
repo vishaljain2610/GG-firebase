@@ -1,4 +1,5 @@
 var table;
+var data_alloted=[];
 //disabling datatable warning alerts and using console instead of it 
 $.fn.dataTable.ext.errMode = 'none';
 $('#table').on('error.dt', function (e, settings, techNote, message) {
@@ -9,12 +10,19 @@ $(document).ready(function () {
     $("#loader_layout").modal();
     console.log('in allotedbookings')
     $.ajax({
-        url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedData',
+        url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings',
         type: 'POST',
         dataType: 'json',
         success: function (data) {
+            console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllBookings", data);
             $("#loader_layout").modal("hide");
-            assignToEventsColumns(data);
+            for(i=0;i<data.length;i++){
+                if(data[i].status=="Alloted" &&  data[i].isDeleted !="true"){
+                    console.log("alloted")
+                    data_alloted.push(data[i]);
+                }
+            }
+            assignToEventsColumns(data_alloted);
         }
     });
 
@@ -86,7 +94,7 @@ $(document).ready(function () {
 function delBooking(data) {
     data.isDeleted = true;
     $.ajax({
-        url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/udpateAllotedData',
+        url: 'https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking',
         type: 'POST',
         dataType: 'json',
         data: data,
@@ -95,11 +103,6 @@ function delBooking(data) {
             window.location.reload();
         }
     });
-
-
-
-
-
 }
 $('#edit_button').click(function () {
 
@@ -178,7 +181,7 @@ function assignToEventsColumns_partners(data) {
         $.ajax({
             url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking",
             type: "post",
-            data: data1,
+            data: allotedData,
             success: function (response) {
                 console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking", response);
                 location.reload();
@@ -190,21 +193,21 @@ function assignToEventsColumns_partners(data) {
         console.log(allotedData);
         // alert(allotedData.status)
         console.log(allotedData);
-        alert("this will allot booking to a partner");
-        $.ajax({
-            url: " https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateAllotedData",
-            method: "POST",
-            data: allotedData,
-            success: function (response) {
-                alert("success");
-                console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateAllotedData", response);
-                $('#allot_partner_modal').modal('hide');
-                location.reload();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
-            }
-        });
+        // alert("this will allot booking to a partner");
+        // $.ajax({
+        //     url: " https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateAllotedData",
+        //     method: "POST",
+        //     data: allotedData,
+        //     success: function (response) {
+        //         alert("success");
+        //         console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateAllotedData", response);
+        //         $('#allot_partner_modal').modal('hide');
+        //         location.reload();
+        //     },
+        //     error: function (jqXHR, textStatus, errorThrown) {
+        //         console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+        //     }
+        // });
 
     });
 }

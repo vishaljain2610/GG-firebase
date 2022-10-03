@@ -1,4 +1,6 @@
 var userData = {}
+var data_alloted=[];
+var data_booked=[];
 $(document).ready(function () {
      var number = JSON.parse(localStorage.getItem("user"));
     userData.number = number;
@@ -23,7 +25,6 @@ $(document).ready(function () {
       $(".modal-backdrop").fadeOut();
       $(".fade").fadeOut();
       $(".show").fadeOut();
-  
       $("#booking_summary").fadeOut();
       $("#plan_summary_modal").fadeOut();
       $("#footer").fadeOut();
@@ -111,31 +112,20 @@ function couponOffers(){
   function mybookings_open() {
     console.log(userData);
     $.ajax({
-      url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
+      url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
       type: "post",
       data: userData,
       success: function (response) 
       {
         console.log(
-          "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getAllotedDataByNumber",
+          "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
           response
         );
+
         $("#booking_successfully_completed").fadeOut("slow");
         $("#mybookings").fadeIn("slow");
-        $.ajax({
-          url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
-          type: "POST",
-          data: userData,
-          success: function (data) {
-            console.log(
-              "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
-              data
-            );
-            booked_data = data;
-            document.body.style.backgroundColor = "#f5f4f4";
-            populate_rides(response, booked_data);
-          },
-        });
+        document.body.style.backgroundColor = "#f5f4f4";
+        populate_rides_seggregate_data(response);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
@@ -143,6 +133,20 @@ function couponOffers(){
     });
   }
   
+  function populate_rides_seggregate_data(response){
+    for(i=0;i<response.length;i++){
+      if(response[i].status=="Alloted" &&  response[i].isDeleted !="true"){
+        console.log("alloted");
+        data_alloted.push(response[i]);
+    }
+    else if(response[i].status=="Booked" &&  response[i].isDeleted !="true"){
+      data_booked.push(response[i]);
+    }
+    }
+    populate_rides(data_alloted,data_booked);
+  }
+
+
   //to show the modal of alloted drivers
   function viewMoreAllotedModal() {
     $("#cabBookingViewMoreAllotedModal").modal("show");
@@ -176,7 +180,7 @@ function couponOffers(){
           "</div>" +
           '<div class="container2_2">' +
           '<div class="route"><b>' +
-          data_resp[i].pickup +
+          data_resp[i].station +
           "</b></div>" +
           '<div class="date_time">' +
           data_resp[i].pickup_date +
@@ -280,7 +284,7 @@ function couponOffers(){
           '<div id="pickUp" class="blocks">' +
           '<div class="title-modal">PickUp Station</div>' +
           '<div class="content-modal" style="overflow-wrap: break-word">' +
-          data_resp[i].pickup +
+          data_resp[i].station +
           "</div>" +
           "</div>" +
           '<div id="basePrice" class="blocks">' +

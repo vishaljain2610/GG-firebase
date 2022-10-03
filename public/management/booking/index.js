@@ -188,16 +188,18 @@ function assignToEventsColumns_partners(data) {
   $('#allotment').click(function () {
     var row = table.api().rows('.selected').data();
     data2 = row[0];
+
     allotedData = {
       ...data1,
       ...data2
     };
+    console.log(allotedData)
     allotedData.status = "Alloted";
     data1.status  = "Alloted";
     $.ajax({
       url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking",
       type: "post",
-      data: data1,
+      data: allotedData,
       success: function (response) {
         console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/updateBooking", response);
         location.reload();
@@ -208,21 +210,21 @@ function assignToEventsColumns_partners(data) {
     });
     console.log(allotedData);
     // alert(allotedData.status)
-    console.log(allotedData);
-    alert("this will allot booking to a partner");
-    $.ajax({
-      url: " https://us-central1-gadigoda-dfc26.cloudfunctions.net/createAllotedData",
-      method: "POST",
-      data: allotedData,
-      success: function (response) {
-        alert("success");
-        console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createAllotedData", response);
-        $('#allot_partner_modal').modal('hide');
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
-      }
-    });
+  //   console.log(allotedData);
+  //   alert("this will allot booking to a partner");
+  //   $.ajax({
+  //     url: " https://us-central1-gadigoda-dfc26.cloudfunctions.net/createAllotedData",
+  //     method: "POST",
+  //     data: allotedData,
+  //     success: function (response) {
+  //       alert("success");
+  //       console.log("https://us-central1-gadigoda-dfc26.cloudfunctions.net/createAllotedData", response);
+  //       $('#allot_partner_modal').modal('hide');
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       console.log("ERROR ON NETWORK CALL", textStatus, errorThrown);
+  //     }
+  //   });
 
   });
 }
