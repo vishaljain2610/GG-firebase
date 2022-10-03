@@ -395,25 +395,60 @@ exports.sendOTP = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     response.set("Access-Control-Allow-Headers", "Content-Type");
     response.set("Access-Control-Allow-Origin", "*");
-    const { phoneNumber } = request.body;
+    var resp = {}
+    const { number } = request.body;
     const otp = Math.floor(100000 + Math.random() * 900000);
     const message = `Your OTP is ${otp}. Please enter it to verify your phone number.`;
     // OTP store to firestore database
     var OTPDataStoreKey;
-    admin
-      .firestore()
-      .collection("OTP").doc().set({
-        otp: otp,
-      }).then(docRef => {
-        OTPDataStoreKey = docRef.id; console.log("Document written with ID: ", docRef);
-      }).catch(error => { console.error("Error adding document: ", error); });
+    axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsAuthKey}&variables_values=${otp}&route=otp&numbers=${number}`)
+      .then(res => 
+      {
+        resp.message = message
+        resp.otp = otp
+        resp.DataBaseKey = res.data.request_id
+        admin
+        .firestore()
+        .collection("Users")
+        .where("number", "==", number)
+        .get()
+        .then((querySnapshot) => 
+        {
+          const users = [];
+          querySnapshot.forEach((doc) => 
+          {
+            const user = doc.data();
+            users.push(user);
+          });
 
-    axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsAuthKey}&variables_values=${otp}&route=otp&numbers=${phoneNumber}`)
-      .then(res => {
-        response.json({
-          message: message,
-          otp: otp,
-          DataBaseKey: res.data.request_id,
+
+          //existing 
+          if (users.length > 0) 
+          {
+            resp.users = users[0];
+            resp.new_user =  false;
+            response.json(resp);
+          }
+          else
+          {
+            //new user
+            admin
+            .firestore()
+            .collection("Users")
+            .doc(number).set({number: number})
+            .then(() => 
+            {
+              resp.number =  number;
+              resp.new_user =  true;
+              response.json(resp);
+            })
+          }
+          
+        })
+        .catch((error) => {
+          response.status(500).json({
+            error: error.code,
+          });
         });
       })
       .catch(error => {
@@ -421,6 +456,7 @@ exports.sendOTP = functions.https.onRequest((request, response) => {
           error: error.code
         });
       });
+  
   });
 });
 
@@ -518,31 +554,6 @@ exports.applyCoupon = functions.https.onRequest((request, response) => {
   });
 });
 
-exports.applyCtrial = functions.https
-.onRequest((request, response) => {
-  response.set("Access-Control-Allow-Origin", "*");
-  response.set("Access-Control-Allow-Headers", "Content-Type");
-  const code = request.body.code;
-  const amount = request.body.amount;
-  admin
-    .firestore()
-    .collection("Discount Coupon")
-    .where("code", "==", code)
-    .get()
-    .then((querySnapshot) => {
-      const packages = [];
-      querySnapshot.forEach((doc) => {
-        const package = doc.data();
-        packages.push(package);
-      });
-      response.json(packages);
-    })
-    .catch((error) => {
-      response.status(500).json({
-        error: error.code,
-      });
-    });
-});
 
 
 exports.updateAllotedData = functions.https.onRequest((request, response) => {
@@ -571,18 +582,22 @@ exports.checkUsers = functions.https.onRequest((request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
     response.set("Access-Control-Allow-Headers", "Content-Type");
     const number = request.body.number;
+    
+  });
+});
+
+exports.updateUsers = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set("Access-Control-Allow-Headers", "Content-Type");
+    const user = request.body;
     admin
       .firestore()
       .collection("Users")
-      .where("number", "==", number)
-      .get()
-      .then((querySnapshot) => {
-        const users = [];
-        querySnapshot.forEach((doc) => {
-          const user = doc.data();
-          users.push(user);
-        });
-        response.json(users);
+      .doc(user.number)
+      .update(user)
+      .then(() => {
+        response.json(user);
       })
       .catch((error) => {
         response.status(500).json({
