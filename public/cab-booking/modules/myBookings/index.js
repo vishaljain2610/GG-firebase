@@ -2,6 +2,7 @@ var userData = {}
 var data_alloted=[];
 var data_booked=[];
 $(document).ready(function () {
+  $("#loader_layout").modal();
      var number = JSON.parse(localStorage.getItem("user"));
     userData.number = number;
     if(userData==null){
@@ -120,7 +121,9 @@ function couponOffers(){
         console.log(
           "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getBookings",
           response
+          
         );
+        $("#loader_layout").modal("hide");
 
         $("#booking_successfully_completed").fadeOut("slow");
         $("#mybookings").fadeIn("slow");
@@ -313,7 +316,7 @@ function couponOffers(){
           "</p>" +
           "</div>" +
           '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-          '<ul class="list-group list-group-flush" id="package_terms">' +
+          '<ul class="list-group list-group-flush" id="package_terms_modal">' +data_resp[i].selected_plan.selected_vehicle_plan.description+
           "</ul>" +
           "</div>" +
           '<div style="font-size: 1.3rem;">' +
@@ -506,7 +509,7 @@ function couponOffers(){
             "</p>" +
             "</div>" +
             '<p style="font-weight: bold;margin-bottom: 0px;font-size: large;padding-left: 1.25rem;">Terms</p>' +
-            '<ul class="list-group list-group-flush" id="package_terms">' +
+            '<ul class="list-group list-group-flush" id="package_terms_modal">' +  booked_data[i].selected_plan.selected_vehicle_plan.description+
             "</ul>" +
             "</div>" +
             '<div style="font-size: 1.3rem;">' +
