@@ -42,6 +42,7 @@ $(".unallotedmodals").modal("hide");
 $("#cabBookingViewMoreAllotedModal").modal("hide");
 $("#couponOffers").modal("hide");
 function couponOffers(){
+  $('#loader_layout').modal();
     $.ajax({
       url: "https://us-central1-gadigoda-dfc26.cloudfunctions.net/getActiveCoupon",
       method: "POST",
@@ -52,6 +53,7 @@ function couponOffers(){
         );
         received_coupons = response;
         populateCoupons(received_coupons)
+        $('#loader_layout').modal('hide');
          
       },
       error: function () {
@@ -377,7 +379,8 @@ function couponOffers(){
           "</li>" +
           ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
           "</li>" +
-          "</ul>" +
+          "</ul>" +'<a href="https://wa.me/message/YM67TEN2MEW3A1">' +
+          '<button type="button" class="btn btn-danger" id="cancel_booking_btn" >Cancel Ride</button>'+'</a>'+
           "</div>" +
           "</div>" +
           "</div>" +
@@ -558,7 +561,8 @@ function couponOffers(){
             "</li>" +
             ' <li class="list-group-item" id="booking_amount_note_label" style="text-align: center!important;color: #e1b109;font-size: small;">' +
             "</li>" +
-            "</ul>" +
+            "</ul>" +'<a href="https://wa.me/message/YM67TEN2MEW3A1">' +
+            '<button type="button" class="btn btn-danger" id="cancel_booking_btn" >Cancel Ride</button>'+'</a>'+
             "</div>" +
             "</div>" +
             "</div>" +
@@ -567,7 +571,7 @@ function couponOffers(){
       }
     }
   }
-  
+
   function display_data_of_booking(data_res) {
     $("#day").val(data_res.pickup_date);
     document.getElementById("day").innerHTML = data_res.pickup_date;
@@ -785,12 +789,12 @@ function getBookings(userData)
 
 }
 
-function populate_bookings(bookings)
-{
+// function populate_bookings(bookings)
+// {
 
-}
+// }
 
-function open_details(i)
-{
+// function open_details(i)
+// {
 
-}
+// }

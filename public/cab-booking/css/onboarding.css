@@ -1060,6 +1060,11 @@ font-weight: 700;
   #package_terms_modal{
     margin:1rem;
   }
+  #cancel_booking_btn{
+    width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
   
    
   
